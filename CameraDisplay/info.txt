@@ -1,0 +1,7 @@
+
+
+- Camera feed from computer:
+
+- Started designing a video display
+- create video and frame object
+
