@@ -1,0 +1,5 @@
+.idea/*
+venv/*
+odometry/*
+gui/__pycache__/*
+gui/__pycache__/qtresources_rc.cpython-37.pyc
