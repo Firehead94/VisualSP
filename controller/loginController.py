@@ -25,6 +25,18 @@ class loginController:
         VisualSPMain.show()
         sys.exit(app.exec_())
 
+    def switchScenes(self, sceneName):
+        None
+
+    def login(self, username):
+        #Verify Login
+        #Get User object
+        self.switchScenes("loggedin")
+
+    def newUser(self):
+        self.switchScenes("newuser")
+
+
 
 loginController()
 
