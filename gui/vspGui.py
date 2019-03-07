@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
-import qtresources_rc
+import gui.qtresources_rc
 
 class Ui_VisualSP(object):
     def setupUi(self, VisualSP):
@@ -387,12 +387,12 @@ class Ui_VisualSP(object):
 
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    VisualSP = QtWidgets.QMainWindow()
-    ui = Ui_VisualSP()
-    ui.setupUi(VisualSP)
-    VisualSP.show()
-    sys.exit(app.exec_())
 
+#if __name__ == "__main__":
+#    import sys
+#    app = QtWidgets.QApplication(sys.argv)
+#    VisualSP = QtWidgets.QMainWindow()
+#    ui = Ui_VisualSP()
+#    ui.setupUi(VisualSP)
+#    VisualSP.show()
+#    sys.exit(app.exec_())
