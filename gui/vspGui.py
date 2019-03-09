@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import sys
+import gui.qtresources_rc
 
 class Ui_VisualSP(object):
     def setupUi(self, VisualSP):
@@ -515,4 +516,12 @@ class Ui_VisualSP(object):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
 
-import qtresources_rc
+
+#if __name__ == "__main__":
+#    import sys
+#    app = QtWidgets.QApplication(sys.argv)
+#    VisualSP = QtWidgets.QMainWindow()
+#    ui = Ui_VisualSP()
+#    ui.setupUi(VisualSP)
+#    VisualSP.show()
+#    sys.exit(app.exec_())
