@@ -7,10 +7,28 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtCore import pyqtSlot
 import sys
 import gui.qtresources_rc
 
 class Ui_VisualSP(object):
+
+    def loginButton(self):
+        self.stackedWidget.setCurrentIndex(2)
+
+    def newUserButton(self):
+        self.stackedWidget.setCurrentIndex(1)
+
+    def logoutButton(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def cancelButton(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def createButton(self):
+        self.stackedWidget.setCurrentIndex(2)
+
     def setupUi(self, VisualSP):
         VisualSP.setObjectName("VisualSP")
         VisualSP.setEnabled(True)
@@ -186,6 +204,7 @@ class Ui_VisualSP(object):
         font.setPointSize(20)
         self.usernameIn.setFont(font)
         self.usernameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.usernameIn.setFrame(False)
         self.usernameIn.setObjectName("usernameIn")
         self.verticalLayout_5.addWidget(self.usernameIn)
         self.firstnameIn = QtWidgets.QLineEdit(self.containerWidgetNew)
@@ -489,8 +508,14 @@ class Ui_VisualSP(object):
         VisualSP.setCentralWidget(self.Main)
 
         self.retranslateUi(VisualSP)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(VisualSP)
+
+        self.loginBtn.clicked.connect(self.loginButton)
+        self.logoutBtn.clicked.connect(self.logoutButton)
+        self.newuserBtn.clicked.connect(self.newUserButton)
+        self.backBtn.clicked.connect(self.cancelButton)
+        self.createBtn.clicked.connect(self.createButton)
 
     def retranslateUi(self, VisualSP):
         _translate = QtCore.QCoreApplication.translate
@@ -506,15 +531,16 @@ class Ui_VisualSP(object):
         self.checkBox.setText(_translate("VisualSP", "Administrator"))
         self.createBtn.setText(_translate("VisualSP", "Create"))
         self.backBtn.setText(_translate("VisualSP", "Back"))
-        self.menuBtn.setText(_translate("VisualSP", "..."))
-        self.saveBtn.setText(_translate("VisualSP", "..."))
-        self.logoutBtn.setText(_translate("VisualSP", "..."))
+        self.menuBtn.setText(_translate("VisualSP", "Menuu"))
+        self.saveBtn.setText(_translate("VisualSP", "Save"))
+        self.logoutBtn.setText(_translate("VisualSP", "Logout"))
         self.usernameOut.setText(_translate("VisualSP", "USERNAME"))
         self.firstnameOut.setPlaceholderText(_translate("VisualSP", "First Name"))
         self.lastnameOut.setPlaceholderText(_translate("VisualSP", "Last Name"))
         self.lastusedOut.setPlaceholderText(_translate("VisualSP", "Last Used"))
         self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
+
 
 
 

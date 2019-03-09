@@ -4,7 +4,7 @@ import user.User
 import user.UserHelper
 import settings.config
 import sys
-
+import keyboard
 global app
 global VisualSPMain
 global ui
@@ -25,6 +25,7 @@ class loginController:
         VisualSPMain.show()
         sys.exit(app.exec_())
 
+
     def switchScenes(self, sceneName):
         None
 
@@ -39,4 +40,5 @@ class loginController:
 
 
 loginController()
+
 
