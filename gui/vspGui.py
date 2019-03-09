@@ -86,7 +86,7 @@ class Ui_VisualSP(object):
         self.login.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.login.setObjectName("login")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.login)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(14, 7, 265, 63))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 7, 281, 63))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -153,6 +153,7 @@ class Ui_VisualSP(object):
         self.NewUser.setSizePolicy(sizePolicy)
         self.NewUser.setMinimumSize(QtCore.QSize(300, 0))
         self.NewUser.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.NewUser.setStyleSheet("background-color: rgb(51, 58, 74);")
         self.NewUser.setObjectName("NewUser")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.NewUser)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -316,7 +317,7 @@ class Ui_VisualSP(object):
 "    border:none;\n"
 "}")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../Git/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveBtn.setIcon(icon2)
         self.saveBtn.setIconSize(QtCore.QSize(60, 50))
         self.saveBtn.setObjectName("saveBtn")
@@ -330,7 +331,7 @@ class Ui_VisualSP(object):
 "    border:none;\n"
 "}")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("../Git/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.logoutBtn.setIcon(icon3)
         self.logoutBtn.setIconSize(QtCore.QSize(60, 50))
         self.logoutBtn.setObjectName("logoutBtn")
@@ -488,7 +489,7 @@ class Ui_VisualSP(object):
         VisualSP.setCentralWidget(self.Main)
 
         self.retranslateUi(VisualSP)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(VisualSP)
 
     def retranslateUi(self, VisualSP):
