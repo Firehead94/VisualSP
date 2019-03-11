@@ -1,28 +1,43 @@
 from sys import platform
+import os
 
-DEFAULT_LOCAL_PATH_WINDOWS = "%appdata%/VisualSP2019/Users/"
-DEFAULT_LOCAL_PATH_MAC = "~/Library/Preferences/visualsp/Users/"
-DEFAULT_LOCAL_PATH_LINUX = "~/.visualsp/users/"
-DEFAULT_LOCAL_PATH_DEFAULT = "/Users/"
+APPDATA_LOC = os.getenv('APPDATA')
+
+DEFAULT_LOCAL_PATH = "\\VisualSP2019"
+
+DEFAULT_USER_FOLDER = "\\users"
+DEFAULT_VIDEO_FOLDER = "\\videos"
+DEFAULT_MISC_FOLDER = "\\misc"
 
 DEFAULT_ACCESS_LEVEL = "0"
 GENERAL_ACCESS_LEVEL = "0"
 ADMIN_ACCESS_LEVEL = "10"
-
-osType = "Default"
-storage = dict(
-    pathW = DEFAULT_LOCAL_PATH_WINDOWS,
-    pathM = DEFAULT_LOCAL_PATH_MAC,
-    pathL = DEFAULT_LOCAL_PATH_LINUX,
-    pathDefault = DEFAULT_LOCAL_PATH_DEFAULT
-)
+osType = "unknown"
 
 
-def __init__(self):
-    if platform == "linux":
-        self.osType = "L"
-    elif platform == "darwin":
-        self.osType == "M"
-    elif platform == "win32" or platform == "win64":
-        self.osType = "W"
+if platform == "linux":
+    osType = "L"
+elif platform == "darwin":
+    osType == "M"
+elif platform == "win32" or platform == "win64":
+    osType = "W"
 
+try:
+    os.mkdir(APPDATA_LOC + DEFAULT_LOCAL_PATH)
+except FileExistsError:
+    print("Directory " , DEFAULT_LOCAL_PATH ,  " already exists")
+
+try:
+    os.mkdir(APPDATA_LOC + DEFAULT_LOCAL_PATH + DEFAULT_USER_FOLDER)
+except FileExistsError:
+    print("Directory " , DEFAULT_USER_FOLDER ,  " already exists")
+
+try:
+    os.mkdir(APPDATA_LOC + DEFAULT_LOCAL_PATH + DEFAULT_VIDEO_FOLDER)
+except FileExistsError:
+    print("Directory " , DEFAULT_VIDEO_FOLDER ,  " already exists")
+
+try:
+    os.mkdir(APPDATA_LOC + DEFAULT_LOCAL_PATH + DEFAULT_MISC_FOLDER)
+except FileExistsError:
+    print("Directory " , DEFAULT_MISC_FOLDER ,  " already exists")

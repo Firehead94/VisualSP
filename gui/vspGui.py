@@ -11,6 +11,11 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from PyQt5.QtCore import pyqtSlot
 import sys
 import gui.qtresources_rc
+import controller.ltsController as Lts
+import user.UserHelper as UserHelper
+import user.User as User
+import settings.config as Config
+import os
 
 class Ui_VisualSP(object):
 
@@ -119,10 +124,6 @@ class Ui_VisualSP(object):
         self.loginBtn.setObjectName("loginBtn")
         self.horizontalLayout_4.addWidget(self.loginBtn)
         self.verticalLayout.addWidget(self.login)
-        self.ERROR_NO_EXIST = QtWidgets.QLabel(self.LoggedOut)
-        self.ERROR_NO_EXIST.setText("")
-        self.ERROR_NO_EXIST.setObjectName("ERROR_NO_EXIST")
-        self.verticalLayout.addWidget(self.ERROR_NO_EXIST)
         self.newuserBtn = QtWidgets.QToolButton(self.LoggedOut)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -144,6 +145,14 @@ class Ui_VisualSP(object):
 "")
         self.newuserBtn.setObjectName("newuserBtn")
         self.verticalLayout.addWidget(self.newuserBtn)
+        font = QtGui.QFont()
+        font.setFamily("Tw Cen MT")
+        font.setPointSize(20)
+        self.ERROR_NO_EXIST = QtWidgets.QLabel(self.LoggedOut)
+        self.ERROR_NO_EXIST.setText("")
+        self.ERROR_NO_EXIST.setObjectName("ERROR_NO_EXIST")
+        self.ERROR_NO_EXIST.setFont(font)
+        self.verticalLayout.addWidget(self.ERROR_NO_EXIST)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
@@ -527,7 +536,11 @@ class Ui_VisualSP(object):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
     def loginButton(self):
-        self.stackedWidget.setCurrentIndex(2)
+        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".txt"):
+            curUser = UserHelper.UserHelper.get_user(self.usernameField.text())
+            self.stackedWidget.setCurrentIndex(2)
+        else:
+            self.ERROR_NO_EXIST.setText("<font color='red'>User Doesn't exist</font>")
 
     def newUserButton(self):
         self.stackedWidget.setCurrentIndex(1)
