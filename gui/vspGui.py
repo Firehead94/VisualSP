@@ -14,21 +14,6 @@ import gui.qtresources_rc
 
 class Ui_VisualSP(object):
 
-    def loginButton(self):
-        self.stackedWidget.setCurrentIndex(2)
-
-    def newUserButton(self):
-        self.stackedWidget.setCurrentIndex(1)
-
-    def logoutButton(self):
-        self.stackedWidget.setCurrentIndex(0)
-
-    def cancelButton(self):
-        self.stackedWidget.setCurrentIndex(0)
-
-    def createButton(self):
-        self.stackedWidget.setCurrentIndex(2)
-
     def setupUi(self, VisualSP):
         VisualSP.setObjectName("VisualSP")
         VisualSP.setEnabled(True)
@@ -522,7 +507,7 @@ class Ui_VisualSP(object):
         VisualSP.setWindowTitle(_translate("VisualSP", "MainWindow"))
         self.loginLabel.setText(_translate("VisualSP", "Login"))
         self.usernameField.setPlaceholderText(_translate("VisualSP", "Username"))
-        self.loginBtn.setText(_translate("VisualSP", "..."))
+        self.loginBtn.setText(_translate("VisualSP", "Login"))
         self.loginBtn.setShortcut(_translate("VisualSP", "Return"))
         self.newuserBtn.setText(_translate("VisualSP", "New User"))
         self.usernameIn.setPlaceholderText(_translate("VisualSP", "Username"))
@@ -531,7 +516,7 @@ class Ui_VisualSP(object):
         self.checkBox.setText(_translate("VisualSP", "Administrator"))
         self.createBtn.setText(_translate("VisualSP", "Create"))
         self.backBtn.setText(_translate("VisualSP", "Back"))
-        self.menuBtn.setText(_translate("VisualSP", "Menuu"))
+        self.menuBtn.setText(_translate("VisualSP", "Menu"))
         self.saveBtn.setText(_translate("VisualSP", "Save"))
         self.logoutBtn.setText(_translate("VisualSP", "Logout"))
         self.usernameOut.setText(_translate("VisualSP", "USERNAME"))
@@ -540,6 +525,21 @@ class Ui_VisualSP(object):
         self.lastusedOut.setPlaceholderText(_translate("VisualSP", "Last Used"))
         self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
+
+    def loginButton(self):
+        self.stackedWidget.setCurrentIndex(2)
+
+    def newUserButton(self):
+        self.stackedWidget.setCurrentIndex(1)
+
+    def logoutButton(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def cancelButton(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    def createButton(self):
+        self.stackedWidget.setCurrentIndex(2)
 
 
 
