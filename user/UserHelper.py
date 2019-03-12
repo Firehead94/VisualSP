@@ -26,22 +26,22 @@ class UserHelper:
     ############################################
     @staticmethod
     def delete_user(username):
+        global savePath
         os.remove(savePath + username + ".json")
 
     ##################################################
     #
     # Get a user using username and returns user
-    # object holding all user info. See User.py
+    # dict holding all user info. See User.py
     #
     ##################################################
     @staticmethod
     def get_user(username):
+        global savePath
         with open(savePath + username + ".json") as file:
             user = json.load(file)
         file.close()
-        retuser = user.User.User()
-        retuser.loadUser(user)
-        return retuser
+        return user
 
     #################################################
     #

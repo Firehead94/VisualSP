@@ -559,7 +559,7 @@ class Ui_VisualSP(object):
         global curUser
         curUser.save()
         UserHelper.UserHelper.update_user(curUser)
-        curUser = User.User
+        curUser = User.User()
         self.updateUserInfoPanel()
         self.stackedWidget.setCurrentIndex(0)
 
