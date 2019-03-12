@@ -39,7 +39,8 @@ class UserHelper:
         with open(savePath + username + ".json") as file:
             user = json.load(file)
         file.close()
-        retuser = user.User(user)
+        retuser = user.User.User()
+        retuser.loadUser(user)
         return retuser
 
     #################################################
@@ -53,12 +54,9 @@ class UserHelper:
     def update_user(currentuser):
         global savePath
         if isinstance(currentuser, user.User.User):
-            print("IS INSTANCE")
             print(savePath + currentuser.user["USERNAME"] + ".json")
             with open(savePath + currentuser.user["USERNAME"] + ".json", "w") as outfile:
-                print("TIME TO DUMP")
                 json.dump(currentuser.user, outfile, indent=2)
-            print("DUMPED")
             outfile.close()
             return True
         return False

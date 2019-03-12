@@ -545,7 +545,7 @@ class Ui_VisualSP(object):
 
     def loginButton(self):
         global curUser
-        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".txt"):
+        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".json"):
             curUser.loadUser(UserHelper.UserHelper.get_user(self.usernameField.text()))
             self.updateUserInfoPanel()
             self.stackedWidget.setCurrentIndex(2)
@@ -568,23 +568,20 @@ class Ui_VisualSP(object):
 
     def createButton(self):
         global curUser
-        print(self.usernameIn.text())
-        curUser.user["USERNAME"] = self.usernameIn.text()
-        print(self.firstnameIn.text())
-        curUser.user["FIRST_NAME"] = self.firstnameIn.text()
-        print(self.lastnameIn.text())
-        curUser.user["LAST_NAME"] = self.lastnameIn.text()
-        print(self.checkBox.isChecked())
-        if self.checkBox.isChecked():
-            curUser.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
+        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameIn.text() + ".json"):
+            self.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
-            curUser.user["ACCESS_LEVEL"] = "GUEST"
-        curUser.save()
-        print("SAVED")
-        UserHelper.UserHelper.update_user(curUser)
-        print("UPDATE")
-        self.updateUserInfoPanel()
-        self.stackedWidget.setCurrentIndex(2)
+            curUser.user["USERNAME"] = self.usernameIn.text()
+            curUser.user["FIRST_NAME"] = self.firstnameIn.text()
+            curUser.user["LAST_NAME"] = self.lastnameIn.text()
+            if self.checkBox.isChecked():
+                curUser.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
+            else:
+                curUser.user["ACCESS_LEVEL"] = "GUEST"
+            curUser.save()
+            UserHelper.UserHelper.update_user(curUser)
+            self.updateUserInfoPanel()
+            self.stackedWidget.setCurrentIndex(2)
 
     def updateUserInfoPanel(self):
         global curUser
