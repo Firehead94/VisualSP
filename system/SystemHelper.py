@@ -11,7 +11,6 @@ import datetime
 ################################################################
 
 # Returns Timestamp from Epoch in mm/dd/yyyy hh:mm:ss
-@staticmethod
 def getTimeStamp():
     currentTime = time.time()
     return datetime.datetime.fromtimestamp(currentTime).strftime('%m-%d-%Y %H:%M:%S')

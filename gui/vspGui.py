@@ -19,6 +19,9 @@ import os
 
 class Ui_VisualSP(object):
 
+    global curUser
+    curUser = User.User()
+
     def setupUi(self, VisualSP):
         VisualSP.setObjectName("VisualSP")
         VisualSP.setEnabled(True)
@@ -383,6 +386,7 @@ class Ui_VisualSP(object):
         self.usernameOut.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.usernameOut.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.usernameOut.setObjectName("usernameOut")
+        self.usernameOut.setText(curUser.user["USERNAME"])
         self.verticalLayout_4.addWidget(self.usernameOut)
         self.firstnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -392,6 +396,7 @@ class Ui_VisualSP(object):
         self.firstnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
         self.firstnameOut.setFrame(False)
         self.firstnameOut.setObjectName("firstnameOut")
+        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
         self.verticalLayout_4.addWidget(self.firstnameOut)
         self.lastnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -401,6 +406,7 @@ class Ui_VisualSP(object):
         self.lastnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
         self.lastnameOut.setFrame(False)
         self.lastnameOut.setObjectName("lastnameOut")
+        self.lastnameOut.setText(curUser.user["LAST_NAME"])
         self.verticalLayout_4.addWidget(self.lastnameOut)
         self.lastusedOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -410,6 +416,7 @@ class Ui_VisualSP(object):
         self.lastusedOut.setStyleSheet("background-color: rgb(111, 127, 161);")
         self.lastusedOut.setFrame(False)
         self.lastusedOut.setObjectName("lastusedOut")
+        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
         self.verticalLayout_4.addWidget(self.lastusedOut)
         self.accessLevelOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -420,6 +427,7 @@ class Ui_VisualSP(object):
         self.accessLevelOut.setFrame(False)
         self.accessLevelOut.setReadOnly(True)
         self.accessLevelOut.setObjectName("accessLevelOut")
+        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
         self.verticalLayout_4.addWidget(self.accessLevelOut)
         self.verticalLayout_4.setStretch(0, 1)
         self.verticalLayout_4.setStretch(1, 1)
@@ -536,8 +544,10 @@ class Ui_VisualSP(object):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
     def loginButton(self):
+        global curUser
         if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".txt"):
-            curUser = UserHelper.UserHelper.get_user(self.usernameField.text())
+            curUser.loadUser(UserHelper.UserHelper.get_user(self.usernameField.text()))
+            self.updateUserInfoPanel()
             self.stackedWidget.setCurrentIndex(2)
         else:
             self.ERROR_NO_EXIST.setText("<font color='red'>User Doesn't exist</font>")
@@ -546,15 +556,43 @@ class Ui_VisualSP(object):
         self.stackedWidget.setCurrentIndex(1)
 
     def logoutButton(self):
+        global curUser
+        curUser.save()
+        UserHelper.UserHelper.update_user(curUser)
+        curUser = User.User
+        self.updateUserInfoPanel()
         self.stackedWidget.setCurrentIndex(0)
 
     def cancelButton(self):
         self.stackedWidget.setCurrentIndex(0)
 
     def createButton(self):
+        global curUser
+        print(self.usernameIn.text())
+        curUser.user["USERNAME"] = self.usernameIn.text()
+        print(self.firstnameIn.text())
+        curUser.user["FIRST_NAME"] = self.firstnameIn.text()
+        print(self.lastnameIn.text())
+        curUser.user["LAST_NAME"] = self.lastnameIn.text()
+        print(self.checkBox.isChecked())
+        if self.checkBox.isChecked():
+            curUser.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
+        else:
+            curUser.user["ACCESS_LEVEL"] = "GUEST"
+        curUser.save()
+        print("SAVED")
+        UserHelper.UserHelper.update_user(curUser)
+        print("UPDATE")
+        self.updateUserInfoPanel()
         self.stackedWidget.setCurrentIndex(2)
 
-
+    def updateUserInfoPanel(self):
+        global curUser
+        self.usernameOut.setText(curUser.user["USERNAME"])
+        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
+        self.lastnameOut.setText(curUser.user["LAST_NAME"])
+        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
+        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
 
 
 #if __name__ == "__main__":
