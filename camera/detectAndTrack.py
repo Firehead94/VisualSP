@@ -2,6 +2,7 @@
 
 import numpy as np
 import cv2 as cv
+import yaml
 
 # Change this if using a different video source. It currently uses whatever the computer has as default
 cap = cv.VideoCapture(0)
@@ -33,6 +34,22 @@ good_new = []
 good_old = []
 img = []
 p1 = []
+
+
+fp = open( "ost.yaml", "r" )
+
+        # Parse the yaml file.
+ci = yaml.safe_load(fp)
+
+height = ci["image_height"]
+width  = ci["image_width"]
+distortion_model = ci["distortion_model"]
+K = ci["camera_matrix"]["data"]
+D = ci["distortion_coefficients"]["data"]
+R = ci["rectification_matrix"]["data"]
+P = ci["projection_matrix"]["data"]
+
+print (K)
 
 def calc():
     global p1
