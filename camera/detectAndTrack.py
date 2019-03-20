@@ -29,18 +29,17 @@ p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
 # Create a mask image for drawing purposes
 mask = np.zeros_like(old_frame)
-
 good_new = []
 good_old = []
 img = []
 p1 = []
 
 
-
+# Opens YAML file containing calibration data
 fp = open( "ost.yaml", "r" )
-
 ci = yaml.safe_load(fp)
 
+# Extracts wanted values from YAML file
 height = ci["image_height"]
 width  = ci["image_width"]
 distortion_model = ci["distortion_model"]
@@ -49,12 +48,10 @@ D = ci["distortion_coefficients"]["data"]
 R = ci["rectification_matrix"]["data"]
 P = ci["projection_matrix"]["data"]
 
+# Puts camera matrix and distortion coefficients into numpy 
+# arrays so they can be used for undistortion
 camMat = np.array( K ).reshape((3, 3))
 camDist = np.array( D ).reshape((1, 5))
-
-
-
-
 
 def calc():
     global p1
@@ -93,6 +90,7 @@ while(1):
     ret,frame = cap.read()
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
 
+    # Undistorts
     undist = cv.undistort(frame, camMat, camDist, None, None) 
 
     calc()
