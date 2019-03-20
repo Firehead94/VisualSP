@@ -4,7 +4,8 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-# Change this if using a different video source. It currently uses whatever the computer has as default
+# Change this if using a different video source. It currently 
+# uses whatever the computer has as default
 cap = cv.VideoCapture(0)
 
 # Parameters for ShiTomasi corner detection (goodPointsToTrack)
@@ -80,6 +81,7 @@ def update(frame_gray):
     global p0
     p0 = good_new.reshape(-1,1,2)
 
+
 # In progress
 #def essentialMat():
     #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
@@ -99,20 +101,20 @@ while(1):
 
     update(frame_gray)
 
-    # Redetection - TODO: make into function
+    # Redetects points when a certain number of them dissapear
     if (len(p1) <= 20):
         p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
     #essentialMat() -- in progress
 
     # Show window
-    cv.imshow('undist',img)
+    cv.imshow('undistorted image with trackers',img)
 
     # Exit loop with specific key press (escape and x button on window)
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
-    if cv.getWindowProperty('undist',cv.WND_PROP_VISIBLE) < 1:        
+    if cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1:        
         break
 
 # Kill
