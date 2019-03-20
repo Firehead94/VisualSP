@@ -36,9 +36,9 @@ img = []
 p1 = []
 
 
+
 fp = open( "ost.yaml", "r" )
 
-        # Parse the yaml file.
 ci = yaml.safe_load(fp)
 
 height = ci["image_height"]
@@ -49,7 +49,12 @@ D = ci["distortion_coefficients"]["data"]
 R = ci["rectification_matrix"]["data"]
 P = ci["projection_matrix"]["data"]
 
-print (K)
+camMat = np.array( K ).reshape((3, 3))
+camDist = np.array( D ).reshape((1, 5))
+
+
+
+
 
 def calc():
     global p1
@@ -60,15 +65,15 @@ def calc():
     global good_old 
     good_old = p0[st==1]
 
-def draw(mask, frame):
+def draw(mask, undist):
     # Draw tracking data
     for i,(new,old) in enumerate(zip(good_new,good_old)):
         a,b = new.ravel()
         c,d = old.ravel()
         mask = cv.line(mask, (a,b),(c,d), color[i].tolist(), 2)
-        frame = cv.circle(frame,(a,b),5,color[i].tolist(),-1)
+        undist = cv.circle(frame,(a,b),5,color[i].tolist(),-1)
     global img
-    img = cv.add(frame,mask)
+    img = cv.add(undist, mask)
 
 
 def update(frame_gray):
@@ -88,9 +93,11 @@ while(1):
     ret,frame = cap.read()
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
 
+    undist = cv.undistort(frame, camMat, camDist, None, None) 
+
     calc()
 
-    draw(mask, frame)
+    draw(mask, undist)
 
     update(frame_gray)
 
@@ -101,13 +108,13 @@ while(1):
     #essentialMat() -- in progress
 
     # Show window
-    cv.imshow('frame',img)
+    cv.imshow('undist',img)
 
     # Exit loop with specific key press (escape and x button on window)
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
-    if cv.getWindowProperty('frame',cv.WND_PROP_VISIBLE) < 1:        
+    if cv.getWindowProperty('undist',cv.WND_PROP_VISIBLE) < 1:        
         break
 
 # Kill
