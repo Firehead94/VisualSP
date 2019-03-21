@@ -28,7 +28,7 @@ class Ui_VisualSP(object):
         VisualSP.resize(1246, 685)
         VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
         VisualSP.setAutoFillBackground(False)
-        VisualSP.setStyleSheet("background-color: rgb(45, 51, 65);")
+        VisualSP.setStyleSheet("background-color: #656565;")
         VisualSP.setDocumentMode(False)
         VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
         VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
@@ -62,7 +62,7 @@ class Ui_VisualSP(object):
         self.LoggedOut.setSizePolicy(sizePolicy)
         self.LoggedOut.setMinimumSize(QtCore.QSize(300, 0))
         self.LoggedOut.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.LoggedOut.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.LoggedOut.setStyleSheet("background-color: #555555;")
         self.LoggedOut.setObjectName("LoggedOut")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.LoggedOut)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -108,7 +108,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(26)
         self.usernameField.setFont(font)
-        self.usernameField.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.usernameField.setStyleSheet("background-color: #b2b2b2;")
         self.usernameField.setFrame(False)
         self.usernameField.setObjectName("usernameField")
         self.horizontalLayout_4.addWidget(self.usernameField)
@@ -139,7 +139,7 @@ class Ui_VisualSP(object):
         font.setPointSize(26)
         self.newuserBtn.setFont(font)
         self.newuserBtn.setStyleSheet("QToolButton {\n"
-"    background-color: rgb(75, 85, 109);\n"
+"    background-color: #808080;\n"
 "}\n"
 "\n"
 ":hover {\n"
@@ -168,7 +168,7 @@ class Ui_VisualSP(object):
         self.NewUser.setSizePolicy(sizePolicy)
         self.NewUser.setMinimumSize(QtCore.QSize(300, 0))
         self.NewUser.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.NewUser.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.NewUser.setStyleSheet("background-color: #555555")
         self.NewUser.setObjectName("NewUser")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.NewUser)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -200,7 +200,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.usernameIn.setFont(font)
-        self.usernameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.usernameIn.setStyleSheet("background-color: #b2b2b2;")
         self.usernameIn.setFrame(False)
         self.usernameIn.setObjectName("usernameIn")
         self.verticalLayout_5.addWidget(self.usernameIn)
@@ -209,7 +209,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.firstnameIn.setFont(font)
-        self.firstnameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.firstnameIn.setStyleSheet("background-color: #b2b2b2;")
         self.firstnameIn.setFrame(False)
         self.firstnameIn.setObjectName("firstnameIn")
         self.verticalLayout_5.addWidget(self.firstnameIn)
@@ -218,7 +218,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastnameIn.setFont(font)
-        self.lastnameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastnameIn.setStyleSheet("background-color: #b2b2b2;")
         self.lastnameIn.setFrame(False)
         self.lastnameIn.setObjectName("lastnameIn")
         self.verticalLayout_5.addWidget(self.lastnameIn)
@@ -228,19 +228,19 @@ class Ui_VisualSP(object):
         font.setPointSize(20)
         self.checkBox.setFont(font)
         self.checkBox.setStyleSheet("QCheckBox::indicator:unchecked:hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"QCheckBox::indicator {\n"
-"    image: url(:/assets/arrowRight.png);\n"
-"    width: 50px;\n"
-"    height: 25px;\n"
-"}\n"
-"\n"
-"\n"
-"background-color: rgb(111, 127, 161);")
+                                    "    background-color: rgb(91, 103, 131);\n"
+                                    "}\n"
+                                    "QCheckBox::indicator:checked {\n"
+                                    "    background-color: rgb(91, 103, 131);\n"
+                                    "}\n"
+                                    "QCheckBox::indicator {\n"
+                                    "    image: url(:/assets/arrowRight.png);\n"
+                                    "    width: 50px;\n"
+                                    "    height: 25px;\n"
+                                    "}\n"
+                                    "\n"
+                                    "\n"
+                                    "background-color: rgb(111, 127, 161);")
         self.checkBox.setIconSize(QtCore.QSize(15, 15))
         self.checkBox.setTristate(False)
         self.checkBox.setObjectName("checkBox")
@@ -251,13 +251,13 @@ class Ui_VisualSP(object):
         font.setPointSize(26)
         self.createBtn.setFont(font)
         self.createBtn.setStyleSheet("QToolButton {\n"
-"    background-color: rgb(75, 85, 109);\n"
-"}\n"
-"\n"
-":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"")
+                                     "    background-color: rgb(75, 85, 109);\n"
+                                     "}\n"
+                                     "\n"
+                                     ":hover {\n"
+                                     "    background-color: rgb(91, 103, 131);\n"
+                                     "}\n"
+                                     "")
         self.createBtn.setObjectName("createBtn")
         self.verticalLayout_5.addWidget(self.createBtn)
         self.backBtn = QtWidgets.QPushButton(self.containerWidgetNew)
@@ -266,13 +266,13 @@ class Ui_VisualSP(object):
         font.setPointSize(26)
         self.backBtn.setFont(font)
         self.backBtn.setStyleSheet("QToolButton {\n"
-"    background-color: rgb(75, 85, 109);\n"
-"}\n"
-"\n"
-":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"")
+                                   "    background-color: rgb(75, 85, 109);\n"
+                                   "}\n"
+                                   "\n"
+                                   ":hover {\n"
+                                   "    background-color: rgb(91, 103, 131);\n"
+                                   "}\n"
+                                   "")
         self.backBtn.setObjectName("backBtn")
         self.verticalLayout_5.addWidget(self.backBtn)
         self.verticalLayout_3.addWidget(self.containerWidgetNew)
@@ -286,7 +286,7 @@ class Ui_VisualSP(object):
         self.LoggedIn.setSizePolicy(sizePolicy)
         self.LoggedIn.setMinimumSize(QtCore.QSize(300, 0))
         self.LoggedIn.setMaximumSize(QtCore.QSize(300, 1165))
-        self.LoggedIn.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.LoggedIn.setStyleSheet("background-color: #555555")
         self.LoggedIn.setObjectName("LoggedIn")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.LoggedIn)
         self.gridLayout_4.setObjectName("gridLayout_4")
@@ -301,7 +301,7 @@ class Ui_VisualSP(object):
         self.menuBar.setSizePolicy(sizePolicy)
         self.menuBar.setMinimumSize(QtCore.QSize(225, 55))
         self.menuBar.setMaximumSize(QtCore.QSize(300, 55))
-        self.menuBar.setStyleSheet("background-color: rgb(75, 85, 109);")
+        self.menuBar.setStyleSheet("background-color: #333333;")
         self.menuBar.setObjectName("menuBar")
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.menuBar)
         self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(-1, -7, 300, 73))
@@ -311,45 +311,48 @@ class Ui_VisualSP(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.menuBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.menuBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.menuBtn.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
+                                   "    background-color: rgb(91, 103, 131);\n"
+                                   "}\n"
+                                   "\n"
+                                   "QToolButton {\n"
+                                   "    border:none;\n"
+                                   "}")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/assets/menuBars.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.menuBtn.setIcon(icon1)
-        self.menuBtn.setIconSize(QtCore.QSize(60, 50))
+        self.menuBtn.setIconSize(QtCore.QSize(60, 45))
         self.menuBtn.setObjectName("menuBtn")
         self.horizontalLayout_2.addWidget(self.menuBtn)
         self.saveBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.saveBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.saveBtn.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
+                                   "    background-color: rgb(91, 103, 131);\n"
+                                   "}\n"
+                                   "\n"
+                                   "QToolButton {\n"
+                                   "    border:none;\n"
+                                   "}")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveBtn.setIcon(icon2)
-        self.saveBtn.setIconSize(QtCore.QSize(60, 50))
+        self.saveBtn.setIconSize(QtCore.QSize(60, 45))
         self.saveBtn.setObjectName("saveBtn")
         self.horizontalLayout_2.addWidget(self.saveBtn)
         self.logoutBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.logoutBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.logoutBtn.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
+                                     "    background-color: rgb(91, 103, 131);\n"
+                                     "}\n"
+                                     "\n"
+                                     "QToolButton {\n"
+                                     "    border:none;\n"
+                                     "}")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.logoutBtn.setIcon(icon3)
-        self.logoutBtn.setIconSize(QtCore.QSize(60, 50))
+        self.logoutBtn.setIconSize(QtCore.QSize(60, 45))
         self.logoutBtn.setObjectName("logoutBtn")
         self.horizontalLayout_2.addWidget(self.logoutBtn)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -393,7 +396,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.firstnameOut.setFont(font)
-        self.firstnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.firstnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.firstnameOut.setFrame(False)
         self.firstnameOut.setObjectName("firstnameOut")
         self.firstnameOut.setText(curUser.user["FIRST_NAME"])
@@ -403,7 +406,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastnameOut.setFont(font)
-        self.lastnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastnameOut.setFrame(False)
         self.lastnameOut.setObjectName("lastnameOut")
         self.lastnameOut.setText(curUser.user["LAST_NAME"])
@@ -413,7 +416,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastusedOut.setFont(font)
-        self.lastusedOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastusedOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastusedOut.setFrame(False)
         self.lastusedOut.setObjectName("lastusedOut")
         self.lastusedOut.setText(curUser.user["TIMESTAMP"])
@@ -423,7 +426,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.accessLevelOut.setFont(font)
-        self.accessLevelOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.accessLevelOut.setStyleSheet("background-color: #b2b2b2;")
         self.accessLevelOut.setFrame(False)
         self.accessLevelOut.setReadOnly(True)
         self.accessLevelOut.setObjectName("accessLevelOut")
@@ -497,10 +500,10 @@ class Ui_VisualSP(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
         self.cameraArea.setSizePolicy(sizePolicy)
-        self.cameraArea.setStyleSheet("background-color: rgb(45, 51, 65);\n"
-"background-image:    url(:/assets/camera.png);\n"
-"background-repeat: no-repeat;\n"
-"background-position: center;")
+        self.cameraArea.setStyleSheet("background-color: #656565;\n"
+                                      "background-image:    url(:/assets/camera.png);\n"
+                                      "background-repeat: no-repeat;\n"
+                                      "background-position: center;")
         self.cameraArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.cameraArea.setFrameShadow(QtWidgets.QFrame.Raised)
         self.cameraArea.setObjectName("cameraArea")
