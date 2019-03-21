@@ -6,9 +6,9 @@ osType = "unknown"
 
 if platform == "linux":
     osType = "L"
-    APPDATA_LOC = "~/"
+    APPDATA_LOC = "~\\"
 elif platform == "darwin":
-    APPDATA_LOC = "~/"
+    APPDATA_LOC = "~\\"
     osType == "M"
 elif platform == "win32" or platform == "win64":
     APPDATA_LOC = os.getenv('APPDATA')
