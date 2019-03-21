@@ -500,7 +500,7 @@ class Ui_VisualSP(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
         self.cameraArea.setSizePolicy(sizePolicy)
-        self.cameraArea.setStyleSheet("background-color: #656565;\n"
+        self.cameraArea.setStyleSheet("background-color: transparent;\n"
                                       "background-image:    url(:/assets/camera.png);\n"
                                       "background-repeat: no-repeat;\n"
                                       "background-position: center;")
