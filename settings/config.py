@@ -1,6 +1,8 @@
 from sys import platform
 import os
 
+# Created by: Justin Scott
+
 APPDATA_LOC = os.getenv('APPDATA')
 
 DEFAULT_LOCAL_PATH = "\\VisualSP2019"

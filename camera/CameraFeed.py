@@ -3,7 +3,9 @@ import numpy as np
 import cv2 as cv
 import settings.config as config
 
-folderPath = config.
+# Created by: Devin Yang
+
+folderPath = config.DEFAULT_VIDEO_FOLDER
 filename = 'video.avi'
 frames_per_second = 24.0
 My_res = '720p'

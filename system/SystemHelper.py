@@ -7,6 +7,7 @@ import datetime
 #
 # Contains static methods to assist with system information
 # gathering.
+# Created by: Justin Scott
 #
 ################################################################
 

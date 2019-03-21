@@ -5,6 +5,8 @@ import settings.config as config
 import uuid
 from system import SystemHelper
 
+# Created by: Justin Scott
+
 
 # File that will handle all functions relating to analyzing the long term storage of infomation on the machine
 global savePath

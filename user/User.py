@@ -7,6 +7,7 @@ import settings.config
 #
 # User object to be used with program for reference on who
 # is currently using the program
+# Created by: Justin Scott
 #
 ################################################################
 
