@@ -9,6 +9,9 @@ global app
 global VisualSPMain
 global ui
 
+
+# Created by: Justin Scott
+
 class loginController:
 
     sceneSwitcher = None
@@ -22,6 +25,7 @@ class loginController:
         VisualSPMain = QtWidgets.QMainWindow()
         ui = vspGui.Ui_VisualSP()
         ui.setupUi(VisualSPMain)
+        #VisualSPMain.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         VisualSPMain.show()
         sys.exit(app.exec_())
 

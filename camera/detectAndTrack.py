@@ -4,6 +4,8 @@ import numpy as np
 import cv2 as cv
 import yaml
 
+# Created by: Kenzie King
+
 # Change this if using a different video source. It currently 
 # uses whatever the computer has as default
 cap = cv.VideoCapture(0)

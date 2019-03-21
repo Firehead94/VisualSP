@@ -3,6 +3,7 @@
 # Form implementation generated from reading ui file 'UIdesign.ui'
 #
 # Created by: PyQt5 UI code generator 5.12
+# Designed by: Justin Scott
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -17,7 +18,7 @@ import user.User as User
 import settings.config as Config
 import os
 
-class Ui_VisualSP(object):
+class Ui_VisualSP(QtWidgets.QWidget):
 
     global curUser
     curUser = User.User()
@@ -114,12 +115,12 @@ class Ui_VisualSP(object):
         self.horizontalLayout_4.addWidget(self.usernameField)
         self.loginBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget)
         self.loginBtn.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"\n"
-"}")
+                                    "    background-color: rgb(91, 103, 131);\n"
+                                    "}\n"
+                                    "\n"
+                                    "QToolButton {\n"
+                                    "\n"
+                                    "}")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/assets/arrowRight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.loginBtn.setIcon(icon)
@@ -139,13 +140,13 @@ class Ui_VisualSP(object):
         font.setPointSize(26)
         self.newuserBtn.setFont(font)
         self.newuserBtn.setStyleSheet("QToolButton {\n"
-"    background-color: #808080;\n"
-"}\n"
-"\n"
-":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"")
+                                        "    background-color: #808080;\n"
+                                        "}\n"
+                                        "\n"
+                                        ":hover {\n"
+                                        "    background-color: rgb(91, 103, 131);\n"
+                                        "}\n"
+                                        "")
         self.newuserBtn.setObjectName("newuserBtn")
         self.verticalLayout.addWidget(self.newuserBtn)
         font = QtGui.QFont()
@@ -500,7 +501,7 @@ class Ui_VisualSP(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
         self.cameraArea.setSizePolicy(sizePolicy)
-        self.cameraArea.setStyleSheet("background-color: #656565;\n"
+        self.cameraArea.setStyleSheet("background-color: transparent;\n"
                                       "background-image:    url(:/assets/camera.png);\n"
                                       "background-repeat: no-repeat;\n"
                                       "background-position: center;")
@@ -595,11 +596,3 @@ class Ui_VisualSP(object):
         self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
 
 
-#if __name__ == "__main__":
-#    import sys
-#    app = QtWidgets.QApplication(sys.argv)
-#    VisualSP = QtWidgets.QMainWindow()
-#    ui = Ui_VisualSP()
-#    ui.setupUi(VisualSP)
-#    VisualSP.show()
-#    sys.exit(app.exec_())
