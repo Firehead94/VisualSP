@@ -9,11 +9,14 @@ global MISC_FLDR
 
 if SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin':
     ROOT_LOC = '~/VisualSP2019'
+    USER_FLDR = ROOT_LOC + '/users/'
+    VIDEO_FLDR = ROOT_LOC + '/videos/'
+    MISC_FLDR = ROOT_LOC + '/misc/'
 else:
     ROOT_LOC = os.getenv('APPDATA') + '\\VisualSP2019'
-USER_FLDR = ROOT_LOC + '\\users\\'
-VIDEO_FLDR = ROOT_LOC + '\\videos\\'
-MISC_FLDR = ROOT_LOC + '\\misc\\'
+    USER_FLDR = ROOT_LOC + '\\users\\'
+    VIDEO_FLDR = ROOT_LOC + '\\videos\\'
+    MISC_FLDR = ROOT_LOC + '\\misc\\'
 
 
 try:
