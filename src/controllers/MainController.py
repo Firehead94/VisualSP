@@ -7,13 +7,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 import sys
 import os
 
+# Created by: Justin Scott
+
 
 class MainController:
 
-    folderDelimeter = "\\"
+
     def __init__(self):
-        if SystemUtils.getOS() == "darwin" or SystemUtils.getOS() == "linux":
-            self.folderDelimeter = "/"
         self.app = QtWidgets.QApplication(sys.argv)
         self.gui = MainGui.MainGui()
         self.user = User.User()
