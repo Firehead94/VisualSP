@@ -8,7 +8,7 @@ global MISC_FLDR
 
 
 if SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin':
-    ROOT_LOC = '~/VisualSP2019'
+    ROOT_LOC = os.path.expanduser()'~/VisualSP2019'
     USER_FLDR = ROOT_LOC + '/users/'
     VIDEO_FLDR = ROOT_LOC + '/videos/'
     MISC_FLDR = ROOT_LOC + '/misc/'
@@ -20,21 +20,21 @@ else:
 
 
 try:
-    os.mkdir(ROOT_LOC)
+    os.makedirs(ROOT_LOC)
 except FileExistsError:
     print("Directory " , ROOT_LOC ,  " already exists")
 
 try:
-    os.mkdir(USER_FLDR)
+    os.makedirs(USER_FLDR)
 except FileExistsError:
     print("Directory " , USER_FLDR ,  " already exists")
 
 try:
-    os.mkdir(VIDEO_FLDR)
+    os.makedirs(VIDEO_FLDR)
 except FileExistsError:
     print("Directory " , VIDEO_FLDR ,  " already exists")
 
 try:
-    os.mkdir(MISC_FLDR)
+    os.makedirs(MISC_FLDR)
 except FileExistsError:
     print("Directory " , MISC_FLDR ,  " already exists")
