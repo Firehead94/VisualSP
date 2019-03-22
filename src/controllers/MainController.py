@@ -1,4 +1,3 @@
-#TODO
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
 import src.gui.MainGui as MainGui
