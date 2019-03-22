@@ -39,7 +39,7 @@ p1 = []
 
 
 # Opens YAML file containing calibration data
-fp = open( "ost.yaml", "r" )
+fp = open( "camera/ost.yaml", "r" )
 ci = yaml.safe_load(fp)
 
 # Extracts wanted values from YAML file

@@ -1,7 +1,7 @@
-import os
-import settings.config
 import time
 import datetime
+import sys
+import os
 
 ################################################################
 #
@@ -15,3 +15,7 @@ import datetime
 def getTimeStamp():
     currentTime = time.time()
     return datetime.datetime.fromtimestamp(currentTime).strftime('%m-%d-%Y %H:%M:%S')
+
+def getOS():
+    return sys.platform
+

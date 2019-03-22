@@ -1,8 +1,9 @@
 import json
 import os
-import settings.config as config
 import uuid
-import user.User
+import src.datastorage.FileHelper as FileHelper
+import src.datastorage.User as User
+
 
 ################################################################
 #
@@ -12,11 +13,7 @@ import user.User
 # Created by: Justin Scott
 #
 ################################################################
-global savePath
-savePath = config.APPDATA_LOC + config.DEFAULT_LOCAL_PATH + config.DEFAULT_USER_FOLDER + "\\"
-
 class UserHelper:
-    global savePath
 
     ############################################
     #
@@ -27,8 +24,7 @@ class UserHelper:
     ############################################
     @staticmethod
     def delete_user(username):
-        global savePath
-        os.remove(savePath + username + ".json")
+        os.remove(FileHelper.USER_FLDR + username + ".json")
 
     ##################################################
     #
@@ -38,8 +34,7 @@ class UserHelper:
     ##################################################
     @staticmethod
     def get_user(username):
-        global savePath
-        with open(savePath + username + ".json") as file:
+        with open(FileHelper.USER_FLDR + username + ".json") as file:
             user = json.load(file)
         file.close()
         return user
@@ -53,10 +48,9 @@ class UserHelper:
     #################################################
     @staticmethod
     def update_user(currentuser):
-        global savePath
-        if isinstance(currentuser, user.User.User):
-            print(savePath + currentuser.user["USERNAME"] + ".json")
-            with open(savePath + currentuser.user["USERNAME"] + ".json", "w") as outfile:
+        if isinstance(currentuser, User.User):
+            print(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json")
+            with open(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json", "w") as outfile:
                 json.dump(currentuser.user, outfile, indent=2)
             outfile.close()
             return True

@@ -8,32 +8,29 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
-from PyQt5.QtCore import pyqtSlot
-import sys
-import gui.qtresources_rc
-import controller.ltsController as Lts
-import user.UserHelper as UserHelper
-import user.User as User
-import settings.config as Config
-import os
+import src.gui.qtresources_rc
 
-class Ui_VisualSP(QtWidgets.QWidget):
+# noinspection PyArgumentList
+class MainGui(QtWidgets.QWidget):
 
-    global curUser
-    curUser = User.User()
+    signal = QtCore.pyqtSignal()
 
-    def setupUi(self, VisualSP):
-        VisualSP.setObjectName("VisualSP")
-        VisualSP.setEnabled(True)
-        VisualSP.resize(1246, 685)
-        VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
-        VisualSP.setAutoFillBackground(False)
-        VisualSP.setStyleSheet("background-color: #656565;")
-        VisualSP.setDocumentMode(False)
-        VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
-        VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
-        self.Main = QtWidgets.QWidget(VisualSP)
+    def __init__(self):
+        super(MainGui, self).__init__()
+        self.setupUi()
+
+    def setupUi(self):
+        self.VisualSP = QtWidgets.QMainWindow()
+        self.VisualSP.setObjectName("VisualSP")
+        self.VisualSP.setEnabled(True)
+        self.VisualSP.resize(1246, 685)
+        self.VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
+        self.VisualSP.setAutoFillBackground(False)
+        self.VisualSP.setStyleSheet("background-color: #656565;")
+        self.VisualSP.setDocumentMode(False)
+        self.VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
+        self.VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
+        self.Main = QtWidgets.QWidget(self.VisualSP)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -390,7 +387,6 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.usernameOut.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.usernameOut.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.usernameOut.setObjectName("usernameOut")
-        self.usernameOut.setText(curUser.user["USERNAME"])
         self.verticalLayout_4.addWidget(self.usernameOut)
         self.firstnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -400,7 +396,6 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.firstnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.firstnameOut.setFrame(False)
         self.firstnameOut.setObjectName("firstnameOut")
-        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
         self.verticalLayout_4.addWidget(self.firstnameOut)
         self.lastnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -410,7 +405,6 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.lastnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastnameOut.setFrame(False)
         self.lastnameOut.setObjectName("lastnameOut")
-        self.lastnameOut.setText(curUser.user["LAST_NAME"])
         self.verticalLayout_4.addWidget(self.lastnameOut)
         self.lastusedOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -420,7 +414,6 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.lastusedOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastusedOut.setFrame(False)
         self.lastusedOut.setObjectName("lastusedOut")
-        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
         self.verticalLayout_4.addWidget(self.lastusedOut)
         self.accessLevelOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
@@ -431,7 +424,6 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.accessLevelOut.setFrame(False)
         self.accessLevelOut.setReadOnly(True)
         self.accessLevelOut.setObjectName("accessLevelOut")
-        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
         self.verticalLayout_4.addWidget(self.accessLevelOut)
         self.verticalLayout_4.setStretch(0, 1)
         self.verticalLayout_4.setStretch(1, 1)
@@ -502,7 +494,7 @@ class Ui_VisualSP(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
         self.cameraArea.setSizePolicy(sizePolicy)
         self.cameraArea.setStyleSheet("background-color: transparent;\n"
-                                      "background-image:    url(:/assets/camera.png);\n"
+                                      "background-image: url(:/assets/camera.png);\n"
                                       "background-repeat: no-repeat;\n"
                                       "background-position: center;")
         self.cameraArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -511,88 +503,39 @@ class Ui_VisualSP(QtWidgets.QWidget):
         self.horizontalLayout_3.addWidget(self.cameraArea)
         self.horizontalLayout_3.setStretch(1, 4)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
-        VisualSP.setCentralWidget(self.Main)
+        self.VisualSP.setCentralWidget(self.Main)
 
-        self.retranslateUi(VisualSP)
+        self.retranslateUi(self.VisualSP)
         self.stackedWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(VisualSP)
-
-        self.loginBtn.clicked.connect(self.loginButton)
-        self.logoutBtn.clicked.connect(self.logoutButton)
-        self.newuserBtn.clicked.connect(self.newUserButton)
-        self.backBtn.clicked.connect(self.cancelButton)
-        self.createBtn.clicked.connect(self.createButton)
+        QtCore.QMetaObject.connectSlotsByName(self.VisualSP)
 
     def retranslateUi(self, VisualSP):
-        _translate = QtCore.QCoreApplication.translate
-        VisualSP.setWindowTitle(_translate("VisualSP", "MainWindow"))
-        self.loginLabel.setText(_translate("VisualSP", "Login"))
-        self.usernameField.setPlaceholderText(_translate("VisualSP", "Username"))
-        self.loginBtn.setText(_translate("VisualSP", "Login"))
-        self.loginBtn.setShortcut(_translate("VisualSP", "Return"))
-        self.newuserBtn.setText(_translate("VisualSP", "New User"))
-        self.usernameIn.setPlaceholderText(_translate("VisualSP", "Username"))
-        self.firstnameIn.setPlaceholderText(_translate("VisualSP", "First Name"))
-        self.lastnameIn.setPlaceholderText(_translate("VisualSP", "Last Name"))
-        self.checkBox.setText(_translate("VisualSP", "Administrator"))
-        self.createBtn.setText(_translate("VisualSP", "Create"))
-        self.backBtn.setText(_translate("VisualSP", "Back"))
-        self.menuBtn.setText(_translate("VisualSP", "Menu"))
-        self.saveBtn.setText(_translate("VisualSP", "Save"))
-        self.logoutBtn.setText(_translate("VisualSP", "Logout"))
-        self.usernameOut.setText(_translate("VisualSP", "USERNAME"))
-        self.firstnameOut.setPlaceholderText(_translate("VisualSP", "First Name"))
-        self.lastnameOut.setPlaceholderText(_translate("VisualSP", "Last Name"))
-        self.lastusedOut.setPlaceholderText(_translate("VisualSP", "Last Used"))
-        self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
-        self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
+            _translate = QtCore.QCoreApplication.translate
+            VisualSP.setWindowTitle(_translate("VisualSP", "MainWindow"))
+            self.loginLabel.setText(_translate("VisualSP", "Login"))
+            self.usernameField.setPlaceholderText(_translate("VisualSP", "Username"))
+            self.loginBtn.setText(_translate("VisualSP", "Login"))
+            self.loginBtn.setShortcut(_translate("VisualSP", "Return"))
+            self.newuserBtn.setText(_translate("VisualSP", "New User"))
+            self.usernameIn.setPlaceholderText(_translate("VisualSP", "Username"))
+            self.firstnameIn.setPlaceholderText(_translate("VisualSP", "First Name"))
+            self.lastnameIn.setPlaceholderText(_translate("VisualSP", "Last Name"))
+            self.checkBox.setText(_translate("VisualSP", "Administrator"))
+            self.createBtn.setText(_translate("VisualSP", "Create"))
+            self.backBtn.setText(_translate("VisualSP", "Back"))
+            self.menuBtn.setText(_translate("VisualSP", "Menu"))
+            self.saveBtn.setText(_translate("VisualSP", "Save"))
+            self.logoutBtn.setText(_translate("VisualSP", "Logout"))
+            self.usernameOut.setText(_translate("VisualSP", "USERNAME"))
+            self.firstnameOut.setPlaceholderText(_translate("VisualSP", "First Name"))
+            self.lastnameOut.setPlaceholderText(_translate("VisualSP", "Last Name"))
+            self.lastusedOut.setPlaceholderText(_translate("VisualSP", "Last Used"))
+            self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
+            self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
-    def loginButton(self):
-        global curUser
-        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".json"):
-            curUser.loadUser(UserHelper.UserHelper.get_user(self.usernameField.text()))
-            self.updateUserInfoPanel()
-            self.stackedWidget.setCurrentIndex(2)
-        else:
-            self.ERROR_NO_EXIST.setText("<font color='red'>User Doesn't exist</font>")
 
-    def newUserButton(self):
-        self.stackedWidget.setCurrentIndex(1)
 
-    def logoutButton(self):
-        global curUser
-        curUser.save()
-        UserHelper.UserHelper.update_user(curUser)
-        curUser = User.User()
-        self.updateUserInfoPanel()
-        self.stackedWidget.setCurrentIndex(0)
 
-    def cancelButton(self):
-        self.stackedWidget.setCurrentIndex(0)
 
-    def createButton(self):
-        global curUser
-        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameIn.text() + ".json"):
-            self.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
-        else:
-            curUser.user["USERNAME"] = self.usernameIn.text()
-            curUser.user["FIRST_NAME"] = self.firstnameIn.text()
-            curUser.user["LAST_NAME"] = self.lastnameIn.text()
-            if self.checkBox.isChecked():
-                curUser.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
-            else:
-                curUser.user["ACCESS_LEVEL"] = "GUEST"
-            curUser.save()
-            UserHelper.UserHelper.update_user(curUser)
-            self.updateUserInfoPanel()
-            self.stackedWidget.setCurrentIndex(2)
-
-    def updateUserInfoPanel(self):
-        global curUser
-        self.usernameOut.setText(curUser.user["USERNAME"])
-        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
-        self.lastnameOut.setText(curUser.user["LAST_NAME"])
-        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
-        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
 
 

@@ -1,11 +1,11 @@
 import os
 import numpy as np
+import src.datastorage.FileHelper as FileHelper
 import cv2 as cv
-import settings.config as config
 
 # Created by: Devin Yang
 
-folderPath = config.DEFAULT_VIDEO_FOLDER
+folderPath = FileHelper.VIDEO_FLDR
 filename = 'video.avi'
 frames_per_second = 24.0
 My_res = '720p'
