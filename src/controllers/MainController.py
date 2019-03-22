@@ -1,6 +1,7 @@
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
 import src.gui.MainGui as MainGui
+import src.utilities.SystemUtils as SystemUtils
 import src.datastorage.UserHelper as UserHelper
 from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 import sys
@@ -9,13 +10,17 @@ import os
 
 class MainController:
 
+    folderDelimeter = "\\"
     def __init__(self):
+        if SystemUtils.getOS() == "darwin" or SystemUtils.getOS() == "linux":
+            self.folderDelimeter = "/"
         self.app = QtWidgets.QApplication(sys.argv)
         self.gui = MainGui.MainGui()
         self.user = User.User()
         self.connectButtons()
         self.gui.VisualSP.show()
         sys.exit(self.app.exec_())
+
 
     def connectButtons(self):
         #CONNECT THE BUTTONS!
@@ -35,7 +40,7 @@ class MainController:
 
     def loginButton(self):
         global curUser
-        if os.path.isfile(FileHelper.USER_FLDR + "\\" + self.gui.usernameField.text() + ".json"):
+        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".json"):
             self.user = User.loadUser(UserHelper.UserHelper.get_user(self.gui.usernameField.text()))
             self.updateUserInfoPanel()
             self.gui.stackedWidget.setCurrentIndex(2)
@@ -58,7 +63,7 @@ class MainController:
         self.gui.accessLevelOut.setText(self.user.user["ACCESS_LEVEL"])
 
     def createButton(self):
-        if os.path.isfile(FileHelper.USER_FLDR + "\\" + self.gui.usernameIn.text() + ".json"):
+        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".json"):
             self.gui.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
             self.user = User.newUser(self.gui.usernameIn.text(), self.gui.firstnameIn.text(), self.gui.lastnameIn.text())
