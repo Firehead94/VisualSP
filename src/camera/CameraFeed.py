@@ -43,7 +43,7 @@ cap = cv.VideoCapture(0)
 dims = get_dims(cap, res=My_res)
 video_type_cv2 = get_video_type(filename)
 
-out = cv.VideoWriter(filename, video_type_cv2, frames_per_second, dims)
+out = cv.VideoWriter(folderPath + filename, video_type_cv2, frames_per_second, dims)
 
 while(True):
     #capture frames
