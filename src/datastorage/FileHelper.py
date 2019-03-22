@@ -8,7 +8,7 @@ global MISC_FLDR
 
 
 if SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin':
-    ROOT_LOC = '~\\VisualSP2019'
+    ROOT_LOC = '~/VisualSP2019'
 else:
     ROOT_LOC = os.getenv('APPDATA') + '\\VisualSP2019'
 USER_FLDR = ROOT_LOC + '\\users\\'
