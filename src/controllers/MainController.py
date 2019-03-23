@@ -10,6 +10,7 @@ import os
 # Created by: Justin Scott
 
 
+
 class MainController:
 
 
@@ -36,6 +37,13 @@ class MainController:
         ###MAIN WINDOW BUTTONS
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
         self.gui.saveBtn.clicked.connect(lambda: self.user.save())
+
+        ##WINDOW BUTTONS
+        self.gui.closeBtn.clicked.connect(self.closeBtn)
+        self.gui.maxrestoreBtn.clicked.connect(self.showMaxRestore)
+        self.gui.minimizeBtn.clicked.connect(self.showSmall)
+
+     #   self.gui.widget_2.installEventFilter(self.gui)
 
 
     def loginButton(self):
@@ -66,7 +74,7 @@ class MainController:
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".json"):
             self.gui.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
-            self.user = User.newUser(self.gui.usernameIn.text(), self.gui.firstnameIn.text(), self.gui.lastnameIn.text())
+            self.user = User.newUser(self.gui.mainContent.usernameIn.text(), self.gui.mainContent.firstnameIn.text(), self.gui.mainContent.lastnameIn.text())
             if self.gui.checkBox.isChecked():
                 self.user.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
             else:
@@ -74,6 +82,24 @@ class MainController:
             self.user.save()
             self.updateUserInfoPanel()
             self.gui.stackedWidget.setCurrentIndex(2)
+
+    def showSmall(self):
+        self.gui.VisualSP.showMinimized()
+
+    def showMaxRestore(self):
+        if( self.gui.maxNormal):
+            self.gui.VisualSP.showNormal()
+            self.gui.maxNormal= False
+            self.gui.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/maximize.png"))
+            print('1')
+        else:
+            self.gui.VisualSP.showMaximized()
+            self.gui.maxNormal=  True
+            print('2')
+            self.gui.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/restore.png"))
+
+    def closeBtn(self):
+        self.gui.VisualSP.close()
 
 
 
