@@ -87,15 +87,14 @@ class MainController:
         self.gui.VisualSP.showMinimized()
 
     def showMaxRestore(self):
-        if( self.gui.maxNormal):
+        if self.gui.maxNormal:
             self.gui.VisualSP.showNormal()
-            self.gui.maxNormal= False
+            self.gui.maxNormal = False
             self.gui.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/maximize.png"))
-            print('1')
         else:
             self.gui.VisualSP.showMaximized()
-            self.gui.maxNormal=  True
-            print('2')
+            self.gui.maxNormal = True
+
             self.gui.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/restore.png"))
 
     def closeBtn(self):

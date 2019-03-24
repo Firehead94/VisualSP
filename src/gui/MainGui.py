@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPoint
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QDesktopWidget
 
 import src.gui.qtresources_rc
 
@@ -21,13 +21,16 @@ class MainGui(QWidget):
 
     def __init__(self):
         super(MainGui, self).__init__()
+        self.setMouseTracking(True)
         self.maxNormal = False
         self.setupUi()
 
     def setupUi(self):
         self.VisualSP = QtWidgets.QMainWindow()
-        #self.VisualSP.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.VisualSP.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+
+        self.VisualSP.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        #self.VisualSP.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+
         self.VisualSP.setObjectName("VisualSP")
         self.VisualSP.setEnabled(True)
         self.VisualSP.resize(1416, 818)
@@ -579,15 +582,28 @@ class MainGui(QWidget):
         self.horizontalLayout_3.addWidget(self.widget)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         self.VisualSP.setCentralWidget(self.Main)
+
+        self.VisualSP.setAttribute(QtCore.Qt.WA_Hover)
+
         self.retranslateUi(self.VisualSP)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(self.VisualSP)
 
-        self.widget_2.installEventFilter(self)
+        #self.widget_2.installEventFilter(self)
+        self.VisualSP.installEventFilter(self)
 
-        self.moving = False
+        self.pressing = False
         self.start = QPoint(0,0)
+        self.moving = False
 
+        #self.Main.setMouseTracking(True)
+        self.hoverLeftEdge = False
+        self.hoverRightEdge = False
+        self.hoverTopEdge = False
+        self.hoverBottomEdge = False
+        self.resizePadding = 10
+
+        self.VisualSP.setMouseTracking(True)
         #self.Main.setCursor(QtCore.Qt.SizeAllCursor)
         #self.horizontalLayout_3.setContentsMargins(1,1,1,1)
         #self.widget.setCursor(QtCore.Qt.ArrowCursor)
@@ -620,6 +636,9 @@ class MainGui(QWidget):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
     def eventFilter(self, obj, event):
+        if event.type() == event.HoverMove:
+            self.setHover(event)
+            self.setCursorSP(event)
         if event.type() == event.MouseButtonPress:
             self.mousePressEvent(event)
         if event.type() == event.MouseMove:
@@ -632,25 +651,80 @@ class MainGui(QWidget):
         return super(MainGui, self).eventFilter(obj, event)
 
     def mousePressEvent(self, event):
-        self.moving = True
-        self.start = self.mapToGlobal(event.pos()) + QPoint(self.stackedWidget.width(),0)
+        self.pressing = True
+        self.start = event.pos()
 
-    def mouseMoveEvent(self,event):
-        if self.moving:
-            self.VisualSP.move(event.globalPos()-self.start)
+    def mouseMoveEvent(self, event):
+        #TOP BAR STUFF
+        if (self.widget_2.underMouse() and not (self.hoverTopEdge or self.hoverRightEdge)) or self.moving:
+            if self.pressing:
+                self.moving = True
+                self.VisualSP.move(event.globalPos()-self.start)
+        #RESIZE STUFF
+        if (self.hoverTopEdge) and not self.moving:
+            frame = self.VisualSP.geometry()
+            frame.setTop(frame.top() + event.pos().y() - self.start.y())
+            self.VisualSP.setGeometry(frame)
+#TODO
+        if (self.hoverBottomEdge) and not self.moving:
+            frame = self.VisualSP.geometry()
+            frame.setBottom(frame.bottom() + (event.pos().y() - self.start.y()))
+            self.VisualSP.setGeometry(frame)
+
+        if (self.hoverLeftEdge) and not self.moving:
+            frame = self.VisualSP.geometry()
+            frame.setLeft(frame.left() + (event.pos().x() - self.start.x()))
+            self.VisualSP.setGeometry(frame)
+#TODO
+        if (self.hoverRightEdge) and not self.moving:
+            frame = self.VisualSP.geometry()
+            frame.setRight(frame.right() + (event.pos().x() - self.start.x()))
+            self.VisualSP.setGeometry(frame)
+#TODO corner cases
+
 
     def mouseReleaseEvent(self, event):
         self.pressing = False
+        self.moving = False
 
     def mouseDoubleClickEvent(self, event):
-        if( self.maxNormal):
-            self.VisualSP.showNormal()
-            self.maxNormal = False
-            self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/maximize.png"))
-            print('1')
-        else:
-            self.VisualSP.showMaximized()
-            self.maxNormal =  True
-            print('2')
-            self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/restore.png"))
+        #TOP BAR STUFF
+        if self.widget_2.underMouse():
+            if self.maxNormal:
+                self.VisualSP.showNormal()
+                self.maxNormal = False
+                self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/maximize.png"))
+            else:
+                self.VisualSP.showMaximized()
+                self.maxNormal = True
+                self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/restore.png"))
 
+    def setCursorSP(self, event):
+        if self.hoverRightEdge or self.hoverLeftEdge:
+            self.VisualSP.setCursor(QtCore.Qt.SizeHorCursor)
+        if self.hoverBottomEdge or self.hoverTopEdge:
+            self.VisualSP.setCursor(QtCore.Qt.SizeVerCursor)
+        if (self.hoverTopEdge and self.hoverLeftEdge) or (self.hoverBottomEdge and self.hoverRightEdge):
+            self.VisualSP.setCursor(QtCore.Qt.SizeFDiagCursor)
+        if (self.hoverTopEdge and self.hoverRightEdge) or (self.hoverBottomEdge and self.hoverLeftEdge):
+            self.VisualSP.setCursor(QtCore.Qt.SizeBDiagCursor)
+        if not (self.hoverLeftEdge or self.hoverBottomEdge or self.hoverRightEdge or self.hoverTopEdge):
+            self.VisualSP.setCursor(QtCore.Qt.ArrowCursor)
+
+    def setHover(self, event):
+        if (not event.pos().x() < 0) and event.pos().x() <= self.resizePadding:
+            self.hoverLeftEdge = True
+        elif not self.pressing:
+            self.hoverLeftEdge = False
+        if (not event.pos().x() > self.VisualSP.width()) and event.pos().x() >= self.VisualSP.width()-self.resizePadding:
+            self.hoverRightEdge = True
+        elif not self.pressing:
+            self.hoverRightEdge = False
+        if (not event.pos().y() < 0) and event.pos().y() <= self.resizePadding:
+            self.hoverTopEdge = True
+        elif not self.pressing:
+            self.hoverTopEdge = False
+        if (not event.pos().y() > self.VisualSP.height()) and event.pos().y() >= self.VisualSP.height()-self.resizePadding:
+            self.hoverBottomEdge = True
+        elif not self.pressing:
+            self.hoverBottomEdge = False
