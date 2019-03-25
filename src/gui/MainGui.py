@@ -661,26 +661,27 @@ class MainGui(QWidget):
                 self.moving = True
                 self.VisualSP.move(event.globalPos()-self.start)
         #RESIZE STUFF
+        #TODO not perfect
         if (self.hoverTopEdge) and not self.moving:
             frame = self.VisualSP.geometry()
+            print("1|",event.pos())
             frame.setTop(frame.top() + event.pos().y() - self.start.y())
             self.VisualSP.setGeometry(frame)
-#TODO
         if (self.hoverBottomEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            frame.setBottom(frame.bottom() + (event.pos().y() - self.start.y()))
-            self.VisualSP.setGeometry(frame)
-
+            print("2|",event.pos())
+            self.VisualSP.setGeometry(frame.x(), frame.y(), frame.width(),event.pos().y())
+        #TODO not perfect
         if (self.hoverLeftEdge) and not self.moving:
             frame = self.VisualSP.geometry()
+            print("3|",event.pos())
             frame.setLeft(frame.left() + (event.pos().x() - self.start.x()))
             self.VisualSP.setGeometry(frame)
-#TODO
         if (self.hoverRightEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            frame.setRight(frame.right() + (event.pos().x() - self.start.x()))
-            self.VisualSP.setGeometry(frame)
-#TODO corner cases
+            print("4|",event.pos())
+            self.VisualSP.setGeometry(frame.x(), frame.y(), event.pos().x(), frame.height())
+
 
 
     def mouseReleaseEvent(self, event):
