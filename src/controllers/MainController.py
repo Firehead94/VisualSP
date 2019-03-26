@@ -1,3 +1,5 @@
+from PyQt5.QtMultimedia import QMediaPlayer
+
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
 import src.gui.MainGui as MainGui
@@ -20,6 +22,10 @@ class MainController:
         self.user = User.User()
         self.connectButtons()
         self.gui.VisualSP.show()
+
+        #self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        #self.videoPlayer.setVideoOutput(self.gui.cameraArea)
+
         sys.exit(self.app.exec_())
 
 

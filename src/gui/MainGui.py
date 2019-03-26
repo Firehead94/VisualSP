@@ -12,6 +12,7 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
+import src.controllers.VideoWidget as VideoWidget
 
 import src.gui.qtresources_rc
 
@@ -565,7 +566,9 @@ class MainGui(QWidget):
         self.closeBtn.setObjectName("close")
         self.horizontalLayout.addWidget(self.closeBtn)
         self.gridLayout_5.addWidget(self.widget_2, 0, 0, 1, 1)
-        self.cameraArea = QVideoWidget(self.widget)
+
+        self.cameraArea = QVideoWidget(self.widget) #VideoWidget.VideoWidget(self.widget)
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
