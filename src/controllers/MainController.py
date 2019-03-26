@@ -36,7 +36,7 @@ class MainController:
 
         ###MAIN WINDOW BUTTONS
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
-        self.gui.saveBtn.clicked.connect(lambda: self.user.save())
+        self.gui.saveBtn.clicked.connect(lambda: (self.user.save(), self.updateUserInfoPanel()))
 
         ##WINDOW BUTTONS
         self.gui.closeBtn.clicked.connect(self.closeBtn)
@@ -47,7 +47,6 @@ class MainController:
 
 
     def loginButton(self):
-        global curUser
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".json"):
             self.user = User.loadUser(UserHelper.UserHelper.get_user(self.gui.usernameField.text()))
             self.updateUserInfoPanel()

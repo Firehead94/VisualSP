@@ -17,9 +17,10 @@ class User:
         "USERNAME": "Username",
         "FIRST_NAME": "Firstname",
         "LAST_NAME": "Lastname",
-        "TIMESTAMP": "",
+        "TIMESTAMP": SystemUtils.getTimeStamp(),
         "ACCESS_LEVEL": "Guest"
     }
+
     # Blank user template, populates timestamp with current and generates UUID
     def __init__(self, un = "Username", fn = "First", ln = "Last", al = "Guest", uuid = str(UserHelper.UserHelper.getUUID()), ts = SystemUtils.getTimeStamp()):
         self.user["USERNAME"] = un
@@ -33,15 +34,12 @@ class User:
     def update(self, k, v):
         for key in self.user:
             if key == k:
-                self.user = {k: v}
-                yield True
-        yield False
+                self.user.update({k: v})
 
     # Updates timestamp and
     # Saves current user to local device
     def save(self):
         self.update("TIMESTAMP", SystemUtils.getTimeStamp())
-        print("save")
         UserHelper.UserHelper.update_user(self)
 
 

@@ -3,6 +3,7 @@
 # Form implementation generated from reading ui file '.\UIdesign.ui'
 #
 # Created by: PyQt5 UI code generator 5.12
+# Designed: Justin Scott
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -664,22 +665,22 @@ class MainGui(QWidget):
         #TODO not perfect
         if (self.hoverTopEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            print("1|",event.pos())
+            #print("1|",event.pos())
             frame.setTop(frame.top() + event.pos().y() - self.start.y())
             self.VisualSP.setGeometry(frame)
         if (self.hoverBottomEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            print("2|",event.pos())
+            #print("2|",event.pos())
             self.VisualSP.setGeometry(frame.x(), frame.y(), frame.width(),event.pos().y())
         #TODO not perfect
         if (self.hoverLeftEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            print("3|",event.pos())
+            #print("3|",event.pos())
             frame.setLeft(frame.left() + (event.pos().x() - self.start.x()))
             self.VisualSP.setGeometry(frame)
         if (self.hoverRightEdge) and not self.moving:
             frame = self.VisualSP.geometry()
-            print("4|",event.pos())
+            #print("4|",event.pos())
             self.VisualSP.setGeometry(frame.x(), frame.y(), event.pos().x(), frame.height())
 
 

@@ -3,6 +3,7 @@ import os
 import uuid
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
+import src.utilities.SystemUtils as SystemUtils
 
 
 ################################################################
@@ -49,7 +50,7 @@ class UserHelper:
     @staticmethod
     def update_user(currentuser):
         if isinstance(currentuser, User.User):
-            print(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json")
+            print("File Updated: ",FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json")
             with open(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json", "w") as outfile:
                 json.dump(currentuser.user, outfile, indent=2)
             outfile.close()
