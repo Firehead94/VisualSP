@@ -79,13 +79,19 @@ class MainController:
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".json"):
             self.gui.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
-            self.user = User.newUser(self.gui.mainContent.usernameIn.text(), self.gui.mainContent.firstnameIn.text(), self.gui.mainContent.lastnameIn.text())
+            print("1")
+            self.user = User.newUser(self.gui.usernameIn.text(), self.gui.firstnameIn.text(),
+                                     self.gui.lastnameIn.text())
+            print("2")
             if self.gui.checkBox.isChecked():
                 self.user.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
             else:
                 self.user.user["ACCESS_LEVEL"] = "GUEST"
+            print("3")
             self.user.save()
+            print("4")
             self.updateUserInfoPanel()
+            print("5")
             self.gui.stackedWidget.setCurrentIndex(2)
 
     def showSmall(self):
