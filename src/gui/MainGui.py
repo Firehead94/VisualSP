@@ -449,6 +449,8 @@ class MainGui(QWidget):
         self.verticalLayout_4.setStretch(3, 1)
         self.verticalLayout_4.setStretch(4, 1)
         self.verticalLayout_2.addWidget(self.info)
+
+        ####
         self.scrollLabel = QtWidgets.QWidget(self.LoggedIn)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -474,6 +476,7 @@ class MainGui(QWidget):
         self.trackingLabel.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.trackingLabel.setObjectName("trackingLabel")
         self.verticalLayout_2.addWidget(self.scrollLabel)
+
         self.trackings = QtWidgets.QWidget(self.LoggedIn)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -483,7 +486,9 @@ class MainGui(QWidget):
         self.trackings.setMinimumSize(QtCore.QSize(0, 300))
         self.trackings.setSizeIncrement(QtCore.QSize(0, 1))
         self.trackings.setObjectName("trackings")
+
         self.scrollArea_2 = QtWidgets.QScrollArea(self.trackings)
+
         self.scrollArea_2.setGeometry(QtCore.QRect(-1, -2, 282, 803))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -493,10 +498,22 @@ class MainGui(QWidget):
         self.scrollArea_2.setLineWidth(0)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
+
         self.trackingField = QtWidgets.QWidget()
+        self.trackingField_layout = QtWidgets.QVBoxLayout()
+        self.trackingField.setLayout(self.trackingField_layout)
+
         self.trackingField.setGeometry(QtCore.QRect(0, 0, 280, 801))
         self.trackingField.setObjectName("trackingField")
+
         self.scrollArea_2.setWidget(self.trackingField)
+        #self.testWidget = QtWidgets.QWidget()
+        #self.testWidget.setStyleSheet("background: RED;")
+        #self.testWidget.setFixedHeight(50)
+        #self.testWidget.setMinimumWidth(280)
+        #self.trackingField_layout.addWidget(self.testWidget)
+
+        ####
         self.verticalLayout_2.addWidget(self.trackings)
         self.verticalLayout_2.setStretch(0, 1)
         self.verticalLayout_2.setStretch(1, 3)

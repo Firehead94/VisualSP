@@ -1,4 +1,5 @@
-from PyQt5.QtMultimedia import QMediaPlayer
+from PyQt5.QtCore import QUrl
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaPlaylist, QMediaContent
 
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
@@ -23,8 +24,16 @@ class MainController:
         self.connectButtons()
         self.gui.VisualSP.show()
 
-        #self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        #self.videoPlayer.setVideoOutput(self.gui.cameraArea)
+        self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.videoPlayer.setVideoOutput(self.gui.cameraArea)
+        ## Change to local video file to display it
+        #self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(FileHelper.VIDEO_FLDR + "video.avi")))
+        self.videoPlayer.pause()
+        ## Uncomment to play video
+        #self.videoPlayer.play()
+
+        self.gui.trackingField
+
 
         sys.exit(self.app.exec_())
 
@@ -48,8 +57,6 @@ class MainController:
         self.gui.closeBtn.clicked.connect(self.closeBtn)
         self.gui.maxrestoreBtn.clicked.connect(self.showMaxRestore)
         self.gui.minimizeBtn.clicked.connect(self.showSmall)
-
-     #   self.gui.widget_2.installEventFilter(self.gui)
 
 
     def loginButton(self):
