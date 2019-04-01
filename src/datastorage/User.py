@@ -6,7 +6,7 @@ import src.datastorage.UserHelper as UserHelper
 #
 # User object to be used with program for reference on who
 # is currently using the program
-# Created by: Justin Scott
+# Created by: Justin Scott / Jacob Stade
 #
 ################################################################
 
@@ -18,17 +18,19 @@ class User:
         "FIRST_NAME": "Firstname",
         "LAST_NAME": "Lastname",
         "TIMESTAMP": SystemUtils.getTimeStamp(),
-        "ACCESS_LEVEL": "Guest"
+        "ACCESS_LEVEL": "Guest",
+        "TRACKINGS" : []
     }
 
     # Blank user template, populates timestamp with current and generates UUID
-    def __init__(self, un = "Username", fn = "First", ln = "Last", al = "Guest", uuid = str(UserHelper.UserHelper.getUUID()), ts = SystemUtils.getTimeStamp()):
+    def __init__(self, un = "Username", fn = "First", ln = "Last", al = "Guest", uuid = str(UserHelper.UserHelper.getUUID()), ts = SystemUtils.getTimeStamp(), tr = []):
         self.user["USERNAME"] = un
         self.user["FIRST_NAME"] = fn
         self.user["LAST_NAME"] = ln
         self.user["ACCESS_LEVEL"] = al
         self.user["TIMESTAMP"] = ts
         self.user["UUID"] = uuid
+        self.user["TRACKINGS"] = tr
 
     # Updates k with v in user
     def update(self, k, v):
@@ -45,7 +47,7 @@ class User:
 
 # Create user from disctionary object
 def loadUser(userdict):
-    user = User(userdict["USERNAME"], userdict["FIRST_NAME"], userdict["LAST_NAME"], userdict["ACCESS_LEVEL"], userdict["UUID"], userdict["TIMESTAMP"])
+    user = User(userdict["USERNAME"], userdict["FIRST_NAME"], userdict["LAST_NAME"], userdict["ACCESS_LEVEL"], userdict["UUID"], userdict["TIMESTAMP"], userdict["TRACKINGS"])
     return user
 
 

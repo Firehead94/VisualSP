@@ -12,7 +12,7 @@ import src.utilities.SystemUtils as SystemUtils
 # Contains static methods to assist with user file management
 # on local storage. Use update_user when creating new
 # user
-# Created by: Justin Scott
+# Created by: Justin Scott / Jacob Stade
 #
 ################################################################
 class UserHelper:

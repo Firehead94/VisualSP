@@ -1,5 +1,8 @@
+from typing import Any, Union
+
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaPlaylist, QMediaContent
+from PyQt5.QtWidgets import QWidget
 
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
@@ -9,6 +12,9 @@ import src.datastorage.UserHelper as UserHelper
 from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
 import sys
 import os
+import src.gui.previousVideoWidget as previousVideoWidget
+import src.camera.CameraFeed as CameraFeed
+import src.camera.DetectTracker as DetectTracker
 
 # Created by: Justin Scott
 
@@ -23,7 +29,6 @@ class MainController:
         self.user = User.User()
         self.connectButtons()
         self.gui.VisualSP.show()
-
         self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.videoPlayer.setVideoOutput(self.gui.cameraArea)
         ## Change to local video file to display it
@@ -32,11 +37,49 @@ class MainController:
         ## Uncomment to play video
         #self.videoPlayer.play()
 
-        self.gui.trackingField
-
 
         sys.exit(self.app.exec_())
 
+    def populateScrollArea(self):
+        #self.gui.trackingField_layout.addWidget()
+        print(self.user.user["TRACKINGS"])
+        while self.gui.trackingField_layout.count():
+            item = self.gui.trackingField_layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+        for i in self.user.user["TRACKINGS"]:
+            print(i)
+            vidWid = previousVideoWidget.previousVideoWidget()
+            vidWid.name.setText(i[len(self.user.user["USERNAME"])+1:-4])
+            vidWid.toolButton.setToolTip(i)
+            vidWid.toolButton.clicked.connect(self.deleteBtn)
+            vidWid.toolButton_2.setToolTip(i)
+            vidWid.toolButton_2.clicked.connect(self.playBtn)
+            self.gui.trackingField_layout.addWidget(vidWid)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gui.trackingField_layout.addItem(spacerItem)
+
+    def createNew(self):
+        captureArea = CameraFeed.CameraFeed()
+        time = SystemUtils.getTimeStamp().replace(" ", "_")
+        captureArea.filename = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
+        self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
+        self.gui.mediaArea.addWidget(captureArea)
+        self.gui.mediaArea.setCurrentIndex(1)
+        captureArea.capture()
+
+    def playBtn(self):
+        self.gui.mediaArea.setCurrentIndex(0)
+        fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
+        print(fileLoc)
+        self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
+        self.videoPlayer.play()
+
+    def deleteBtn(self):
+        fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
+        self.user.user["TRACKINGS"].remove(fileLoc)
+        os.remove(fileLoc)
 
     def connectButtons(self):
         #CONNECT THE BUTTONS!
@@ -52,12 +95,12 @@ class MainController:
         ###MAIN WINDOW BUTTONS
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
         self.gui.saveBtn.clicked.connect(lambda: (self.user.save(), self.updateUserInfoPanel()))
+        self.gui.menuBtn.clicked.connect(self.createNew)
 
         ##WINDOW BUTTONS
         self.gui.closeBtn.clicked.connect(self.closeBtn)
         self.gui.maxrestoreBtn.clicked.connect(self.showMaxRestore)
         self.gui.minimizeBtn.clicked.connect(self.showSmall)
-
 
     def loginButton(self):
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".pkl"):
@@ -81,24 +124,20 @@ class MainController:
         self.gui.lastnameOut.setText(self.user.user["LAST_NAME"])
         self.gui.lastusedOut.setText(self.user.user["TIMESTAMP"])
         self.gui.accessLevelOut.setText(self.user.user["ACCESS_LEVEL"])
+        self.populateScrollArea()
 
     def createButton(self):
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".pkl"):
             self.gui.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
-            print("1")
             self.user = User.newUser(self.gui.usernameIn.text(), self.gui.firstnameIn.text(),
                                      self.gui.lastnameIn.text())
-            print("2")
             if self.gui.checkBox.isChecked():
                 self.user.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
             else:
                 self.user.user["ACCESS_LEVEL"] = "GUEST"
-            print("3")
             self.user.save()
-            print("4")
             self.updateUserInfoPanel()
-            print("5")
             self.gui.stackedWidget.setCurrentIndex(2)
 
     def showSmall(self):
