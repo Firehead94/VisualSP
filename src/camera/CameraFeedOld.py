@@ -10,7 +10,7 @@ import cv2 as cv
 # Created by: Devin Yang
 
 folderPath = FileHelper.VIDEO_FLDR
-filename = 'video.avi'
+filename = 'video2.avi'
 frames_per_second = 24.0
 My_res = '1080p'
 
@@ -46,8 +46,8 @@ def get_video_type(filename):
 cap = cv.VideoCapture(0)
 dims = get_dims(cap, res=My_res)
 video_type_cv2 = get_video_type(filename)
-
-out = cv.VideoWriter(folderPath + filename, video_type_cv2, frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+print(cv.VideoWriter_fourcc(*'XVID'))
+out = cv.VideoWriter(folderPath + filename, cv.VideoWriter_fourcc(*'XVID'), frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
 
 while(True):
     #capture frames

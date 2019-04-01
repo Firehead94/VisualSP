@@ -14,7 +14,7 @@ import sys
 import os
 import src.gui.previousVideoWidget as previousVideoWidget
 import src.camera.CameraFeed as CameraFeed
-import src.camera.DetectTracker as DetectTracker
+#import src.camera.DetectTracker as DetectTracker
 
 # Created by: Justin Scott
 
@@ -62,24 +62,31 @@ class MainController:
 
     def createNew(self):
         captureArea = CameraFeed.CameraFeed()
-        time = SystemUtils.getTimeStamp().replace(" ", "_")
-        captureArea.filename = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
+        time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
+        fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
+        captureArea.capture(fileLoc)
         self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
+        print(self.user.user["TRACKINGS"])
         self.gui.mediaArea.addWidget(captureArea)
         self.gui.mediaArea.setCurrentIndex(1)
-        captureArea.capture()
+        self.user.save()
+        self.updateUserInfoPanel()
 
     def playBtn(self):
         self.gui.mediaArea.setCurrentIndex(0)
         fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
-        print(fileLoc)
         self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
         self.videoPlayer.play()
+        self.user.save()
+        self.updateUserInfoPanel()
 
     def deleteBtn(self):
-        fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
-        self.user.user["TRACKINGS"].remove(fileLoc)
+        fileName = self.gui.sender().toolTip()
+        fileLoc = FileHelper.VIDEO_FLDR + fileName
+        self.user.user["TRACKINGS"].remove(fileName)
         os.remove(fileLoc)
+        self.user.save()
+        self.updateUserInfoPanel()
 
     def connectButtons(self):
         #CONNECT THE BUTTONS!
