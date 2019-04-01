@@ -60,7 +60,7 @@ class MainController:
 
 
     def loginButton(self):
-        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".json"):
+        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".pkl"):
             self.user = User.loadUser(UserHelper.UserHelper.get_user(self.gui.usernameField.text()))
             self.updateUserInfoPanel()
             self.gui.stackedWidget.setCurrentIndex(2)
@@ -83,7 +83,7 @@ class MainController:
         self.gui.accessLevelOut.setText(self.user.user["ACCESS_LEVEL"])
 
     def createButton(self):
-        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".json"):
+        if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameIn.text() + ".pkl"):
             self.gui.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
         else:
             print("1")

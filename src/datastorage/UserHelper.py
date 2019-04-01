@@ -3,6 +3,7 @@ import os
 import uuid
 import src.datastorage.FileHelper as FileHelper
 import src.datastorage.User as User
+import pickle
 import src.utilities.SystemUtils as SystemUtils
 
 
@@ -25,7 +26,7 @@ class UserHelper:
     ############################################
     @staticmethod
     def delete_user(username):
-        os.remove(FileHelper.USER_FLDR + username + ".json")
+        os.remove(FileHelper.USER_FLDR + username + ".pkl")
 
     ##################################################
     #
@@ -35,8 +36,8 @@ class UserHelper:
     ##################################################
     @staticmethod
     def get_user(username):
-        with open(FileHelper.USER_FLDR + username + ".json") as file:
-            user = json.load(file)
+        with open(FileHelper.USER_FLDR + username + ".pkl", "rb") as file:
+            user = pickle.load(file)
         file.close()
         return user
 
@@ -50,9 +51,9 @@ class UserHelper:
     @staticmethod
     def update_user(currentuser):
         if isinstance(currentuser, User.User):
-            print("File Updated: ",FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json")
-            with open(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".json", "w") as outfile:
-                json.dump(currentuser.user, outfile, indent=2)
+            print("File Updated: ",FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".pkl")
+            with open(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".pkl", "wb") as outfile:
+                pickle.dump(currentuser.user, outfile, protocol=pickle.HIGHEST_PROTOCOL)
             outfile.close()
             return True
         return False

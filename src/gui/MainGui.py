@@ -13,6 +13,7 @@ from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 import src.controllers.VideoWidget as VideoWidget
+import src.gui.previousVideoWidget as previousVideoWidget
 
 import src.gui.qtresources_rc
 
@@ -489,7 +490,7 @@ class MainGui(QWidget):
 
         self.scrollArea_2 = QtWidgets.QScrollArea(self.trackings)
 
-        self.scrollArea_2.setGeometry(QtCore.QRect(-1, -2, 282, 803))
+        self.scrollArea_2.setGeometry(QtCore.QRect(-1, -2, 300, 800))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -500,18 +501,21 @@ class MainGui(QWidget):
         self.scrollArea_2.setObjectName("scrollArea_2")
 
         self.trackingField = QtWidgets.QWidget()
-        self.trackingField_layout = QtWidgets.QVBoxLayout()
-        self.trackingField.setLayout(self.trackingField_layout)
+        self.trackingField_layout = QtWidgets.QVBoxLayout(self.trackingField)
 
-        self.trackingField.setGeometry(QtCore.QRect(0, 0, 280, 801))
+        self.trackingField.setGeometry(QtCore.QRect(0, 0, 300, 800))
         self.trackingField.setObjectName("trackingField")
 
         self.scrollArea_2.setWidget(self.trackingField)
+
+        #self.populateScrollArea()
         #self.testWidget = QtWidgets.QWidget()
         #self.testWidget.setStyleSheet("background: RED;")
         #self.testWidget.setFixedHeight(50)
         #self.testWidget.setMinimumWidth(280)
         #self.trackingField_layout.addWidget(self.testWidget)
+
+
 
         ####
         self.verticalLayout_2.addWidget(self.trackings)
@@ -750,3 +754,6 @@ class MainGui(QWidget):
             self.hoverBottomEdge = True
         elif not self.pressing:
             self.hoverBottomEdge = False
+
+    #def populateScrollArea(self):
+
