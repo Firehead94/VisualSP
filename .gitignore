@@ -2,4 +2,8 @@
 venv/*
 odometry/*
 gui/__pycache__/*
-gui/__pycache__/qtresources_rc.cpython-37.pyc
+__pycache__/*
+*/__pycache__/*
+*.pyc
+*.iml
+.DS_Store

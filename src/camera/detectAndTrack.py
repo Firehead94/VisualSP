@@ -4,6 +4,8 @@ import numpy as np
 import cv2 as cv
 import yaml
 
+# Created by: Kenzie King
+
 # Change this if using a different video source. It currently 
 # uses whatever the computer has as default
 cap = cv.VideoCapture(0)
@@ -37,7 +39,7 @@ p1 = []
 
 
 # Opens YAML file containing calibration data
-fp = open( "ost.yaml", "r" )
+fp = open( "camera/ost.yaml", "r" )
 ci = yaml.safe_load(fp)
 
 # Extracts wanted values from YAML file

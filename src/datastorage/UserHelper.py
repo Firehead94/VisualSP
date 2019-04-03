@@ -1,21 +1,21 @@
 import json
 import os
-import settings.config as config
 import uuid
-import user.User
+import src.datastorage.FileHelper as FileHelper
+import src.datastorage.User as User
+import pickle
+import src.utilities.SystemUtils as SystemUtils
+
 
 ################################################################
 #
 # Contains static methods to assist with user file management
 # on local storage. Use update_user when creating new
 # user
+# Created by: Justin Scott / Jacob Stade
 #
 ################################################################
-global savePath
-savePath = config.APPDATA_LOC + config.DEFAULT_LOCAL_PATH + config.DEFAULT_USER_FOLDER + "\\"
-
 class UserHelper:
-    global savePath
 
     ############################################
     #
@@ -26,8 +26,7 @@ class UserHelper:
     ############################################
     @staticmethod
     def delete_user(username):
-        global savePath
-        os.remove(savePath + username + ".json")
+        os.remove(FileHelper.USER_FLDR + username + ".pkl")
 
     ##################################################
     #
@@ -37,9 +36,8 @@ class UserHelper:
     ##################################################
     @staticmethod
     def get_user(username):
-        global savePath
-        with open(savePath + username + ".json") as file:
-            user = json.load(file)
+        with open(FileHelper.USER_FLDR + username + ".pkl", "rb") as file:
+            user = pickle.load(file)
         file.close()
         return user
 
@@ -52,11 +50,10 @@ class UserHelper:
     #################################################
     @staticmethod
     def update_user(currentuser):
-        global savePath
-        if isinstance(currentuser, user.User.User):
-            print(savePath + currentuser.user["USERNAME"] + ".json")
-            with open(savePath + currentuser.user["USERNAME"] + ".json", "w") as outfile:
-                json.dump(currentuser.user, outfile, indent=2)
+        if isinstance(currentuser, User.User):
+            print("File Updated: ",FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".pkl")
+            with open(FileHelper.USER_FLDR + currentuser.user["USERNAME"] + ".pkl", "wb") as outfile:
+                pickle.dump(currentuser.user, outfile, protocol=pickle.HIGHEST_PROTOCOL)
             outfile.close()
             return True
         return False

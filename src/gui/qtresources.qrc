@@ -1,0 +1,16 @@
+<RCC>
+  <qresource>
+    <file>../../assets/arrowLeft.png</file>
+    <file>../../assets/arrowRight.png</file>
+    <file>../../assets/pause.png</file>
+    <file>../../assets/play.png</file>
+    <file>../../assets/download.png</file>
+    <file>../../assets/logout.png</file>
+    <file>../../assets/menuBars.png</file>
+    <file>../../assets/camera.png</file>
+    <file>../../assets/restore.png</file>
+    <file>../../assets/minimize.png</file>
+    <file>../../assets/maximize.png</file>
+    <file>../../assets/close.png</file>
+  </qresource>
+</RCC>

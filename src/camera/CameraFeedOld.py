@@ -1,12 +1,18 @@
 import os
 import numpy as np
-import cv2 as cv
-import settings.config as config
+from PyQt5 import QtWidgets
 
-folderPath = config.
-filename = 'video.avi'
+import src.datastorage.FileHelper as FileHelper
+import src.utilities.SystemUtils as SystemUtils
+import src.camera.DetectTracker as DetectTracker
+import cv2 as cv
+
+# Created by: Devin Yang
+
+folderPath = FileHelper.VIDEO_FLDR
+filename = 'video2.avi'
 frames_per_second = 24.0
-My_res = '720p'
+My_res = '1080p'
 
 #set res
 def change_res (cap, width, height):
@@ -19,7 +25,7 @@ STD_DIMENSIONS ={
     "1080p": (1920, 1080),
 }
 
-def get_dims(cap, res = '720'):
+def get_dims(cap, res = '1080p'):
     width, height = STD_DIMENSIONS['480p']
     if res in STD_DIMENSIONS:
         width, height = STD_DIMENSIONS[res]
@@ -40,8 +46,8 @@ def get_video_type(filename):
 cap = cv.VideoCapture(0)
 dims = get_dims(cap, res=My_res)
 video_type_cv2 = get_video_type(filename)
-
-out = cv.VideoWriter(filename, video_type_cv2, frames_per_second, dims)
+print(cv.VideoWriter_fourcc(*'XVID'))
+out = cv.VideoWriter(folderPath + filename, cv.VideoWriter_fourcc(*'XVID'), frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
 
 while(True):
     #capture frames
@@ -50,10 +56,9 @@ while(True):
     #display the frames
     cv.imshow('frame', frame)
     if cv.waitKey(20) & 0xFF == ord('q'):
-         break
+        break
 
 #release capture
 cap.release()
 out.release()
 cv.destroyAllWindows()
-

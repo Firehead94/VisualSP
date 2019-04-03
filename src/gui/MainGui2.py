@@ -7,39 +7,37 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
-from PyQt5.QtCore import pyqtSlot
-import sys
-import gui.qtresources_rc
-import controller.ltsController as Lts
-import user.UserHelper as UserHelper
-import user.User as User
-import settings.config as Config
-import os
+
 
 class Ui_VisualSP(object):
-
-    global curUser
-    curUser = User.User()
-
     def setupUi(self, VisualSP):
         VisualSP.setObjectName("VisualSP")
         VisualSP.setEnabled(True)
-        VisualSP.resize(1246, 685)
+        VisualSP.resize(1479, 794)
         VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
         VisualSP.setAutoFillBackground(False)
-        VisualSP.setStyleSheet("background-color: rgb(45, 51, 65);")
+        VisualSP.setStyleSheet("QMainWindow {\n"
+"    background-color: #656565;\n"
+"    background-image: url(:/assets/camera.png);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: right bottom;\n"
+"}")
         VisualSP.setDocumentMode(False)
         VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
         VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
         self.Main = QtWidgets.QWidget(VisualSP)
+        self.Main.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Main.sizePolicy().hasHeightForWidth())
         self.Main.setSizePolicy(sizePolicy)
+        self.Main.setMinimumSize(QtCore.QSize(0, 0))
+        self.Main.setStyleSheet("background-color: transparent;")
         self.Main.setObjectName("Main")
         self.gridLayout = QtWidgets.QGridLayout(self.Main)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetMinAndMaxSize)
@@ -53,6 +51,9 @@ class Ui_VisualSP(object):
         self.stackedWidget.setSizePolicy(sizePolicy)
         self.stackedWidget.setMinimumSize(QtCore.QSize(300, 0))
         self.stackedWidget.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.stackedWidget.setStyleSheet("")
+        self.stackedWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.stackedWidget.setLineWidth(0)
         self.stackedWidget.setObjectName("stackedWidget")
         self.LoggedOut = QtWidgets.QWidget()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
@@ -62,7 +63,7 @@ class Ui_VisualSP(object):
         self.LoggedOut.setSizePolicy(sizePolicy)
         self.LoggedOut.setMinimumSize(QtCore.QSize(300, 0))
         self.LoggedOut.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.LoggedOut.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.LoggedOut.setStyleSheet("background-color: #555555;")
         self.LoggedOut.setObjectName("LoggedOut")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.LoggedOut)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -108,7 +109,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(26)
         self.usernameField.setFont(font)
-        self.usernameField.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.usernameField.setStyleSheet("background-color: #b2b2b2;")
         self.usernameField.setFrame(False)
         self.usernameField.setObjectName("usernameField")
         self.horizontalLayout_4.addWidget(self.usernameField)
@@ -127,6 +128,10 @@ class Ui_VisualSP(object):
         self.loginBtn.setObjectName("loginBtn")
         self.horizontalLayout_4.addWidget(self.loginBtn)
         self.verticalLayout.addWidget(self.login)
+        self.ERROR_NO_EXIST = QtWidgets.QLabel(self.LoggedOut)
+        self.ERROR_NO_EXIST.setText("")
+        self.ERROR_NO_EXIST.setObjectName("ERROR_NO_EXIST")
+        self.verticalLayout.addWidget(self.ERROR_NO_EXIST)
         self.newuserBtn = QtWidgets.QToolButton(self.LoggedOut)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -139,7 +144,7 @@ class Ui_VisualSP(object):
         font.setPointSize(26)
         self.newuserBtn.setFont(font)
         self.newuserBtn.setStyleSheet("QToolButton {\n"
-"    background-color: rgb(75, 85, 109);\n"
+"    background-color: #808080;\n"
 "}\n"
 "\n"
 ":hover {\n"
@@ -148,14 +153,6 @@ class Ui_VisualSP(object):
 "")
         self.newuserBtn.setObjectName("newuserBtn")
         self.verticalLayout.addWidget(self.newuserBtn)
-        font = QtGui.QFont()
-        font.setFamily("Tw Cen MT")
-        font.setPointSize(20)
-        self.ERROR_NO_EXIST = QtWidgets.QLabel(self.LoggedOut)
-        self.ERROR_NO_EXIST.setText("")
-        self.ERROR_NO_EXIST.setObjectName("ERROR_NO_EXIST")
-        self.ERROR_NO_EXIST.setFont(font)
-        self.verticalLayout.addWidget(self.ERROR_NO_EXIST)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
@@ -168,7 +165,7 @@ class Ui_VisualSP(object):
         self.NewUser.setSizePolicy(sizePolicy)
         self.NewUser.setMinimumSize(QtCore.QSize(300, 0))
         self.NewUser.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.NewUser.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.NewUser.setStyleSheet("background-color: #555555")
         self.NewUser.setObjectName("NewUser")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.NewUser)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -200,8 +197,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.usernameIn.setFont(font)
-        self.usernameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
-        self.usernameIn.setFrame(False)
+        self.usernameIn.setStyleSheet("background-color: #b2b2b2;")
         self.usernameIn.setObjectName("usernameIn")
         self.verticalLayout_5.addWidget(self.usernameIn)
         self.firstnameIn = QtWidgets.QLineEdit(self.containerWidgetNew)
@@ -209,7 +205,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.firstnameIn.setFont(font)
-        self.firstnameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.firstnameIn.setStyleSheet("background-color: #b2b2b2;")
         self.firstnameIn.setFrame(False)
         self.firstnameIn.setObjectName("firstnameIn")
         self.verticalLayout_5.addWidget(self.firstnameIn)
@@ -218,7 +214,7 @@ class Ui_VisualSP(object):
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastnameIn.setFont(font)
-        self.lastnameIn.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastnameIn.setStyleSheet("background-color: #b2b2b2;")
         self.lastnameIn.setFrame(False)
         self.lastnameIn.setObjectName("lastnameIn")
         self.verticalLayout_5.addWidget(self.lastnameIn)
@@ -286,9 +282,10 @@ class Ui_VisualSP(object):
         self.LoggedIn.setSizePolicy(sizePolicy)
         self.LoggedIn.setMinimumSize(QtCore.QSize(300, 0))
         self.LoggedIn.setMaximumSize(QtCore.QSize(300, 1165))
-        self.LoggedIn.setStyleSheet("background-color: rgb(51, 58, 74);")
+        self.LoggedIn.setStyleSheet("background-color: #555555")
         self.LoggedIn.setObjectName("LoggedIn")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.LoggedIn)
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setSpacing(0)
@@ -301,7 +298,7 @@ class Ui_VisualSP(object):
         self.menuBar.setSizePolicy(sizePolicy)
         self.menuBar.setMinimumSize(QtCore.QSize(225, 55))
         self.menuBar.setMaximumSize(QtCore.QSize(300, 55))
-        self.menuBar.setStyleSheet("background-color: rgb(75, 85, 109);")
+        self.menuBar.setStyleSheet("background-color: #333333;")
         self.menuBar.setObjectName("menuBar")
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.menuBar)
         self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(-1, -7, 300, 73))
@@ -310,7 +307,11 @@ class Ui_VisualSP(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.horizontalLayout_2.addLayout(self.verticalLayout_6)
         self.menuBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.menuBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.menuBtn.setStyleSheet(":hover {\n"
 "    background-color: rgb(91, 103, 131);\n"
 "}\n"
@@ -321,10 +322,11 @@ class Ui_VisualSP(object):
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/assets/menuBars.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.menuBtn.setIcon(icon1)
-        self.menuBtn.setIconSize(QtCore.QSize(60, 50))
+        self.menuBtn.setIconSize(QtCore.QSize(40, 40))
         self.menuBtn.setObjectName("menuBtn")
         self.horizontalLayout_2.addWidget(self.menuBtn)
         self.saveBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.saveBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.saveBtn.setStyleSheet(":hover {\n"
 "    background-color: rgb(91, 103, 131);\n"
 "}\n"
@@ -333,12 +335,13 @@ class Ui_VisualSP(object):
 "    border:none;\n"
 "}")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("../Git/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveBtn.setIcon(icon2)
-        self.saveBtn.setIconSize(QtCore.QSize(60, 50))
+        self.saveBtn.setIconSize(QtCore.QSize(40, 40))
         self.saveBtn.setObjectName("saveBtn")
         self.horizontalLayout_2.addWidget(self.saveBtn)
         self.logoutBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
+        self.logoutBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.logoutBtn.setStyleSheet(":hover {\n"
 "    background-color: rgb(91, 103, 131);\n"
 "}\n"
@@ -347,9 +350,9 @@ class Ui_VisualSP(object):
 "    border:none;\n"
 "}")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("../Git/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.logoutBtn.setIcon(icon3)
-        self.logoutBtn.setIconSize(QtCore.QSize(60, 50))
+        self.logoutBtn.setIconSize(QtCore.QSize(40, 40))
         self.logoutBtn.setObjectName("logoutBtn")
         self.horizontalLayout_2.addWidget(self.logoutBtn)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -386,48 +389,43 @@ class Ui_VisualSP(object):
         self.usernameOut.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.usernameOut.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.usernameOut.setObjectName("usernameOut")
-        self.usernameOut.setText(curUser.user["USERNAME"])
         self.verticalLayout_4.addWidget(self.usernameOut)
         self.firstnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.firstnameOut.setFont(font)
-        self.firstnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.firstnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.firstnameOut.setFrame(False)
         self.firstnameOut.setObjectName("firstnameOut")
-        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
         self.verticalLayout_4.addWidget(self.firstnameOut)
         self.lastnameOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastnameOut.setFont(font)
-        self.lastnameOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastnameOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastnameOut.setFrame(False)
         self.lastnameOut.setObjectName("lastnameOut")
-        self.lastnameOut.setText(curUser.user["LAST_NAME"])
         self.verticalLayout_4.addWidget(self.lastnameOut)
         self.lastusedOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.lastusedOut.setFont(font)
-        self.lastusedOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.lastusedOut.setStyleSheet("background-color: #b2b2b2;")
         self.lastusedOut.setFrame(False)
         self.lastusedOut.setObjectName("lastusedOut")
-        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
         self.verticalLayout_4.addWidget(self.lastusedOut)
         self.accessLevelOut = QtWidgets.QLineEdit(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(20)
         self.accessLevelOut.setFont(font)
-        self.accessLevelOut.setStyleSheet("background-color: rgb(111, 127, 161);")
+        self.accessLevelOut.setStyleSheet("background-color: #b2b2b2;")
         self.accessLevelOut.setFrame(False)
         self.accessLevelOut.setReadOnly(True)
         self.accessLevelOut.setObjectName("accessLevelOut")
-        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
         self.verticalLayout_4.addWidget(self.accessLevelOut)
         self.verticalLayout_4.setStretch(0, 1)
         self.verticalLayout_4.setStretch(1, 1)
@@ -469,8 +467,9 @@ class Ui_VisualSP(object):
         self.trackings.setMinimumSize(QtCore.QSize(0, 300))
         self.trackings.setSizeIncrement(QtCore.QSize(0, 1))
         self.trackings.setObjectName("trackings")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.trackings)
+        self.gridLayout_6.setObjectName("gridLayout_6")
         self.scrollArea_2 = QtWidgets.QScrollArea(self.trackings)
-        self.scrollArea_2.setGeometry(QtCore.QRect(-1, -2, 282, 803))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -480,9 +479,10 @@ class Ui_VisualSP(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.trackingField = QtWidgets.QWidget()
-        self.trackingField.setGeometry(QtCore.QRect(0, 0, 280, 801))
+        self.trackingField.setGeometry(QtCore.QRect(0, 0, 278, 425))
         self.trackingField.setObjectName("trackingField")
         self.scrollArea_2.setWidget(self.trackingField)
+        self.gridLayout_6.addWidget(self.scrollArea_2, 0, 0, 1, 1)
         self.verticalLayout_2.addWidget(self.trackings)
         self.verticalLayout_2.setStretch(0, 1)
         self.verticalLayout_2.setStretch(1, 3)
@@ -491,40 +491,102 @@ class Ui_VisualSP(object):
         self.gridLayout_4.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.LoggedIn)
         self.horizontalLayout_3.addWidget(self.stackedWidget)
-        self.cameraArea = QtWidgets.QFrame(self.Main)
+        self.widget = QtWidgets.QWidget(self.Main)
+        self.widget.setObjectName("widget")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.widget)
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_5.setSpacing(0)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.widget_2 = QtWidgets.QWidget(self.widget)
+        self.widget_2.setMinimumSize(QtCore.QSize(0, 55))
+        self.widget_2.setStyleSheet("background-color: #333333;")
+        self.widget_2.setObjectName("widget_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_2)
+        self.horizontalLayout.setContentsMargins(0, 0, 6, 6)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem3 = QtWidgets.QSpacerItem(1000, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem3)
+        self.Minimize = QtWidgets.QToolButton(self.widget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Minimize.sizePolicy().hasHeightForWidth())
+        self.Minimize.setSizePolicy(sizePolicy)
+        self.Minimize.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.Minimize.setText("")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/assets/minimize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Minimize.setIcon(icon4)
+        self.Minimize.setIconSize(QtCore.QSize(40, 40))
+        self.Minimize.setObjectName("Minimize")
+        self.horizontalLayout.addWidget(self.Minimize)
+        self.MaxRestore = QtWidgets.QToolButton(self.widget_2)
+        self.MaxRestore.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.MaxRestore.setText("")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/assets/maximize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MaxRestore.setIcon(icon5)
+        self.MaxRestore.setIconSize(QtCore.QSize(40, 40))
+        self.MaxRestore.setObjectName("MaxRestore")
+        self.horizontalLayout.addWidget(self.MaxRestore)
+        self.Close = QtWidgets.QToolButton(self.widget_2)
+        self.Close.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.Close.setText("")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/assets/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Close.setIcon(icon6)
+        self.Close.setIconSize(QtCore.QSize(40, 40))
+        self.Close.setObjectName("Close")
+        self.horizontalLayout.addWidget(self.Close)
+        self.gridLayout_5.addWidget(self.widget_2, 0, 0, 1, 1)
+        self.mediaArea = QtWidgets.QStackedWidget(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
-        self.cameraArea.setSizePolicy(sizePolicy)
-        self.cameraArea.setStyleSheet("background-color: rgb(45, 51, 65);\n"
-"background-image:    url(:/assets/camera.png);\n"
-"background-repeat: no-repeat;\n"
-"background-position: center;")
-        self.cameraArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.cameraArea.setFrameShadow(QtWidgets.QFrame.Raised)
+        sizePolicy.setHeightForWidth(self.mediaArea.sizePolicy().hasHeightForWidth())
+        self.mediaArea.setSizePolicy(sizePolicy)
+        self.mediaArea.setStyleSheet("background-image: url(:/assets/camera.png);")
+        self.mediaArea.setObjectName("mediaArea")
+        self.cameraArea = QVideoWidget()
         self.cameraArea.setObjectName("cameraArea")
-        self.horizontalLayout_3.addWidget(self.cameraArea)
-        self.horizontalLayout_3.setStretch(1, 4)
+        self.cameraArea.setStyleSheet("background-image: url(:/assets/camera.png);")
+        self.mediaArea.addWidget(self.cameraArea)
+        self.captureArea = QtWidgets.QWidget()
+        self.captureArea.setObjectName("captureArea")
+        self.mediaArea.addWidget(self.captureArea)
+        self.gridLayout_5.addWidget(self.mediaArea, 1, 0, 1, 1)
+        self.horizontalLayout_3.addWidget(self.widget)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         VisualSP.setCentralWidget(self.Main)
 
         self.retranslateUi(VisualSP)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(VisualSP)
-
-        self.loginBtn.clicked.connect(self.loginButton)
-        self.logoutBtn.clicked.connect(self.logoutButton)
-        self.newuserBtn.clicked.connect(self.newUserButton)
-        self.backBtn.clicked.connect(self.cancelButton)
-        self.createBtn.clicked.connect(self.createButton)
 
     def retranslateUi(self, VisualSP):
         _translate = QtCore.QCoreApplication.translate
         VisualSP.setWindowTitle(_translate("VisualSP", "MainWindow"))
         self.loginLabel.setText(_translate("VisualSP", "Login"))
         self.usernameField.setPlaceholderText(_translate("VisualSP", "Username"))
-        self.loginBtn.setText(_translate("VisualSP", "Login"))
+        self.loginBtn.setText(_translate("VisualSP", "..."))
         self.loginBtn.setShortcut(_translate("VisualSP", "Return"))
         self.newuserBtn.setText(_translate("VisualSP", "New User"))
         self.usernameIn.setPlaceholderText(_translate("VisualSP", "Username"))
@@ -533,9 +595,9 @@ class Ui_VisualSP(object):
         self.checkBox.setText(_translate("VisualSP", "Administrator"))
         self.createBtn.setText(_translate("VisualSP", "Create"))
         self.backBtn.setText(_translate("VisualSP", "Back"))
-        self.menuBtn.setText(_translate("VisualSP", "Menu"))
-        self.saveBtn.setText(_translate("VisualSP", "Save"))
-        self.logoutBtn.setText(_translate("VisualSP", "Logout"))
+        self.menuBtn.setText(_translate("VisualSP", "..."))
+        self.saveBtn.setText(_translate("VisualSP", "..."))
+        self.logoutBtn.setText(_translate("VisualSP", "..."))
         self.usernameOut.setText(_translate("VisualSP", "USERNAME"))
         self.firstnameOut.setPlaceholderText(_translate("VisualSP", "First Name"))
         self.lastnameOut.setPlaceholderText(_translate("VisualSP", "Last Name"))
@@ -543,60 +605,6 @@ class Ui_VisualSP(object):
         self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
-    def loginButton(self):
-        global curUser
-        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameField.text() + ".json"):
-            curUser.loadUser(UserHelper.UserHelper.get_user(self.usernameField.text()))
-            self.updateUserInfoPanel()
-            self.stackedWidget.setCurrentIndex(2)
-        else:
-            self.ERROR_NO_EXIST.setText("<font color='red'>User Doesn't exist</font>")
 
-    def newUserButton(self):
-        self.stackedWidget.setCurrentIndex(1)
-
-    def logoutButton(self):
-        global curUser
-        curUser.save()
-        UserHelper.UserHelper.update_user(curUser)
-        curUser = User.User()
-        self.updateUserInfoPanel()
-        self.stackedWidget.setCurrentIndex(0)
-
-    def cancelButton(self):
-        self.stackedWidget.setCurrentIndex(0)
-
-    def createButton(self):
-        global curUser
-        if os.path.isfile(Config.APPDATA_LOC + Config.DEFAULT_LOCAL_PATH + Config.DEFAULT_USER_FOLDER + "\\" + self.usernameIn.text() + ".json"):
-            self.ERROR_EXISTS.setText("<font color='red'>User Already Exists</font>")
-        else:
-            curUser.user["USERNAME"] = self.usernameIn.text()
-            curUser.user["FIRST_NAME"] = self.firstnameIn.text()
-            curUser.user["LAST_NAME"] = self.lastnameIn.text()
-            if self.checkBox.isChecked():
-                curUser.user["ACCESS_LEVEL"] = "ADMINISTRATOR"
-            else:
-                curUser.user["ACCESS_LEVEL"] = "GUEST"
-            curUser.save()
-            UserHelper.UserHelper.update_user(curUser)
-            self.updateUserInfoPanel()
-            self.stackedWidget.setCurrentIndex(2)
-
-    def updateUserInfoPanel(self):
-        global curUser
-        self.usernameOut.setText(curUser.user["USERNAME"])
-        self.firstnameOut.setText(curUser.user["FIRST_NAME"])
-        self.lastnameOut.setText(curUser.user["LAST_NAME"])
-        self.lastusedOut.setText(curUser.user["TIMESTAMP"])
-        self.accessLevelOut.setText(curUser.user["ACCESS_LEVEL"])
-
-
-#if __name__ == "__main__":
-#    import sys
-#    app = QtWidgets.QApplication(sys.argv)
-#    VisualSP = QtWidgets.QMainWindow()
-#    ui = Ui_VisualSP()
-#    ui.setupUi(VisualSP)
-#    VisualSP.show()
-#    sys.exit(app.exec_())
+from PyQt5.QtMultimediaWidget import QVideoWidget
+import qtresources_rc
