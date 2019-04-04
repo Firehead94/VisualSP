@@ -85,8 +85,8 @@ def update(frame_gray):
 
 
 # In progress
-#def essentialMat():
-    #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
+def essentialMat():
+    E, mask = cv.findEssentialMat(p0, p1, camMat, cv.RANSAC, .999, 1)
 
 # Main loop 
 while(1):
@@ -102,12 +102,12 @@ while(1):
     draw(mask, undist)
 
     update(frame_gray)
-
+    #essentialMat() #-- in progress
     # Redetects points when a certain number of them dissapear
     if (len(p1) <= 20):
         p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
-    #essentialMat() -- in progress
+    #essentialMat()
 
     # Show window
     cv.imshow('undistorted image with trackers',img)

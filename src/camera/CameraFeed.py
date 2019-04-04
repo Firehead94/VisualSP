@@ -24,10 +24,11 @@ class CameraFeed(QtWidgets.QWidget):
         while(True):
             #capture frames
             ret, frame = cap.read()
-            tracker.trackStuff(ret,frame)
+
+            tracked = tracker.trackStuff(ret,frame)
             #display the frames
-            cv.imshow('frame', frame)
-            out.write(frame)
+            cv.imshow('frame', tracked) # pass only frame here and to out.write for dots only and no lines.
+            out.write(tracked)
             #painter.drawImage(QtCore.QPoint(0,0), frame)
             if cv.waitKey(20) & 0xFF == ord('q'):
                 break
