@@ -41,7 +41,6 @@ class DetectAndTrack():
         self.img = []
         self.p1 = []
 
-
         # Opens YAML file containing calibration data
         self.fp = open( "../camera/ost.yaml", "r" )
         self.ci = yaml.safe_load(self.fp)
@@ -61,10 +60,10 @@ class DetectAndTrack():
         self.camDist = np.array( self.D ).reshape((1, 5))
 
     def calc(self):
-        self.p1, self.st, self.err = cv.calcOpticalFlowPyrLK(self.old_gray, self.frame_gray, self.p0, None, **self.lk_params)
+        self.p1, st, self.err = cv.calcOpticalFlowPyrLK(self.old_gray, self.frame_gray, self.p0, None, **self.lk_params)
         # Select corners
-        self.good_new = self.p1[self.st==1]
-        self.good_old = self.p0[self.st==1]
+        self.good_new = self.p1[st==1]
+        self.good_old = self.p0[st==1]
 
     def draw(self, mask, undist):
         # Draw tracking data
@@ -72,7 +71,10 @@ class DetectAndTrack():
             a,b = new.ravel()
             c,d = old.ravel()
             mask = cv.line(mask, (a,b),(c,d), self.color[i].tolist(), 2)
-            undist = cv.circle(self.frame,(a,b),5,self.color[i].tolist(),-1)
+            undist = cv.circle(self.frame,(a,b),5,self.color[i].tolist(), 8)
+
+        print(*undist, sep = ", ")
+        print(*mask, sep = ", ")
         self.img = cv.add(undist, mask)
 
 

@@ -11,6 +11,7 @@ import src.camera.DetectTracker as DetectTracker
 from goprocam import GoProCamera
 from goprocam import constants
 
+# Created by: Leo Wernet, Devin Yang
 
 class GproStream(QtWidgets.QWidget):
 
@@ -29,9 +30,9 @@ class GproStream(QtWidgets.QWidget):
         tracker = DetectTracker.DetectAndTrack(cap)
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))
-        fps = cap.get(30)
+        fps = cap.get(5)
         vid = cv.VideoWriter_fourcc(*'MJPG') # writng the video file
-        out = cv.VideoWriter(fileLoc, vid, fps, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+        out = cv.VideoWriter(self.folderPath + self.File_Output, vid, fps, (frame_width, frame_height))
         # File = open(complete_save, "w")
 
         if cap.isOpened() != True:
@@ -41,7 +42,7 @@ class GproStream(QtWidgets.QWidget):
             ret, frame = cap.read()
             tracked = tracker.trackStuff(ret,frame)
             ##gray = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-            cv.imshow("GoPro OpenCV", frame)
+            cv.imshow("GoPro OpenCV", tracked)
             out.write(tracked)
             if cv.waitKey(1) & 0xFF == ord('q'):
                 break
