@@ -71,7 +71,10 @@ class DetectAndTrack():
             a,b = new.ravel()
             c,d = old.ravel()
             mask = cv.line(mask, (a,b),(c,d), self.color[i].tolist(), 2)
-            undist = cv.circle(self.frame,(a,b),5,self.color[i].tolist(),-1)
+            undist = cv.circle(self.frame,(a,b),5,self.color[i].tolist(), 8)
+
+        print(*undist, sep = ", ")
+        print(*mask, sep = ", ")
         self.img = cv.add(undist, mask)
 
 
