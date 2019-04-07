@@ -55,6 +55,14 @@ P = ci["projection_matrix"]["data"]
 # arrays so they can be used for undistortion
 camMat = np.array( K ).reshape((3, 3))
 camDist = np.array( D ).reshape((1, 5))
+camRect = np.array( R ).reshape((3, 3))
+
+global new_R
+new_R = np.zeros((256, 256), dtype = "float")
+global t
+t = np.zeros((256, 256), dtype = "float")
+
+
 
 def calc():
     global p1
@@ -86,12 +94,11 @@ def update(frame_gray):
 
 # In progress
 def essentialMat():
-    E, mask = cv.findEssentialMat(p0, p1, camMat, cv.RANSAC, .999, 1)
-    #print(p0)
-    #print("--------------------")
-    #print(p1)
-    #print("********************")
 
+    E = cv.findEssentialMat(p1, p0, 1.0, (0,0), cv.RANSAC, .999, 1)
+
+
+count = 0
 # Main loop 
 while(1):
 
@@ -106,21 +113,29 @@ while(1):
     draw(mask, undist)
 
     update(frame_gray)
-    #essentialMat() #-- in progress
+
     # Redetects points when a certain number of them dissapear
     if (len(p1) <= 20):
         p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
-
-    if (len(p1) > len(p0)):
-        length = len(p1) - len(p0)
-        p1 = p1[:-length]
-        
+        p1 = p0
     print(len(p0))
     print("!!!!!!!!!!!!!!!!!!!!!!")
     print(len(p1))
     print("***********************")
-    essentialMat()
-    
+
+    #print (p0)
+    if (len(p1) > len(p0)):
+        length = len(p1) - len(p0)
+        p1 = p1[:-length]        
+    if (count > 0):
+    #essentialMat()
+        E, new_mask = cv.findEssentialMat(p1, p0, 1.0, (0,0), cv.RANSAC, .999, 1)
+	#cv.decomposeEssentialMat(E, R0, R1, t)
+        print(E) 
+        cv.recoverPose(E, p1, p0, new_R, t, 1.0, (0.0, 0.0), new_mask)
+        print(new_R)
+
+    count += 1
 
     # Show window
     cv.imshow('undistorted image with trackers',img)
@@ -129,7 +144,7 @@ while(1):
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
-    if cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1:        
+    if cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1:
         break
 
 # Kill
