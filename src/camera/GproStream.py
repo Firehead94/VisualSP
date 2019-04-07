@@ -11,6 +11,7 @@ import src.camera.DetectTracker as DetectTracker
 from goprocam import GoProCamera
 from goprocam import constants
 
+# Created by: Leo Wernet, Devin Yang
 
 class GproStream(QtWidgets.QWidget):
 
