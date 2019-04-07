@@ -43,14 +43,12 @@ class MainController:
 
     def populateScrollArea(self):
         #self.gui.trackingField_layout.addWidget()
-        print(self.user.user["TRACKINGS"])
         while self.gui.trackingField_layout.count():
             item = self.gui.trackingField_layout.takeAt(0)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()
         for i in self.user.user["TRACKINGS"]:
-            print(i)
             vidWid = previousVideoWidget.previousVideoWidget()
             vidWid.name.setText(i[len(self.user.user["USERNAME"])+1:-4])
             vidWid.toolButton.setToolTip(i)
@@ -68,7 +66,6 @@ class MainController:
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
         captureArea.capture(fileLoc)
         self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
-        print(self.user.user["TRACKINGS"])
         self.gui.mediaArea.addWidget(captureArea)
         self.gui.mediaArea.setCurrentIndex(1)
         self.user.save()
