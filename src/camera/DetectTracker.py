@@ -42,7 +42,8 @@ class DetectAndTrack():
         self.p1 = []
 
         # Opens YAML file containing calibration data
-        self.fp = open( "../camera/ost.yaml", "r" )
+        self.fp = open( "camera/ost.yaml", "r" ) #######TODO switch between ../ and nothing mac vs win
+
         self.ci = yaml.safe_load(self.fp)
 
         # Extracts wanted values from YAML file
@@ -60,10 +61,10 @@ class DetectAndTrack():
         self.camDist = np.array( self.D ).reshape((1, 5))
 
     def calc(self):
-        self.p1, st, self.err = cv.calcOpticalFlowPyrLK(self.old_gray, self.frame_gray, self.p0, None, **self.lk_params)
+        self.p1, self.st, self.err = cv.calcOpticalFlowPyrLK(self.old_gray, self.frame_gray, self.p0, None, **self.lk_params)
         # Select corners
-        self.good_new = self.p1[st==1]
-        self.good_old = self.p0[st==1]
+        self.good_new = self.p1[self.st==1]
+        self.good_old = self.p0[self.st==1]
 
     def draw(self, mask, undist):
         # Draw tracking data
@@ -81,8 +82,9 @@ class DetectAndTrack():
         self.p0 = self.good_new.reshape(-1,1,2)
 
 
-    def essentialMat(self):
-        self.E, self.mask = cv.findEssentialMat(self.p0, self.p1, self.camMat, cv.RANSAC, .999, 1)
+    # In progress
+    #def essentialMat(self):
+    #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
 
     # Main loop
     #while(1):
@@ -102,16 +104,11 @@ class DetectAndTrack():
 
         self.update(self.frame_gray)
 
-
         # Redetects points when a certain number of them dissapear
         if (len(self.p1) <= 20):
             self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
 
-        if (len(self.p1) > len(self.p0)):
-            length = len(self.p1) - len(self.p0)
-            self.p1 = self.p1[:-length]
-
-        self.essentialMat()
+        #essentialMat() -- in progress
 
         return self.img
         # Show window
