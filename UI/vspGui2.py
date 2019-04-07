@@ -13,31 +13,21 @@ class Ui_VisualSP(object):
     def setupUi(self, VisualSP):
         VisualSP.setObjectName("VisualSP")
         VisualSP.setEnabled(True)
-        VisualSP.resize(1479, 794)
+        VisualSP.resize(1246, 685)
         VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
         VisualSP.setAutoFillBackground(False)
-        VisualSP.setStyleSheet("QMainWindow {\n"
-"    background-color: #656565;\n"
-"    background-image: url(:/assets/camera.png);\n"
-"    background-repeat: no-repeat;\n"
-"    background-position: right bottom;\n"
-"}")
+        VisualSP.setStyleSheet("background-color: #656565;")
         VisualSP.setDocumentMode(False)
         VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
         VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
         self.Main = QtWidgets.QWidget(VisualSP)
-        self.Main.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Main.sizePolicy().hasHeightForWidth())
         self.Main.setSizePolicy(sizePolicy)
-        self.Main.setMinimumSize(QtCore.QSize(0, 0))
-        self.Main.setStyleSheet("background-color: transparent;")
         self.Main.setObjectName("Main")
         self.gridLayout = QtWidgets.QGridLayout(self.Main)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetMinAndMaxSize)
@@ -52,8 +42,6 @@ class Ui_VisualSP(object):
         self.stackedWidget.setMinimumSize(QtCore.QSize(300, 0))
         self.stackedWidget.setMaximumSize(QtCore.QSize(300, 16777215))
         self.stackedWidget.setStyleSheet("")
-        self.stackedWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.stackedWidget.setLineWidth(0)
         self.stackedWidget.setObjectName("stackedWidget")
         self.LoggedOut = QtWidgets.QWidget()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
@@ -285,7 +273,6 @@ class Ui_VisualSP(object):
         self.LoggedIn.setStyleSheet("background-color: #555555")
         self.LoggedIn.setObjectName("LoggedIn")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.LoggedIn)
-        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setSpacing(0)
@@ -307,9 +294,6 @@ class Ui_VisualSP(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.horizontalLayout_2.addLayout(self.verticalLayout_6)
         self.menuBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
         self.menuBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.menuBtn.setStyleSheet(":hover {\n"
@@ -322,7 +306,7 @@ class Ui_VisualSP(object):
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/assets/menuBars.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.menuBtn.setIcon(icon1)
-        self.menuBtn.setIconSize(QtCore.QSize(40, 40))
+        self.menuBtn.setIconSize(QtCore.QSize(60, 45))
         self.menuBtn.setObjectName("menuBtn")
         self.horizontalLayout_2.addWidget(self.menuBtn)
         self.saveBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
@@ -337,7 +321,7 @@ class Ui_VisualSP(object):
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("../Git/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveBtn.setIcon(icon2)
-        self.saveBtn.setIconSize(QtCore.QSize(40, 40))
+        self.saveBtn.setIconSize(QtCore.QSize(60, 45))
         self.saveBtn.setObjectName("saveBtn")
         self.horizontalLayout_2.addWidget(self.saveBtn)
         self.logoutBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
@@ -352,7 +336,7 @@ class Ui_VisualSP(object):
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("../Git/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.logoutBtn.setIcon(icon3)
-        self.logoutBtn.setIconSize(QtCore.QSize(40, 40))
+        self.logoutBtn.setIconSize(QtCore.QSize(60, 45))
         self.logoutBtn.setObjectName("logoutBtn")
         self.horizontalLayout_2.addWidget(self.logoutBtn)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -467,9 +451,8 @@ class Ui_VisualSP(object):
         self.trackings.setMinimumSize(QtCore.QSize(0, 300))
         self.trackings.setSizeIncrement(QtCore.QSize(0, 1))
         self.trackings.setObjectName("trackings")
-        self.gridLayout_6 = QtWidgets.QGridLayout(self.trackings)
-        self.gridLayout_6.setObjectName("gridLayout_6")
         self.scrollArea_2 = QtWidgets.QScrollArea(self.trackings)
+        self.scrollArea_2.setGeometry(QtCore.QRect(-1, -2, 282, 803))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -479,10 +462,9 @@ class Ui_VisualSP(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.trackingField = QtWidgets.QWidget()
-        self.trackingField.setGeometry(QtCore.QRect(0, 0, 278, 425))
+        self.trackingField.setGeometry(QtCore.QRect(0, 0, 280, 801))
         self.trackingField.setObjectName("trackingField")
         self.scrollArea_2.setWidget(self.trackingField)
-        self.gridLayout_6.addWidget(self.scrollArea_2, 0, 0, 1, 1)
         self.verticalLayout_2.addWidget(self.trackings)
         self.verticalLayout_2.setStretch(0, 1)
         self.verticalLayout_2.setStretch(1, 3)
@@ -491,89 +473,21 @@ class Ui_VisualSP(object):
         self.gridLayout_4.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.LoggedIn)
         self.horizontalLayout_3.addWidget(self.stackedWidget)
-        self.widget = QtWidgets.QWidget(self.Main)
-        self.widget.setObjectName("widget")
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.widget)
-        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_5.setSpacing(0)
-        self.gridLayout_5.setObjectName("gridLayout_5")
-        self.widget_2 = QtWidgets.QWidget(self.widget)
-        self.widget_2.setMinimumSize(QtCore.QSize(0, 55))
-        self.widget_2.setStyleSheet("background-color: #333333;")
-        self.widget_2.setObjectName("widget_2")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_2)
-        self.horizontalLayout.setContentsMargins(0, 0, 6, 6)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem3 = QtWidgets.QSpacerItem(1000, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem3)
-        self.Minimize = QtWidgets.QToolButton(self.widget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Minimize.sizePolicy().hasHeightForWidth())
-        self.Minimize.setSizePolicy(sizePolicy)
-        self.Minimize.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
-        self.Minimize.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/assets/minimize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Minimize.setIcon(icon4)
-        self.Minimize.setIconSize(QtCore.QSize(40, 40))
-        self.Minimize.setObjectName("Minimize")
-        self.horizontalLayout.addWidget(self.Minimize)
-        self.MaxRestore = QtWidgets.QToolButton(self.widget_2)
-        self.MaxRestore.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
-        self.MaxRestore.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/assets/maximize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MaxRestore.setIcon(icon5)
-        self.MaxRestore.setIconSize(QtCore.QSize(40, 40))
-        self.MaxRestore.setObjectName("MaxRestore")
-        self.horizontalLayout.addWidget(self.MaxRestore)
-        self.Close = QtWidgets.QToolButton(self.widget_2)
-        self.Close.setStyleSheet(":hover {\n"
-"    background-color: rgb(91, 103, 131);\n"
-"}\n"
-"\n"
-"QToolButton {\n"
-"    border:none;\n"
-"}")
-        self.Close.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/assets/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Close.setIcon(icon6)
-        self.Close.setIconSize(QtCore.QSize(40, 40))
-        self.Close.setObjectName("Close")
-        self.horizontalLayout.addWidget(self.Close)
-        self.gridLayout_5.addWidget(self.widget_2, 0, 0, 1, 1)
-        self.mediaArea = QtWidgets.QStackedWidget(self.widget)
+        self.cameraArea = QtWidgets.QFrame(self.Main)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.mediaArea.sizePolicy().hasHeightForWidth())
-        self.mediaArea.setSizePolicy(sizePolicy)
-        self.mediaArea.setStyleSheet("background-image: url(:/assets/camera.png);")
-        self.mediaArea.setObjectName("mediaArea")
-        self.cameraArea = QVideoWidget()
+        sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
+        self.cameraArea.setSizePolicy(sizePolicy)
+        self.cameraArea.setStyleSheet("background-color: #656565;\n"
+"background-image:    url(:/assets/camera.png);\n"
+"background-repeat: no-repeat;\n"
+"background-position: center;")
+        self.cameraArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.cameraArea.setFrameShadow(QtWidgets.QFrame.Raised)
         self.cameraArea.setObjectName("cameraArea")
-        self.cameraArea.setStyleSheet("background-image: url(:/assets/camera.png);")
-        self.mediaArea.addWidget(self.cameraArea)
-        self.captureArea = QtWidgets.QWidget()
-        self.captureArea.setObjectName("captureArea")
-        self.mediaArea.addWidget(self.captureArea)
-        self.gridLayout_5.addWidget(self.mediaArea, 1, 0, 1, 1)
-        self.horizontalLayout_3.addWidget(self.widget)
+        self.horizontalLayout_3.addWidget(self.cameraArea)
+        self.horizontalLayout_3.setStretch(1, 4)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         VisualSP.setCentralWidget(self.Main)
 
@@ -606,5 +520,4 @@ class Ui_VisualSP(object):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
 
-from PyQt5.QtMultimediaWidget import QVideoWidget
 import qtresources_rc

@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>../assets/arrowLeft.png</file>
+    <file>../assets/arrowRight.png</file>
+    <file>../assets/download.png</file>
+    <file>../assets/logout.png</file>
+    <file>../assets/menuBars.png</file>
+    <file>../assets/camera.png</file>
+  </qresource>
+</RCC>

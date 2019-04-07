@@ -17,6 +17,7 @@ import src.camera.CameraFeed as CameraFeed
 #import src.camera.DetectTracker as DetectTracker
 
 # Created by: Justin Scott
+from src.camera import GproStream
 
 
 
@@ -61,7 +62,8 @@ class MainController:
         self.gui.trackingField_layout.addItem(spacerItem)
 
     def createNew(self):
-        captureArea = CameraFeed.CameraFeed()
+        #captureArea = CameraFeed.CameraFeed()
+        captureArea = GproStream.GproStream()
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
         captureArea.capture(fileLoc)
