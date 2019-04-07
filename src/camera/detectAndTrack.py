@@ -39,7 +39,7 @@ p1 = []
 
 
 # Opens YAML file containing calibration data
-fp = open( "camera/ost.yaml", "r" )
+fp = open( "ost.yaml", "r" )
 ci = yaml.safe_load(fp)
 
 # Extracts wanted values from YAML file
@@ -85,8 +85,12 @@ def update(frame_gray):
 
 
 # In progress
-#def essentialMat():
-    #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
+def essentialMat():
+    E, mask = cv.findEssentialMat(p0, p1, camMat, cv.RANSAC, .999, 1)
+    #print(p0)
+    #print("--------------------")
+    #print(p1)
+    #print("********************")
 
 # Main loop 
 while(1):
@@ -102,12 +106,21 @@ while(1):
     draw(mask, undist)
 
     update(frame_gray)
-
+    #essentialMat() #-- in progress
     # Redetects points when a certain number of them dissapear
     if (len(p1) <= 20):
         p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
-    #essentialMat() -- in progress
+    if (len(p1) > len(p0)):
+        length = len(p1) - len(p0)
+        p1 = p1[:-length]
+        
+    print(len(p0))
+    print("!!!!!!!!!!!!!!!!!!!!!!")
+    print(len(p1))
+    print("***********************")
+    essentialMat()
+    
 
     # Show window
     cv.imshow('undistorted image with trackers',img)

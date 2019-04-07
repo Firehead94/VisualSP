@@ -110,6 +110,7 @@ class DetectAndTrack():
 
         #essentialMat() -- in progress
 
+        return self.img
         # Show window
         #cv.imshow('undistorted image with trackers',self.img)
 
