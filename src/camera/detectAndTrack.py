@@ -62,6 +62,7 @@ new_R = np.zeros((256, 256), dtype = "float")
 global t
 t = np.zeros((256, 256), dtype = "float")
 
+traj = np.zeros((600,600,3), dtype=np.uint8)
 
 
 def calc():
