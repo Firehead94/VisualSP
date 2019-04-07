@@ -6,10 +6,13 @@ import yaml
 
 # Created by: Kenzie King
 # Modified by: Justin Scott
+from src.datastorage import FileHelper
+
 
 class DetectAndTrack():
 
     def __init__(self, capture):
+        self.count = 0
         # Change this if using a different video source. It currently
         # uses whatever the computer has as default
         self.cap = capture
@@ -40,10 +43,8 @@ class DetectAndTrack():
         self.good_old = []
         self.img = []
         self.p1 = []
-
         # Opens YAML file containing calibration data
-        self.fp = open( "camera/ost.yaml", "r" ) #######TODO switch between ../ and nothing mac vs win
-
+        self.fp = open( 'ost.yaml', "r" )
         self.ci = yaml.safe_load(self.fp)
 
         # Extracts wanted values from YAML file
@@ -59,6 +60,14 @@ class DetectAndTrack():
         # arrays so they can be used for undistortion
         self.camMat = np.array( self.K ).reshape((3, 3))
         self.camDist = np.array( self.D ).reshape((1, 5))
+        #NEW#
+        self.camRect = np.array( self.R ).reshape((3, 3))
+        global new_R
+        new_R = np.zeros((256, 256), dtype = "float")
+        global t
+        t = np.zeros((256, 256), dtype = "float")
+
+        traj = np.zeros((600,600,3), dtype=np.uint8)
 
     def calc(self):
         self.p1, self.st, self.err = cv.calcOpticalFlowPyrLK(self.old_gray, self.frame_gray, self.p0, None, **self.lk_params)
@@ -82,13 +91,16 @@ class DetectAndTrack():
         self.p0 = self.good_new.reshape(-1,1,2)
 
 
-    # In progress
-    #def essentialMat(self):
-    #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
+    #NEW#
+    def essentialMat(self):
+        self.E = cv.findEssentialMat(self.p1, self.p0, 1.0, (0,0), cv.RANSAC, .999, 1)
 
     # Main loop
     #while(1):
     def trackStuff(self, ret, frame):
+        global new_R
+        global t
+
 
         self.frame = frame
         self.ret = ret
@@ -107,6 +119,20 @@ class DetectAndTrack():
         # Redetects points when a certain number of them dissapear
         if (len(self.p1) <= 20):
             self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
+            #NEW#
+            self.p1 = self.p0
+
+        #NEW#
+        if (len(self.p1) > len(self.p0)):
+            length = len(self.p1) - len(self.p0)
+            self.p1 = self.p1[:-length]
+        if (self.count > 0):
+            #essentialMat()
+            self.E, new_mask = cv.findEssentialMat(self.p1, self.p0, 1.0, (0,0), cv.RANSAC, .999, 1)
+            #cv.decomposeEssentialMat(E, R0, R1, t)
+            cv.recoverPose(self.E, self.p1, self.p0, new_R, t, 1.0, (0.0, 0.0), new_mask)
+
+        self.count += 1
 
         #essentialMat() -- in progress
 

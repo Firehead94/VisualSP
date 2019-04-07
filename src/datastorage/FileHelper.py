@@ -9,6 +9,7 @@ global ROOT_LOC
 global USER_FLDR
 global VIDEO_FLDR
 global MISC_FLDR
+global OST
 
 
 if SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin':
@@ -16,11 +17,13 @@ if SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin':
     USER_FLDR = ROOT_LOC + '/users/'
     VIDEO_FLDR = ROOT_LOC + '/videos/'
     MISC_FLDR = ROOT_LOC + '/misc/'
+    OST = '../camera/ost.yaml'
 else:
     ROOT_LOC = os.getenv('APPDATA') + '\\VisualSP2019'
     USER_FLDR = ROOT_LOC + '\\users\\'
     VIDEO_FLDR = ROOT_LOC + '\\videos\\'
     MISC_FLDR = ROOT_LOC + '\\misc\\'
+    OST = 'ost.yaml'
 
 
 try:

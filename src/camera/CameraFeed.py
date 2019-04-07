@@ -16,13 +16,16 @@ class CameraFeed(QtWidgets.QWidget):
         self.frames_per_second = 24.0
 
     def capture(self, fileLoc):
+
         cap = cv.VideoCapture(0) ###################################################
         out = cv.VideoWriter(fileLoc, cv.VideoWriter_fourcc(*'XVID'), self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
-
+        print("trackstuff")
         tracker = DetectTracker.DetectAndTrack(cap)
+        print("trackstuff2")
         painter = QtGui.QPainter()
         while(True):
             #capture frames
+
             ret, frame = cap.read()
 
             tracked = tracker.trackStuff(ret,frame)
