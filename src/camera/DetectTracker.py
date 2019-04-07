@@ -82,9 +82,8 @@ class DetectAndTrack():
         self.p0 = self.good_new.reshape(-1,1,2)
 
 
-    # In progress
-    #def essentialMat(self):
-    #cv.findEssentialMat(p0, p1, 4,  'RANSAC', .999, 1, mask)
+    def essentialMat(self):
+        self.E, self.mask = cv.findEssentialMat(self.p0, self.p1, self.camMat, cv.RANSAC, .999, 1)
 
     # Main loop
     #while(1):
@@ -104,11 +103,16 @@ class DetectAndTrack():
 
         self.update(self.frame_gray)
 
+
         # Redetects points when a certain number of them dissapear
         if (len(self.p1) <= 20):
             self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
 
-        #essentialMat() -- in progress
+        if (len(self.p1) > len(self.p0)):
+            length = len(self.p1) - len(self.p0)
+            self.p1 = self.p1[:-length]
+
+        self.essentialMat()
 
         return self.img
         # Show window
