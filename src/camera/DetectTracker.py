@@ -43,7 +43,7 @@ class DetectAndTrack():
 
 
         # Opens YAML file containing calibration data
-        self.fp = open( "camera/ost.yaml", "r" )
+        self.fp = open( "../camera/ost.yaml", "r" )
         self.ci = yaml.safe_load(self.fp)
 
         # Extracts wanted values from YAML file
