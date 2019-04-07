@@ -12,10 +12,10 @@ from goprocam import GoProCamera
 from goprocam import constants
 
 
-class goproFeed(QtWidgets.QWidget):
+class GproStream(QtWidgets.QWidget):
 
     def __init__(self):
-        super(goproFeed,self).__init__()
+        super(GproStream,self).__init__()
         self.folderPath = FileHelper.VIDEO_FLDR
         self.gpCam = GoProCamera.GoPro()
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
