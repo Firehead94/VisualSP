@@ -15,6 +15,7 @@ import os
 import src.gui.previousVideoWidget as previousVideoWidget
 import src.camera.CameraFeed as CameraFeed
 #import src.camera.DetectTracker as DetectTracker
+import src.gui.qtresources_rc
 
 # Created by: Justin Scott
 from src.camera import GproStream
@@ -29,6 +30,7 @@ class MainController:
         self.gui = MainGui.MainGui()
         self.user = User.User()
         self.connectButtons()
+        self.playing = QtWidgets.QToolButton()
         self.gui.VisualSP.show()
         self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.videoPlayer.setVideoOutput(self.gui.cameraArea)
@@ -37,7 +39,6 @@ class MainController:
         self.videoPlayer.pause()
         ## Uncomment to play video
         #self.videoPlayer.play()
-
 
         sys.exit(self.app.exec_())
 
@@ -71,13 +72,23 @@ class MainController:
         self.user.save()
         self.updateUserInfoPanel()
 
+    ## play a
     def playBtn(self):
         self.gui.mediaArea.setCurrentIndex(0)
-        fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
-        self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
-        self.videoPlayer.play()
-        self.user.save()
-        self.updateUserInfoPanel()
+        if self.playing == self.gui.sender():
+            if self.videoPlayer.state() == QMediaPlayer.PlayingState:
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/play.png"))
+                self.videoPlayer.pause()
+            else:
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
+                self.videoPlayer.play()
+        else:
+            fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
+            self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
+            self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
+            self.videoPlayer.play()
+            self.playing.setIcon(QtGui.QIcon(":/assets/play.png"))
+            self.playing = self.gui.sender()
 
     def deleteBtn(self):
         fileName = self.gui.sender().toolTip()

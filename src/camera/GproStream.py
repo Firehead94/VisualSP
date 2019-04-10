@@ -28,7 +28,7 @@ class GproStream(QtWidgets.QWidget):
 
     def capture(self, fileLoc):
 
-        cap = cv.VideoCapture(self.udp)
+        cap = cv.VideoCapture(self.udp, cv.CAP_FFMPEG)
         tracker = DetectTracker.DetectAndTrack(cap)
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))
