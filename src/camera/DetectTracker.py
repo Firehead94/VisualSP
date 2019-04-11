@@ -34,6 +34,7 @@ class DetectAndTrack():
         # Take first frame and find corners in it
         self.ret, self.old_frame = self.cap.read()
         self.old_gray = cv.cvtColor(self.old_frame, cv.COLOR_BGR2GRAY)
+        self.p0 = np.zeros(shape=(1,2))
         if (type == 'ShiTomasi'):
             self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
 
@@ -122,36 +123,36 @@ class DetectAndTrack():
             self.draw(self.mask, undist)
             self.update(self.frame_gray)
 
-        elif (type == 'SIFT'):
-            print(type)
-            sift = cv.xfeatures2d.SIFT_create()
-            kp, des = sift.detectAndCompute(self.old_gray,None)
-            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        else:
+            if (type == 'SIFT'):
+                print(type)
+                sift = cv.xfeatures2d.SIFT_create()
+                kp, des = sift.detectAndCompute(self.old_gray,None)
+                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        elif (type == 'SURF'):
-            print(type)
-            surf = cv.xfeatures2d.SURF_create(1000)
-            kp, des = surf.detectAndCompute(self.old_gray,None)
-            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            elif (type == 'SURF'):
+                print(type)
+                surf = cv.xfeatures2d.SURF_create(1000)
+                kp, des = surf.detectAndCompute(self.old_gray,None)
+                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        elif (type == 'ORB'):
-            print(type)
-            orb = cv.ORB_create(nfeatures=100)
-            kp, des = orb.detectAndCompute(self.old_gray, None)
-            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            elif (type == 'ORB'):
+                print(type)
+                orb = cv.ORB_create(nfeatures=100)
+                kp, des = orb.detectAndCompute(self.old_gray, None)
+                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+            elif (type == 'FAST'):
+                fast = cv.FastFeatureDetector_create(25, True)
+                # calls FAST algorithm using OpenCV
+                kp = fast.detect(frame, None)
+                # draws the points that FAST finds on the image
+                self.img = cv.drawKeypoints(self.old_gray, kp, None, color=(80, 0, 200))
 
-        elif (type == 'FAST'):
-            fast = cv.FastFeatureDetector_create(25, True)
-            # calls FAST algorithm using OpenCV
-            kp = fast.detect(frame, None)
-            # draws the points that FAST finds on the image
-            self.img = cv.drawKeypoints(self.old_gray, kp, None, color=(80, 0, 200))
-
-        self.good_new = self.p1
-        self.good_old = self.p0
-        self.old_gray = frame.copy()
-        self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            self.good_new = self.p1
+            self.good_old = self.p0
+            self.old_gray = frame.copy()
+            self.p0 = np.array(self.good_new).reshape(-1,1,2)
 
 
         return self.img

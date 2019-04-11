@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-input = 'sift'
+input = 'shi'
 
 # Created by: Kenzie King
 
