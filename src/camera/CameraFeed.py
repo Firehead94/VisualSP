@@ -65,8 +65,8 @@ class CameraFeed(QtWidgets.QWidget):
                 if ret==True:
                     tracked = tracker.trackStuff(ret,frame)
                     #display the frames
-                    cv.imshow('frame', tracked) # pass only frame here and to out.write for dots only and no lines.
-                    out.write(frame)
+                    cv.imshow('frame', tracked) # pass tracked here to display lines, frame for dots only
+                    out.write(frame) # pass tracked here to store lines, frame for dots only
 
                 if cv.waitKey(20) & 0xFF == ord('q'):
                     break

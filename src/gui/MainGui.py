@@ -546,7 +546,7 @@ class MainGui(QWidget):
         self.Source.addItem("")
         self.horizontalLayout.addWidget(self.Source)
 
-        ##TODO REMOVE IF NOT DONE
+        ##TODO REMOVE BELOW IF NOT DONE
         self.featureDetections = QtWidgets.QComboBox(self.widget_2)
         self.featureDetections.setMinimumSize(QtCore.QSize(200, 35))
         font = QtGui.QFont()
@@ -563,6 +563,7 @@ class MainGui(QWidget):
         self.horizontalLayout.addWidget(self.featureDetections)
         self.featureDetections.setVisible(False)
         self.Source.setVisible(False)
+        ##TODO REMOVE ABOVE IF NOT DONE
 
         spacerItem3 = QtWidgets.QSpacerItem(1000, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
