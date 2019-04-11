@@ -117,7 +117,7 @@ class DetectAndTrack():
         undist = cv.undistort(self.frame, self.camMat, self.camDist, None, None)
 
         if (type == 'ShiTomasi'):
-            print(type)
+           # print(type)
             self.shiRetrack()
             self.calc()
             self.draw(self.mask, undist)
@@ -125,19 +125,19 @@ class DetectAndTrack():
 
         else:
             if (type == 'SIFT'):
-                print(type)
+                #print(type)
                 sift = cv.xfeatures2d.SIFT_create()
                 kp, des = sift.detectAndCompute(self.old_gray,None)
                 self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
             elif (type == 'SURF'):
-                print(type)
+                #print(type)
                 surf = cv.xfeatures2d.SURF_create(1000)
                 kp, des = surf.detectAndCompute(self.old_gray,None)
                 self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
             elif (type == 'ORB'):
-                print(type)
+                #print(type)
                 orb = cv.ORB_create(nfeatures=100)
                 kp, des = orb.detectAndCompute(self.old_gray, None)
                 self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
