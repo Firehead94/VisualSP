@@ -12,6 +12,8 @@ import src.datastorage.FileHelper as FileHelper
 import src.utilities.SystemUtils as SystemUtils
 import src.camera.DetectTracker as DetectTracker
 import cv2 as cv
+from shutil import copyfile
+
 
 class CameraFeed(QtWidgets.QWidget):
     # Created by: Devin Yang
@@ -20,9 +22,8 @@ class CameraFeed(QtWidgets.QWidget):
         super(CameraFeed,self).__init__()
         self.frames_per_second = 30
 
-    def capture(self, fileLoc, capType):
-
-        if capType.text() == 'GoPro':
+    def capture(self, fileLoc, capType, detection):
+        if capType == 'GoPro':
             self.gpCam = GoProCamera.GoPro()
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.t = time()
@@ -30,21 +31,26 @@ class CameraFeed(QtWidgets.QWidget):
             self.gpCam.livestream("start")
             cap = cv.VideoCapture(self.udp)
             vid = cv.VideoWriter_fourcc(*'MJPG')
-        elif capType.text() == 'File':
+        elif capType == 'File':
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
-            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4)", options=options)
+            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4);;AVI Files (*.avi)", options=options)
             if fileName:
+                fileName = fileName.replace("/","\\")
+                print(fileName)
                 cap = cv.VideoCapture(fileName)
-                vid = cv.VideoWriter_fourcc(*'MP4V')
+                vid = cv.VideoWriter_fourcc(*'XVID')
             else:
                 print("No file selected")
                 return
-        elif capType.text() == 'Webcam':
+        elif capType == 'Webcam':
             cap = cv.VideoCapture(0)
             vid = cv.VideoWriter_fourcc(*'XVID')
-        elif capType.text() == 'None':
+        elif capType == 'None':
             print('No cap device selected')
+            return
+        else:
+            print("error")
             return
         out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
         tracker = DetectTracker.DetectAndTrack(cap)
@@ -60,7 +66,7 @@ class CameraFeed(QtWidgets.QWidget):
                     tracked = tracker.trackStuff(ret,frame)
                     #display the frames
                     cv.imshow('frame', tracked) # pass only frame here and to out.write for dots only and no lines.
-                    out.write(tracked)
+                    out.write(frame)
 
                 if cv.waitKey(20) & 0xFF == ord('q'):
                     break

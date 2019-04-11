@@ -29,9 +29,7 @@ class MainController:
         self.app = QtWidgets.QApplication(sys.argv)
         self.gui = MainGui.MainGui()
         self.user = User.User()
-        self.selectedBtn = self.gui.Webcam
         self.connectButtons()
-        self.playing = QtWidgets.QToolButton()
         self.gui.VisualSP.show()
         self.videoPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.videoPlayer.setVideoOutput(self.gui.cameraArea)
@@ -45,6 +43,8 @@ class MainController:
 
     def populateScrollArea(self):
         #self.gui.trackingField_layout.addWidget()
+        self.playing = QtWidgets.QToolButton()
+        self.videoPlayer.stateChanged.connect(lambda:   self.playing.setIcon(QtGui.QIcon(":/assets/play.png")) if self.videoPlayer.state() == QMediaPlayer.StoppedState else None)
         while self.gui.trackingField_layout.count():
             item = self.gui.trackingField_layout.takeAt(0)
             widget = item.widget()
@@ -66,7 +66,7 @@ class MainController:
         #captureArea = GproStream.GproStream()
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
-        captureArea.capture(fileLoc, self.selectedBtn)
+        captureArea.capture(fileLoc, self.gui.Source.currentText(), self.gui.featureDetections.currentText())
         if os.path.isfile(fileLoc):
             self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
             self.gui.mediaArea.addWidget(captureArea)
@@ -119,22 +119,18 @@ class MainController:
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
         self.gui.saveBtn.clicked.connect(lambda: (self.user.save(), self.updateUserInfoPanel()))
         self.gui.menuBtn.clicked.connect(self.createNew)
-        self.gui.GoPro.toggled.connect(lambda:self.btnstate(self.gui.GoPro))
-        self.gui.Webcam.toggled.connect(lambda:self.btnstate(self.gui.Webcam))
-        self.gui.File.toggled.connect(lambda:self.btnstate(self.gui.File))
 
         ##WINDOW BUTTONS
         self.gui.closeBtn.clicked.connect(self.closeBtn)
         self.gui.maxrestoreBtn.clicked.connect(self.showMaxRestore)
         self.gui.minimizeBtn.clicked.connect(self.showSmall)
 
-    def btnstate(self, btn):
-        self.selectedBtn = btn
-
     def loginButton(self):
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".pkl"):
             self.user = User.loadUser(UserHelper.UserHelper.get_user(self.gui.usernameField.text()))
             self.updateUserInfoPanel()
+            self.gui.featureDetections.setVisible(True)
+            self.gui.Source.setVisible(True)
             self.gui.stackedWidget.setCurrentIndex(2)
             return
         else:
@@ -145,6 +141,8 @@ class MainController:
         self.user.save()
         UserHelper.UserHelper.update_user(self.user)
         self.updateUserInfoPanel()
+        self.gui.featureDetections.setVisible(False)
+        self.gui.Source.setVisible(False)
         self.gui.stackedWidget.setCurrentIndex(0)
 
     def updateUserInfoPanel(self):

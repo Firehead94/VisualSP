@@ -653,7 +653,7 @@ QToolButton {
                   </property>
                   <property name="icon">
                    <iconset resource="qtresources.qrc">
-                    <normaloff>:/assets/menuBars.png</normaloff>:/assets/menuBars.png</iconset>
+                    <normaloff>:/assets/record.png</normaloff>:/assets/record.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -788,53 +788,7 @@ QToolButton {
                  <height>200</height>
                 </size>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1,1,1,1,1">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_5">
-                  <item>
-                   <widget class="QRadioButton" name="Webcam">
-                    <property name="font">
-                     <font>
-                      <family>Tw Cen MT</family>
-                      <pointsize>16</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Webcam</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QRadioButton" name="File">
-                    <property name="font">
-                     <font>
-                      <family>Tw Cen MT</family>
-                      <pointsize>16</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>File</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QRadioButton" name="GoPro">
-                    <property name="font">
-                     <font>
-                      <family>Tw Cen MT</family>
-                      <pointsize>16</pointsize>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>GoPro</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
+               <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,1,1,1,1">
                 <item>
                  <widget class="QLabel" name="usernameOut">
                   <property name="font">
@@ -1086,6 +1040,84 @@ QToolButton {
             <property name="bottomMargin">
              <number>6</number>
             </property>
+            <item>
+             <widget class="QComboBox" name="Source">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Tw Cen MT</family>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: WHITE;</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Webcam</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>File</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>GoPro</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="featureDetections">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Tw Cen MT</family>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: WHITE;</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Shi Tomasi</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SIFT</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SURF</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>FAST</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ORB</string>
+               </property>
+              </item>
+             </widget>
+            </item>
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
