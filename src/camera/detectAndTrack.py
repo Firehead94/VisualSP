@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-input = 'surf'
+input = 'orb'
 
 # Created by: Kenzie King
 
@@ -102,7 +102,13 @@ def update(frame_gray):
     global p0
     p0 = good_new.reshape(-1,1,2)
 
-count = 0
+def siftSurf(old_gray, p0):
+    img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    good_new = p1 
+    good_old = p0
+    old_gray = frame_gray.copy()
+    p0 = np.array(good_new).reshape(-1,1,2)
+    cv.imshow('undistorted image with trackers',img)
 
 # Main loop 
 while(1):
@@ -140,11 +146,17 @@ while(1):
         p0 = np.array(good_new).reshape(-1,1,2)
         cv.imshow('undistorted image with trackers',img)
 
+    elif (input == 'orb'):
+        orb = cv.ORB_create(nfeatures=100)
+	kp, des = orb.detectAndCompute(old_gray, None)
+        img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        good_new = p1 
+        good_old = p0
+        old_gray = frame_gray.copy()
+        p0 = np.array(good_new).reshape(-1,1,2)
+        cv.imshow('undistorted image with trackers',img)
 
 
-
-
-    count = 1 + count
 
     # Exit loop with specific key press (escape and x button on window)
     k = cv.waitKey(30) & 0xff
