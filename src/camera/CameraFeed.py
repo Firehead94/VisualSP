@@ -25,12 +25,21 @@ class CameraFeed(QtWidgets.QWidget):
 
     def capture(self, fileLoc, capType, detection):
         if capType == 'GoPro':
+            print("gpcam")
             self.gpCam = GoProCamera.GoPro()
+            print("sock")
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.t = time()
             self.udp = "udp://10.5.5.9:8554"
-            self.gpCam.livestream("start")
+            print("starting")
+            try:
+                self.gpCam.livestream("start")
+            except:
+                self.error_dialog.showMessage("No GoPro detected")
+                return;
+            print("started")
             cap = cv.VideoCapture(self.udp)
+            print("cap")
             vid = cv.VideoWriter_fourcc(*'MJPG')
         elif capType == 'File':
             options = QFileDialog.Options()
@@ -43,7 +52,7 @@ class CameraFeed(QtWidgets.QWidget):
                     cap = cv.VideoCapture(fileName)
                     vid = cv.VideoWriter_fourcc(*'XVID')
                 else:
-                    print("Incorrect file type")
+                    self.error_dialog.showMessage("Incorrect File Type")
                     return
             else:
                 print("No file selected")
