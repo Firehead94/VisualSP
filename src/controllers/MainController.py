@@ -86,17 +86,21 @@ class MainController:
                 self.videoPlayer.play()
         else:
             fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
-            self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
-            self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
-            self.videoPlayer.play()
-            self.playing.setIcon(QtGui.QIcon(":/assets/play.png"))
-            self.playing = self.gui.sender()
+            if os.path.isfile(fileLoc):
+                self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
+                self.videoPlayer.play()
+                self.playing.setIcon(QtGui.QIcon(":/assets/play.png"))
+                self.playing = self.gui.sender()
+            else:
+                print("no file found")
 
     def deleteBtn(self):
         fileName = self.gui.sender().toolTip()
         fileLoc = FileHelper.VIDEO_FLDR + fileName
         self.user.user["TRACKINGS"].remove(fileName)
-        os.remove(fileLoc)
+        if os.path.isfile(fileLoc):
+            os.remove(fileLoc)
         self.user.save()
         self.updateUserInfoPanel()
 
