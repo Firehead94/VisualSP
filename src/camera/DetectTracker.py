@@ -107,7 +107,7 @@ class DetectAndTrack():
         global new_R
         global t
 
-        print(type)
+        #print(type)
         self.frame = frame
         self.ret = ret
 
