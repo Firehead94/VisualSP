@@ -67,7 +67,7 @@ class MainController:
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
         captureArea.capture(fileLoc, self.selectedBtn)
-        if os. path. isfile(fileLoc):
+        if os.path.isfile(fileLoc):
             self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
             self.gui.mediaArea.addWidget(captureArea)
             self.gui.mediaArea.setCurrentIndex(1)
