@@ -4,11 +4,13 @@ import numpy as np
 import cv2 as cv
 import yaml
 
+input = 'shi'
+
 # Created by: Kenzie King
 
 # Change this if using a different video source. It currently 
 # uses whatever the computer has as default
-from src.datastorage import FileHelper
+#from src.datastorage import FileHelper
 
 cap = cv.VideoCapture(0)
 
@@ -27,17 +29,21 @@ lk_params = dict( winSize  = (15,15),
 # Create random colors for use in point tracking
 color = np.random.randint(0,255,(100,3))
 
-# Take first frame and find corners in it
-ret, old_frame = cap.read()
-old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
-p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
-# Create a mask image for drawing purposes
-mask = np.zeros_like(old_frame)
-good_new = []
-good_old = []
-img = []
-p1 = []
+
+if (input == 'shi'):
+    p0 = np.zeros(shape=(1,2))
+    ret, old_frame = cap.read()
+    old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
+    p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+
+
+    # Create a mask image for drawing purposes
+    mask = np.zeros_like(old_frame)
+    good_new = []
+    good_old = []
+    img = []
+    p1 = []
 
 
 # Opens YAML file containing calibration data
@@ -59,15 +65,20 @@ camMat = np.array( K ).reshape((3, 3))
 camDist = np.array( D ).reshape((1, 5))
 camRect = np.array( R ).reshape((3, 3))
 
-global new_R
-new_R = np.zeros((256, 256), dtype = "float")
-global t
-t = np.zeros((256, 256), dtype = "float")
+def shiTrack():
+    # Take first frame and find corners in it
+    p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
-traj = np.zeros((600,600,3), dtype=np.uint8)
-
+def shiRetrack():
+    # Redetects points when a certain number of them dissapear
+    global p1
+    if (len(p1) <= 20):
+        p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+        p1 = p0
 
 def calc():
+    print(p0)
+    print(frame_gray)
     global p1
     p1, st, err = cv.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
     # Select corners
@@ -75,6 +86,7 @@ def calc():
     good_new = p1[st==1]
     global good_old 
     good_old = p0[st==1]
+
 
 def draw(mask, undist):
     # Draw tracking data
@@ -94,60 +106,39 @@ def update(frame_gray):
     global p0
     p0 = good_new.reshape(-1,1,2)
 
-
-# In progress
-def essentialMat():
-
-    E = cv.findEssentialMat(p1, p0, 1.0, (0,0), cv.RANSAC, .999, 1)
-
-
 count = 0
+
 # Main loop 
 while(1):
 
     ret,frame = cap.read()
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    #old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
 
     # Undistorts
     undist = cv.undistort(frame, camMat, camDist, None, None) 
 
-    calc()
+    if (input == 'shi'):
 
-    draw(mask, undist)
+        shiRetrack()
+        calc()
+        draw(mask, undist)
+        update(frame_gray)
+            # Show window
+        cv.imshow('undistorted image with trackers',img)
 
-    update(frame_gray)
 
-    # Redetects points when a certain number of them dissapear
-    if (len(p1) <= 20):
-        p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
-        p1 = p0
-    print(len(p0))
-    print("!!!!!!!!!!!!!!!!!!!!!!")
-    print(len(p1))
-    print("***********************")
 
-    #print (p0)
-    if (len(p1) > len(p0)):
-        length = len(p1) - len(p0)
-        p1 = p1[:-length]        
-    if (count > 0):
-    #essentialMat()
-        E, new_mask = cv.findEssentialMat(p1, p0, 1.0, (0,0), cv.RANSAC, .999, 1)
-	#cv.decomposeEssentialMat(E, R0, R1, t)
-        print(E) 
-        cv.recoverPose(E, p1, p0, new_R, t, 1.0, (0.0, 0.0), new_mask)
-        print(new_R)
 
-    count += 1
 
-    # Show window
-    cv.imshow('undistorted image with trackers',img)
+
+    count = 1 + count
 
     # Exit loop with specific key press (escape and x button on window)
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
-    if cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1:
+    if (cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1):
         break
 
 # Kill
