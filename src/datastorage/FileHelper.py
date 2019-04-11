@@ -23,7 +23,7 @@ else:
     USER_FLDR = ROOT_LOC + '\\users\\'
     VIDEO_FLDR = ROOT_LOC + '\\videos\\'
     MISC_FLDR = ROOT_LOC + '\\misc\\'
-    OST = 'ost.yaml'
+    OST = 'camera\\ost.yaml'
 
 
 try:
