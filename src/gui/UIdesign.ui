@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1479</width>
-    <height>794</height>
+    <width>1868</width>
+    <height>1123</height>
    </rect>
   </property>
   <property name="sizeIncrement">
@@ -265,7 +265,7 @@ QToolButton {
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Git/src/gui/qtresources.qrc">
+                   <iconset resource="qtresources.qrc">
                     <normaloff>:/assets/arrowRight.png</normaloff>:/assets/arrowRight.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -652,8 +652,8 @@ QToolButton {
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Git/src/gui/qtresources.qrc">
-                    <normaloff>:/assets/menuBars.png</normaloff>:/assets/menuBars.png</iconset>
+                   <iconset resource="qtresources.qrc">
+                    <normaloff>:/assets/record.png</normaloff>:/assets/record.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -684,8 +684,8 @@ QToolButton {
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>../Git/assets/download.png</normaloff>../Git/assets/download.png</iconset>
+                   <iconset resource="qtresources.qrc">
+                    <normaloff>:/assets/download.png</normaloff>:/assets/download.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -716,8 +716,8 @@ QToolButton {
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset>
-                    <normaloff>../Git/assets/logout.png</normaloff>../Git/assets/logout.png</iconset>
+                   <iconset resource="qtresources.qrc">
+                    <normaloff>:/assets/logout.png</normaloff>:/assets/logout.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -983,7 +983,7 @@ QToolButton {
                     <x>0</x>
                     <y>0</y>
                     <width>278</width>
-                    <height>425</height>
+                    <height>754</height>
                    </rect>
                   </property>
                  </widget>
@@ -1041,6 +1041,84 @@ QToolButton {
              <number>6</number>
             </property>
             <item>
+             <widget class="QComboBox" name="Source">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Tw Cen MT</family>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: WHITE;</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Webcam</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>File</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>GoPro</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="featureDetections">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>35</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Tw Cen MT</family>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: WHITE;</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Shi Tomasi</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SIFT</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SURF</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>FAST</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ORB</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -1074,7 +1152,7 @@ QToolButton {
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Git/src/gui/qtresources.qrc">
+               <iconset resource="qtresources.qrc">
                 <normaloff>:/assets/minimize.png</normaloff>:/assets/minimize.png</iconset>
               </property>
               <property name="iconSize">
@@ -1100,7 +1178,7 @@ QToolButton {
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Git/src/gui/qtresources.qrc">
+               <iconset resource="qtresources.qrc">
                 <normaloff>:/assets/maximize.png</normaloff>:/assets/maximize.png</iconset>
               </property>
               <property name="iconSize">
@@ -1126,7 +1204,7 @@ QToolButton {
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Git/src/gui/qtresources.qrc">
+               <iconset resource="qtresources.qrc">
                 <normaloff>:/assets/close.png</normaloff>:/assets/close.png</iconset>
               </property>
               <property name="iconSize">
@@ -1152,7 +1230,7 @@ QToolButton {
             <string notr="true">background-color: transparent;
 </string>
            </property>
-           <widget class="QVideoWidget" name="cameraArea" native="true"/>
+           <widget class="QVideoWidget" name="cameraArea"/>
            <widget class="QWidget" name="captureArea"/>
           </widget>
          </item>
@@ -1173,7 +1251,7 @@ QToolButton {
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Git/src/gui/qtresources.qrc"/>
+  <include location="qtresources.qrc"/>
  </resources>
  <connections/>
 </ui>

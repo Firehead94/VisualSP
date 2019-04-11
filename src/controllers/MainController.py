@@ -15,6 +15,7 @@ import os
 import src.gui.previousVideoWidget as previousVideoWidget
 import src.camera.CameraFeed as CameraFeed
 #import src.camera.DetectTracker as DetectTracker
+import src.gui.qtresources_rc
 
 # Created by: Justin Scott
 from src.camera import GproStream
@@ -38,11 +39,12 @@ class MainController:
         ## Uncomment to play video
         #self.videoPlayer.play()
 
-
         sys.exit(self.app.exec_())
 
     def populateScrollArea(self):
         #self.gui.trackingField_layout.addWidget()
+        self.playing = QtWidgets.QToolButton()
+        self.videoPlayer.stateChanged.connect(lambda:   self.playing.setIcon(QtGui.QIcon(":/assets/play.png")) if self.videoPlayer.state() == QMediaPlayer.StoppedState else None)
         while self.gui.trackingField_layout.count():
             item = self.gui.trackingField_layout.takeAt(0)
             widget = item.widget()
@@ -64,26 +66,41 @@ class MainController:
         #captureArea = GproStream.GproStream()
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
-        captureArea.capture(fileLoc)
-        self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
-        self.gui.mediaArea.addWidget(captureArea)
-        self.gui.mediaArea.setCurrentIndex(1)
-        self.user.save()
-        self.updateUserInfoPanel()
+        captureArea.capture(fileLoc, self.gui.Source.currentText(), self.gui.featureDetections.currentText())
+        if os.path.isfile(fileLoc):
+            self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
+            self.gui.mediaArea.addWidget(captureArea)
+            self.gui.mediaArea.setCurrentIndex(1)
+            self.user.save()
+            self.updateUserInfoPanel()
 
+    ## play a
     def playBtn(self):
         self.gui.mediaArea.setCurrentIndex(0)
-        fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
-        self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
-        self.videoPlayer.play()
-        self.user.save()
-        self.updateUserInfoPanel()
+        if self.playing == self.gui.sender():
+            if self.videoPlayer.state() == QMediaPlayer.PlayingState:
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/play.png"))
+                self.videoPlayer.pause()
+            else:
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
+                self.videoPlayer.play()
+        else:
+            fileLoc = FileHelper.VIDEO_FLDR + self.gui.sender().toolTip()
+            if os.path.isfile(fileLoc):
+                self.videoPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileLoc)))
+                self.gui.sender().setIcon(QtGui.QIcon(":/assets/pause.png"))
+                self.videoPlayer.play()
+                self.playing.setIcon(QtGui.QIcon(":/assets/play.png"))
+                self.playing = self.gui.sender()
+            else:
+                print("no file found")
 
     def deleteBtn(self):
         fileName = self.gui.sender().toolTip()
         fileLoc = FileHelper.VIDEO_FLDR + fileName
         self.user.user["TRACKINGS"].remove(fileName)
-        os.remove(fileLoc)
+        if os.path.isfile(fileLoc):
+            os.remove(fileLoc)
         self.user.save()
         self.updateUserInfoPanel()
 
@@ -112,6 +129,8 @@ class MainController:
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".pkl"):
             self.user = User.loadUser(UserHelper.UserHelper.get_user(self.gui.usernameField.text()))
             self.updateUserInfoPanel()
+            self.gui.featureDetections.setVisible(True)
+            self.gui.Source.setVisible(True)
             self.gui.stackedWidget.setCurrentIndex(2)
             return
         else:
@@ -122,6 +141,8 @@ class MainController:
         self.user.save()
         UserHelper.UserHelper.update_user(self.user)
         self.updateUserInfoPanel()
+        self.gui.featureDetections.setVisible(False)
+        self.gui.Source.setVisible(False)
         self.gui.stackedWidget.setCurrentIndex(0)
 
     def updateUserInfoPanel(self):
