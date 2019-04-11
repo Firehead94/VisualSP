@@ -38,7 +38,7 @@ class CameraFeed(QtWidgets.QWidget):
                 self.gpCam.livestream("start")
             except:
                 self.error_dialog.showMessage("No GoPro detected")
-                return;
+                return
             print("started")
             cap = cv.VideoCapture(self.udp)
             print("cap")
@@ -48,7 +48,7 @@ class CameraFeed(QtWidgets.QWidget):
             options |= QFileDialog.DontUseNativeDialog
             fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4);;AVI Files (*.avi)", options=options)
             if fileName:
-                if fileName[-3:] == 'avi' or fileName[-3:] == 'mp4':
+                if fileName[-3:] == 'avi' or fileName[-3:] == 'MP4':
                     if not (SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin'):
                         fileName = fileName.replace("/","\\")
                     print(fileName)

@@ -543,7 +543,8 @@ class MainGui(QWidget):
         self.Source.setObjectName("Source")
         self.Source.addItem("")
         self.Source.addItem("")
-        self.Source.addItem("")
+        ##TODO GORPO
+        #self.Source.addItem("")
         self.horizontalLayout.addWidget(self.Source)
 
         ##TODO REMOVE BELOW IF NOT DONE
@@ -711,7 +712,8 @@ class MainGui(QWidget):
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
         self.Source.setItemText(0, _translate("VisualSP", "Webcam"))
         self.Source.setItemText(1, _translate("VisualSP", "File"))
-        self.Source.setItemText(2, _translate("VisualSP", "GoPro"))
+        ##TODO GORPO
+        #self.Source.setItemText(2, _translate("VisualSP", "GoPro"))
         self.featureDetections.setItemText(0, _translate("VisualSP", "ShiTomasi"))
         self.featureDetections.setItemText(1, _translate("VisualSP", "SIFT"))
         self.featureDetections.setItemText(2, _translate("VisualSP", "SURF"))

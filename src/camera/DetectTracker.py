@@ -247,7 +247,7 @@ class DetectAndTrack():
             self.good_old = self.p0
             self.old_gray = frame.copy()
             self.p0 = np.array(self.good_new).reshape(-1,1,2)
-            return self.img1
+            return self.img3
 
 
 
