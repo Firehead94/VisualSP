@@ -12,6 +12,7 @@ from src.datastorage import FileHelper
 class DetectAndTrack():
 
     def __init__(self, capture, type):
+        self.count = -1
         # Change this if using a different video source. It currently
         # uses whatever the computer has as default
         self.cap = capture
@@ -115,47 +116,141 @@ class DetectAndTrack():
 
         # Undistorts
         undist = cv.undistort(self.frame, self.camMat, self.camDist, None, None)
-
+        self.count += 1
         if (type == 'ShiTomasi'):
-           # print(type)
             self.shiRetrack()
             self.calc()
             self.draw(self.mask, undist)
             self.update(self.frame_gray)
+            return self.img
 
-        else:
-            if (type == 'SIFT'):
-                #print(type)
-                sift = cv.xfeatures2d.SIFT_create()
-                kp, des = sift.detectAndCompute(self.old_gray,None)
-                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-            elif (type == 'SURF'):
-                #print(type)
-                surf = cv.xfeatures2d.SURF_create(1000)
-                kp, des = surf.detectAndCompute(self.old_gray,None)
-                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-            elif (type == 'ORB'):
-                #print(type)
-                orb = cv.ORB_create(nfeatures=100)
-                kp, des = orb.detectAndCompute(self.old_gray, None)
-                self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-            elif (type == 'FAST'):
-                fast = cv.FastFeatureDetector_create(25, True)
-                # calls FAST algorithm using OpenCV
-                kp = fast.detect(frame, None)
-                # draws the points that FAST finds on the image
-                self.img = cv.drawKeypoints(self.old_gray, kp, None, color=(80, 0, 200))
-
+        elif (type == 'SIFT'):
+            sift = cv.xfeatures2d.SIFT_create()
+            if (self.count == 0):
+                self.kp1, self.des1 = sift.detectAndCompute(self.old_gray,None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                self.img3 = frame
+            else:
+                self.kp1, self.des1 = sift.detectAndCompute(self.old_gray,None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                bf = cv.BFMatcher()
+                matches = bf.knnMatch(self.des0,self.des1, k=2)
+                good = []
+                for m,n in matches:
+                    if m.distance < 0.75*n.distance:
+                        good.append([m])
+                self.img3 = cv.drawMatchesKnn(self.img0,self.kp0,self.img1,self.kp1,good,4,flags=2)
+            self.kp0 = self.kp1
+            self.des0 = self.des1
+            self.img0 = self.img1
             self.good_new = self.p1
             self.good_old = self.p0
             self.old_gray = frame.copy()
             self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            return self.img3
+
+        elif (type == 'SURF'):
+            surf = cv.xfeatures2d.SURF_create(1000)
+            if (self.count == 0):
+                self.kp1, self.des1 = surf.detectAndCompute(self.old_gray,None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                self.img3 = frame
+            else:
+                self.kp1, self.des1 = surf.detectAndCompute(self.old_gray,None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                bf = cv.BFMatcher()
+                matches = bf.knnMatch(self.des0,self.des1, k=2)
+                good = []
+                for m,n in matches:
+                    if m.distance < 0.75*n.distance:
+                        good.append([m])
+                self.img3 = cv.drawMatchesKnn(self.img0,self.kp0,self.img1,self.kp1,good,4,flags=2)
+            self.kp0 = self.kp1
+            self.des0 = self.des1
+            self.img0 = self.img1
+            self.good_new = self.p1
+            self.good_old = self.p0
+            self.old_gray = frame.copy()
+            self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            return self.img3
+
+        elif (type == 'ORB'):
+            orb = cv.ORB_create(nfeatures=100)
+            if (self.count == 0):
+                self.kp1, self.des1 = orb.detectAndCompute(self.old_gray, None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                self.img3 = frame
+            else:
+                self.kp1, self.des1 = orb.detectAndCompute(self.old_gray,None)
+                self.img1=cv.drawKeypoints(self.old_gray,self.kp1,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                bf = cv.BFMatcher()
+                matches = bf.knnMatch(self.des0,self.des1, k=2)
+                good = []
+                for m,n in matches:
+                    if m.distance < 0.75*n.distance:
+                        good.append([m])
+                self.img3 = cv.drawMatchesKnn(self.img0,self.kp0,self.img1,self.kp1,good,4,flags=2)
+            self.kp0 = self.kp1
+            self.des0 = self.des1
+            self.img0 = self.img1
+            self.good_new = self.p1
+            self.good_old = self.p0
+            self.old_gray = frame.copy()
+            self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            return self.img3
+
+        elif (type == 'FAST'):
+            fast = cv.FastFeatureDetector_create(25, True)
+            self.kp = fast.detect(frame, None)
+            self.img = cv.drawKeypoints(self.old_gray, self.kp, None, color=(80, 0, 200))
+            self.good_new = self.p1
+            self.good_old = self.p0
+            self.old_gray = frame.copy()
+            self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            return self.img
+
+        #    elif (input == 'harris'):
+        #        kp = cv.cornerHarris(frame_gray,2,3,0.04)
+        #        img = cv.drawKeypoints(frame_gray, kp, None, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        #        good_new = p1
+        #        good_old = p0
+        #        old_gray = frame.copy()
+        #        p0 = np.array(good_new).reshape(-1,1,2)
+        #        cv.imshow('frame',img)
+
+        elif (type == 'Brief'):
+            star = cv.xfeatures2d.StarDetector_create()
+            brief = cv.xfeatures2d.BriefDescriptorExtractor_create()
+            if (self.count == 0):
+                self.kp1 = star.detect(self.frame_gray,None)
+                self.kp1, self.des1 = brief.compute(self.frame_gray, self.kp1)
+                self.img1 = cv.drawKeypoints(self.frame_gray, self.kp1, None, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                self.img3 = self.img1
+            else:
+                self.kp1 = star.detect(self.frame_gray,None)
+                self.kp1, self.des1 = brief.compute(self.frame_gray, self.kp1)
+                self.img1 = cv.drawKeypoints(self.frame_gray, self.kp1, None, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                bf = cv.BFMatcher()
+                matches = bf.knnMatch(self.des0,self.des1, k=2)
+                good = []
+                for m,n in matches:
+                    if m.distance < 0.75*n.distance:
+                        good.append([m])
+                self.img3 = cv.drawMatchesKnn(self.img0,self.kp0,self.img1,self.kp1,good,4,flags=2)
+            self.kp0 = self.kp1
+            self.des0 = self.des1
+            self.img0 = self.img1
+            #kp = star.detect(frame_gray,None)
+            #kp, des = brief.compute(frame_gray, kp)
+            #img = cv.drawKeypoints(frame_gray, kp, None, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            self.good_new = self.p1
+            self.good_old = self.p0
+            self.old_gray = frame.copy()
+            self.p0 = np.array(self.good_new).reshape(-1,1,2)
+            return self.img1
 
 
-        return self.img
+
         # Show window
         #cv.imshow('undistorted image with trackers',self.img)
 

@@ -13,10 +13,12 @@ import src.utilities.SystemUtils as SystemUtils
 import src.camera.DetectTracker as DetectTracker
 import cv2 as cv
 from shutil import copyfile
+import os
 
 
 class CameraFeed(QtWidgets.QWidget):
-    # Created by: Devin Yang
+    # Created by: Devin Yang, Leo Wernet
+    # Modified by: Justin Scott
 
     def __init__(self):
         super(CameraFeed,self).__init__()
@@ -47,7 +49,8 @@ class CameraFeed(QtWidgets.QWidget):
             fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4);;AVI Files (*.avi)", options=options)
             if fileName:
                 if fileName[-3:] == 'avi' or fileName[-3:] == 'mp4':
-                    fileName = fileName.replace("/","\\")
+                    if not (SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin'):
+                        fileName = fileName.replace("/","\\")
                     print(fileName)
                     cap = cv.VideoCapture(fileName)
                     vid = cv.VideoWriter_fourcc(*'XVID')

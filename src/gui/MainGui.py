@@ -560,6 +560,7 @@ class MainGui(QWidget):
         self.featureDetections.addItem("")
         self.featureDetections.addItem("")
         self.featureDetections.addItem("")
+        self.featureDetections.addItem("")
         self.horizontalLayout.addWidget(self.featureDetections)
         self.featureDetections.setVisible(False)
         self.Source.setVisible(False)
@@ -716,6 +717,7 @@ class MainGui(QWidget):
         self.featureDetections.setItemText(2, _translate("VisualSP", "SURF"))
         self.featureDetections.setItemText(3, _translate("VisualSP", "FAST"))
         self.featureDetections.setItemText(4, _translate("VisualSP", "ORB"))
+        self.featureDetections.setItemText(5, _translate("VisualSP", "Brief"))
 
     def eventFilter(self, obj, event):
         if event.type() == event.HoverMove:
