@@ -11,8 +11,7 @@ from src.datastorage import FileHelper
 
 class DetectAndTrack():
 
-    def __init__(self, capture):
-        self.count = 0
+    def __init__(self, capture, type):
         # Change this if using a different video source. It currently
         # uses whatever the computer has as default
         self.cap = capture
@@ -35,7 +34,8 @@ class DetectAndTrack():
         # Take first frame and find corners in it
         self.ret, self.old_frame = self.cap.read()
         self.old_gray = cv.cvtColor(self.old_frame, cv.COLOR_BGR2GRAY)
-        self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
+        if (type == 'ShiTomasi'):
+            self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
 
         # Create a mask image for drawing purposes
         self.mask = np.zeros_like(self.old_frame)
@@ -95,13 +95,18 @@ class DetectAndTrack():
     def essentialMat(self):
         self.E = cv.findEssentialMat(self.p1, self.p0, 1.0, (0,0), cv.RANSAC, .999, 1)
 
+    def shiRetrack(self):
+        if (len(self.p1) <= 20):
+            self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
+            self.p1 = self.p0
+
     # Main loop
     #while(1):
-    def trackStuff(self, ret, frame):
+    def trackStuff(self, ret, frame, type):
         global new_R
         global t
 
-
+        print(type)
         self.frame = frame
         self.ret = ret
 
@@ -110,31 +115,44 @@ class DetectAndTrack():
         # Undistorts
         undist = cv.undistort(self.frame, self.camMat, self.camDist, None, None)
 
-        self.calc()
+        if (type == 'ShiTomasi'):
+            print(type)
+            self.shiRetrack()
+            self.calc()
+            self.draw(self.mask, undist)
+            self.update(self.frame_gray)
 
-        self.draw(self.mask, undist)
+        elif (type == 'SIFT'):
+            print(type)
+            sift = cv.xfeatures2d.SIFT_create()
+            kp, des = sift.detectAndCompute(self.old_gray,None)
+            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        self.update(self.frame_gray)
+        elif (type == 'SURF'):
+            print(type)
+            surf = cv.xfeatures2d.SURF_create(1000)
+            kp, des = surf.detectAndCompute(self.old_gray,None)
+            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        # Redetects points when a certain number of them dissapear
-        if (len(self.p1) <= 20):
-            self.p0 = cv.goodFeaturesToTrack(self.old_gray, mask = None, **self.feature_params)
-            #NEW#
-            self.p1 = self.p0
+        elif (type == 'ORB'):
+            print(type)
+            orb = cv.ORB_create(nfeatures=100)
+            kp, des = orb.detectAndCompute(self.old_gray, None)
+            self.img=cv.drawKeypoints(self.old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-        #NEW#
-        if (len(self.p1) > len(self.p0)):
-            length = len(self.p1) - len(self.p0)
-            self.p1 = self.p1[:-length]
-        if (self.count > 0):
-            #essentialMat()
-            self.E, new_mask = cv.findEssentialMat(self.p1, self.p0, 1.0, (0,0), cv.RANSAC, .999, 1)
-            #cv.decomposeEssentialMat(E, R0, R1, t)
-            cv.recoverPose(self.E, self.p1, self.p0, new_R, t, 1.0, (0.0, 0.0), new_mask)
 
-        self.count += 1
+        elif (type == 'FAST'):
+            fast = cv.FastFeatureDetector_create(25, True)
+            # calls FAST algorithm using OpenCV
+            kp = fast.detect(frame, None)
+            # draws the points that FAST finds on the image
+            self.img = cv.drawKeypoints(self.old_gray, kp, None, color=(80, 0, 200))
 
-        #essentialMat() -- in progress
+        self.good_new = self.p1
+        self.good_old = self.p0
+        self.old_gray = frame.copy()
+        self.p0 = np.array(self.good_new).reshape(-1,1,2)
+
 
         return self.img
         # Show window

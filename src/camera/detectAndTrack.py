@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-input = 'fast'
+input = 'sift'
 
 # Created by: Kenzie King
 
@@ -19,7 +19,7 @@ feature_params = dict( maxCorners = 50,
                        qualityLevel = 0.01,
                        minDistance = 7,
                        blockSize = 3,
-		       useHarrisDetector = True )
+               useHarrisDetector = True )
 
 # Parameters for KLT Tracker
 lk_params = dict( winSize  = (15,15),
@@ -140,7 +140,7 @@ while(1):
 
     elif (input == 'orb'):
         orb = cv.ORB_create(nfeatures=100)
-	kp, des = orb.detectAndCompute(old_gray, None)
+        kp, des = orb.detectAndCompute(old_gray, None)
         img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         good_new = p1 
         good_old = p0
@@ -150,10 +150,10 @@ while(1):
 
     elif (input == 'fast'):
         fast = cv.FastFeatureDetector_create(25, True)
-    	# calls FAST algorithm using OpenCV
-    	kp = fast.detect(frame, None)
-    	# draws the points that FAST finds on the image
-    	img = cv.drawKeypoints(old_gray, kp, None, color=(80, 0, 200))
+        # calls FAST algorithm using OpenCV
+        kp = fast.detect(frame, None)
+        # draws the points that FAST finds on the image
+        img = cv.drawKeypoints(old_gray, kp, None, color=(80, 0, 200))
         good_new = p1 
         good_old = p0
         old_gray = frame.copy()

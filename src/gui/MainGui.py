@@ -711,7 +711,7 @@ class MainGui(QWidget):
         self.Source.setItemText(0, _translate("VisualSP", "Webcam"))
         self.Source.setItemText(1, _translate("VisualSP", "File"))
         self.Source.setItemText(2, _translate("VisualSP", "GoPro"))
-        self.featureDetections.setItemText(0, _translate("VisualSP", "Shi Tomasi"))
+        self.featureDetections.setItemText(0, _translate("VisualSP", "ShiTomasi"))
         self.featureDetections.setItemText(1, _translate("VisualSP", "SIFT"))
         self.featureDetections.setItemText(2, _translate("VisualSP", "SURF"))
         self.featureDetections.setItemText(3, _translate("VisualSP", "FAST"))

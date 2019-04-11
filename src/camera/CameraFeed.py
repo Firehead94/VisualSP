@@ -53,7 +53,7 @@ class CameraFeed(QtWidgets.QWidget):
             print("error")
             return
         out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
-        tracker = DetectTracker.DetectAndTrack(cap)
+        tracker = DetectTracker.DetectAndTrack(cap, detection)
 
         if cap.isOpened() != True:
             print("There was an error trying to open the stream. Check if GoPro is connected to computer via WIFI")
@@ -63,7 +63,7 @@ class CameraFeed(QtWidgets.QWidget):
 
                 ret, frame = cap.read()
                 if ret==True:
-                    tracked = tracker.trackStuff(ret,frame)
+                    tracked = tracker.trackStuff(ret,frame, detection)
                     #display the frames
                     cv.imshow('frame', tracked) # pass tracked here to display lines, frame for dots only
                     out.write(frame) # pass tracked here to store lines, frame for dots only
