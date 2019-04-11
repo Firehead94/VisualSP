@@ -76,7 +76,7 @@ def shiRetrack():
 
 def calc():
     global p1
-    p1 = cv.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
+    p1, st, err = cv.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
     # Select corners
     global good_new 
     good_new = p1[st==1]
@@ -102,14 +102,6 @@ def update(frame_gray):
     global p0
     p0 = good_new.reshape(-1,1,2)
 
-def siftSurf(old_gray, p0):
-    img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-    good_new = p1 
-    good_old = p0
-    old_gray = frame_gray.copy()
-    p0 = np.array(good_new).reshape(-1,1,2)
-    cv.imshow('frame',img)
-
 # Main loop 
 while(1):
 
@@ -132,7 +124,7 @@ while(1):
         img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         good_new = p1 
         good_old = p0
-        old_gray = frame_gray.copy()
+        old_gray = frame.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
         cv.imshow('frame',img)
 
@@ -142,7 +134,7 @@ while(1):
         img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         good_new = p1 
         good_old = p0
-        old_gray = frame_gray.copy()
+        old_gray = frame.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
         cv.imshow('frame',img)
 
@@ -152,7 +144,7 @@ while(1):
         img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         good_new = p1 
         good_old = p0
-        old_gray = frame_gray.copy()
+        old_gray = frame.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
         cv.imshow('frame',img)
 
@@ -162,6 +154,10 @@ while(1):
     	kp = fast.detect(frame, None)
     	# draws the points that FAST finds on the image
     	img = cv.drawKeypoints(old_gray, kp, None, color=(80, 0, 200))
+        good_new = p1 
+        good_old = p0
+        old_gray = frame.copy()
+        p0 = np.array(good_new).reshape(-1,1,2)
         cv.imshow('frame',img)
 
     # Exit loop with specific key press (escape and x button on window)
