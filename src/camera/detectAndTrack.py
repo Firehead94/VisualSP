@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-input = 'shi'
+input = 'surf'
 
 # Created by: Kenzie King
 
@@ -31,19 +31,21 @@ color = np.random.randint(0,255,(100,3))
 
 
 
+
+p0 = np.zeros(shape=(1,2))
+ret, old_frame = cap.read()
+old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
+
 if (input == 'shi'):
-    p0 = np.zeros(shape=(1,2))
-    ret, old_frame = cap.read()
-    old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
     p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 
 
-    # Create a mask image for drawing purposes
-    mask = np.zeros_like(old_frame)
-    good_new = []
-    good_old = []
-    img = []
-    p1 = []
+# Create a mask image for drawing purposes
+mask = np.zeros_like(old_frame)
+good_new = []
+good_old = []
+img = []
+p1 = []
 
 
 # Opens YAML file containing calibration data
@@ -65,10 +67,6 @@ camMat = np.array( K ).reshape((3, 3))
 camDist = np.array( D ).reshape((1, 5))
 camRect = np.array( R ).reshape((3, 3))
 
-def shiTrack():
-    # Take first frame and find corners in it
-    p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
-
 def shiRetrack():
     # Redetects points when a certain number of them dissapear
     global p1
@@ -77,10 +75,8 @@ def shiRetrack():
         p1 = p0
 
 def calc():
-    print(p0)
-    print(frame_gray)
     global p1
-    p1, st, err = cv.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
+    p1 = cv.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
     # Select corners
     global good_new 
     good_new = p1[st==1]
@@ -113,20 +109,36 @@ while(1):
 
     ret,frame = cap.read()
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    #old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
 
     # Undistorts
     undist = cv.undistort(frame, camMat, camDist, None, None) 
 
     if (input == 'shi'):
-
         shiRetrack()
         calc()
         draw(mask, undist)
         update(frame_gray)
-            # Show window
         cv.imshow('undistorted image with trackers',img)
 
+    elif (input == 'sift'):
+        sift = cv.xfeatures2d.SIFT_create()
+        kp, des = sift.detectAndCompute(old_gray,None)
+        img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        good_new = p1 
+        good_old = p0
+        old_gray = frame_gray.copy()
+        p0 = np.array(good_new).reshape(-1,1,2)
+        cv.imshow('undistorted image with trackers',img)
+
+    elif (input == 'surf'):
+        surf = cv.xfeatures2d.SURF_create(1000)
+        kp, des = surf.detectAndCompute(old_gray,None)
+        img=cv.drawKeypoints(old_gray,kp,4, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        good_new = p1 
+        good_old = p0
+        old_gray = frame_gray.copy()
+        p0 = np.array(good_new).reshape(-1,1,2)
+        cv.imshow('undistorted image with trackers',img)
 
 
 
