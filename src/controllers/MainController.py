@@ -27,9 +27,9 @@ class MainController:
 
     def __init__(self):
         self.app = QtWidgets.QApplication(sys.argv)
-        self.selectedBtn = "None"
         self.gui = MainGui.MainGui()
         self.user = User.User()
+        self.selectedBtn = self.gui.Webcam
         self.connectButtons()
         self.playing = QtWidgets.QToolButton()
         self.gui.VisualSP.show()
@@ -67,11 +67,12 @@ class MainController:
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
         captureArea.capture(fileLoc, self.selectedBtn)
-        self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
-        self.gui.mediaArea.addWidget(captureArea)
-        self.gui.mediaArea.setCurrentIndex(1)
-        self.user.save()
-        self.updateUserInfoPanel()
+        if os. path. isfile(fileLoc):
+            self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
+            self.gui.mediaArea.addWidget(captureArea)
+            self.gui.mediaArea.setCurrentIndex(1)
+            self.user.save()
+            self.updateUserInfoPanel()
 
     ## play a
     def playBtn(self):
@@ -114,7 +115,9 @@ class MainController:
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
         self.gui.saveBtn.clicked.connect(lambda: (self.user.save(), self.updateUserInfoPanel()))
         self.gui.menuBtn.clicked.connect(self.createNew)
-        self.gui.GoPro.toggled.connect(lambda:self.btnstate(self.b2))
+        self.gui.GoPro.toggled.connect(lambda:self.btnstate(self.gui.GoPro))
+        self.gui.Webcam.toggled.connect(lambda:self.btnstate(self.gui.Webcam))
+        self.gui.File.toggled.connect(lambda:self.btnstate(self.gui.File))
 
         ##WINDOW BUTTONS
         self.gui.closeBtn.clicked.connect(self.closeBtn)

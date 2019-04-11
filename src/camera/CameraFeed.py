@@ -5,6 +5,7 @@ from time import time
 import numpy as np
 from PyQt5 import QtWidgets, QtCore
 from PyQt5 import QtGui
+from PyQt5.QtWidgets import QFileDialog
 from goprocam import GoProCamera
 
 import src.datastorage.FileHelper as FileHelper
@@ -30,8 +31,15 @@ class CameraFeed(QtWidgets.QWidget):
             cap = cv.VideoCapture(self.udp)
             vid = cv.VideoWriter_fourcc(*'MJPG')
         elif capType.text() == 'File':
-            cap = cv.VideoCapture()
-            vid = cv.VideoWriter_fourcc(*'XVID')
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4)", options=options)
+            if fileName:
+                cap = cv.VideoCapture(fileName)
+                vid = cv.VideoWriter_fourcc(*'MP4V')
+            else:
+                print("No file selected")
+                return
         elif capType.text() == 'Webcam':
             cap = cv.VideoCapture(0)
             vid = cv.VideoWriter_fourcc(*'XVID')
