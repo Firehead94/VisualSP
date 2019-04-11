@@ -66,7 +66,10 @@ class CameraFeed(QtWidgets.QWidget):
                     tracked = tracker.trackStuff(ret,frame, detection)
                     #display the frames
                     cv.imshow('frame', tracked) # pass tracked here to display lines, frame for dots only
-                    out.write(frame) # pass tracked here to store lines, frame for dots only
+                    if detection == 'ShiTomasi':
+                        out.write(frame) # pass tracked here to store lines, frame for dots only
+                    else:
+                        out.write(tracked)
 
                 if cv.waitKey(20) & 0xFF == ord('q'):
                     break
