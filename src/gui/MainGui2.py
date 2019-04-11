@@ -1,49 +1,31 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\UIdesign.ui'
+# Form implementation generated from reading ui file 'UIdesign.ui'
 #
 # Created by: PyQt5 UI code generator 5.12
-# Designed: Justin Scott
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPoint
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
-from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QFrame
-import src.controllers.VideoWidget as VideoWidget
-import src.gui.previousVideoWidget as previousVideoWidget
-
-import src.gui.qtresources_rc
 
 
-class MainGui(QWidget):
-
-    signal = QtCore.pyqtSignal()
-
-    def __init__(self):
-        super(MainGui, self).__init__()
-        self.setMouseTracking(True)
-        self.maxNormal = False
-        self.setupUi()
-
-    def setupUi(self):
-        self.VisualSP = QtWidgets.QMainWindow()
-
-        self.VisualSP.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        #self.VisualSP.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
-
-        self.VisualSP.setObjectName("VisualSP")
-        self.VisualSP.setEnabled(True)
-        self.VisualSP.resize(1416, 818)
-        self.VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
-        self.VisualSP.setAutoFillBackground(False)
-        self.VisualSP.setStyleSheet("background-color: #656565;")
-        self.VisualSP.setDocumentMode(False)
-        self.VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
-        self.VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
-        self.Main = QtWidgets.QWidget(self.VisualSP)
+class Ui_VisualSP(object):
+    def setupUi(self, VisualSP):
+        VisualSP.setObjectName("VisualSP")
+        VisualSP.setEnabled(True)
+        VisualSP.resize(1868, 1123)
+        VisualSP.setSizeIncrement(QtCore.QSize(1, 1))
+        VisualSP.setAutoFillBackground(False)
+        VisualSP.setStyleSheet("QMainWindow {\n"
+"    background-color: #656565;\n"
+"    background-image: url(:/assets/camera.png);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: right bottom;\n"
+"}")
+        VisualSP.setDocumentMode(False)
+        VisualSP.setTabShape(QtWidgets.QTabWidget.Triangular)
+        VisualSP.setDockOptions(QtWidgets.QMainWindow.AllowNestedDocks|QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks|QtWidgets.QMainWindow.GroupedDragging)
+        self.Main = QtWidgets.QWidget(VisualSP)
         self.Main.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -51,7 +33,8 @@ class MainGui(QWidget):
         sizePolicy.setHeightForWidth(self.Main.sizePolicy().hasHeightForWidth())
         self.Main.setSizePolicy(sizePolicy)
         self.Main.setMinimumSize(QtCore.QSize(0, 0))
-        self.Main.setObjectName("mainWindow")
+        self.Main.setStyleSheet("background-color: transparent;")
+        self.Main.setObjectName("Main")
         self.gridLayout = QtWidgets.QGridLayout(self.Main)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setSpacing(0)
@@ -66,8 +49,8 @@ class MainGui(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.stackedWidget.sizePolicy().hasHeightForWidth())
         self.stackedWidget.setSizePolicy(sizePolicy)
-        self.stackedWidget.setMinimumSize(QtCore.QSize(350, 0))
-        self.stackedWidget.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.stackedWidget.setMinimumSize(QtCore.QSize(300, 0))
+        self.stackedWidget.setMaximumSize(QtCore.QSize(300, 16777215))
         self.stackedWidget.setStyleSheet("")
         self.stackedWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.stackedWidget.setLineWidth(0)
@@ -78,8 +61,8 @@ class MainGui(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.LoggedOut.sizePolicy().hasHeightForWidth())
         self.LoggedOut.setSizePolicy(sizePolicy)
-        self.LoggedOut.setMinimumSize(QtCore.QSize(350, 0))
-        self.LoggedOut.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.LoggedOut.setMinimumSize(QtCore.QSize(300, 0))
+        self.LoggedOut.setMaximumSize(QtCore.QSize(300, 16777215))
         self.LoggedOut.setStyleSheet("background-color: #555555;")
         self.LoggedOut.setObjectName("LoggedOut")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.LoggedOut)
@@ -115,7 +98,7 @@ class MainGui(QWidget):
         self.login.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.login.setObjectName("login")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.login)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 7, 331, 63))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 7, 281, 63))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -132,12 +115,12 @@ class MainGui(QWidget):
         self.horizontalLayout_4.addWidget(self.usernameField)
         self.loginBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget)
         self.loginBtn.setStyleSheet(":hover {\n"
-                                    "    background-color: rgb(91, 103, 131);\n"
-                                    "}\n"
-                                    "\n"
-                                    "QToolButton {\n"
-                                    "\n"
-                                    "}")
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"\n"
+"}")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/assets/arrowRight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.loginBtn.setIcon(icon)
@@ -161,13 +144,13 @@ class MainGui(QWidget):
         font.setPointSize(26)
         self.newuserBtn.setFont(font)
         self.newuserBtn.setStyleSheet("QToolButton {\n"
-                                      "    background-color: #808080;\n"
-                                      "}\n"
-                                      "\n"
-                                      ":hover {\n"
-                                      "    background-color: rgb(91, 103, 131);\n"
-                                      "}\n"
-                                      "")
+"    background-color: #808080;\n"
+"}\n"
+"\n"
+":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"")
         self.newuserBtn.setObjectName("newuserBtn")
         self.verticalLayout.addWidget(self.newuserBtn)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -180,8 +163,8 @@ class MainGui(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.NewUser.sizePolicy().hasHeightForWidth())
         self.NewUser.setSizePolicy(sizePolicy)
-        self.NewUser.setMinimumSize(QtCore.QSize(350, 0))
-        self.NewUser.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.NewUser.setMinimumSize(QtCore.QSize(300, 0))
+        self.NewUser.setMaximumSize(QtCore.QSize(300, 16777215))
         self.NewUser.setStyleSheet("background-color: #555555")
         self.NewUser.setObjectName("NewUser")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.NewUser)
@@ -241,19 +224,19 @@ class MainGui(QWidget):
         font.setPointSize(20)
         self.checkBox.setFont(font)
         self.checkBox.setStyleSheet("QCheckBox::indicator:unchecked:hover {\n"
-                                    "    background-color: rgb(91, 103, 131);\n"
-                                    "}\n"
-                                    "QCheckBox::indicator:checked {\n"
-                                    "    background-color: rgb(91, 103, 131);\n"
-                                    "}\n"
-                                    "QCheckBox::indicator {\n"
-                                    "    image: url(:/assets/arrowRight.png);\n"
-                                    "    width: 50px;\n"
-                                    "    height: 25px;\n"
-                                    "}\n"
-                                    "\n"
-                                    "\n"
-                                    "background-color: rgb(111, 127, 161);")
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"QCheckBox::indicator {\n"
+"    image: url(:/assets/arrowRight.png);\n"
+"    width: 50px;\n"
+"    height: 25px;\n"
+"}\n"
+"\n"
+"\n"
+"background-color: rgb(111, 127, 161);")
         self.checkBox.setIconSize(QtCore.QSize(15, 15))
         self.checkBox.setTristate(False)
         self.checkBox.setObjectName("checkBox")
@@ -264,13 +247,13 @@ class MainGui(QWidget):
         font.setPointSize(26)
         self.createBtn.setFont(font)
         self.createBtn.setStyleSheet("QToolButton {\n"
-                                     "    background-color: rgb(75, 85, 109);\n"
-                                     "}\n"
-                                     "\n"
-                                     ":hover {\n"
-                                     "    background-color: rgb(91, 103, 131);\n"
-                                     "}\n"
-                                     "")
+"    background-color: rgb(75, 85, 109);\n"
+"}\n"
+"\n"
+":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"")
         self.createBtn.setObjectName("createBtn")
         self.verticalLayout_5.addWidget(self.createBtn)
         self.backBtn = QtWidgets.QPushButton(self.containerWidgetNew)
@@ -279,13 +262,13 @@ class MainGui(QWidget):
         font.setPointSize(26)
         self.backBtn.setFont(font)
         self.backBtn.setStyleSheet("QToolButton {\n"
-                                   "    background-color: rgb(75, 85, 109);\n"
-                                   "}\n"
-                                   "\n"
-                                   ":hover {\n"
-                                   "    background-color: rgb(91, 103, 131);\n"
-                                   "}\n"
-                                   "")
+"    background-color: rgb(75, 85, 109);\n"
+"}\n"
+"\n"
+":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"")
         self.backBtn.setObjectName("backBtn")
         self.verticalLayout_5.addWidget(self.backBtn)
         self.verticalLayout_3.addWidget(self.containerWidgetNew)
@@ -297,8 +280,8 @@ class MainGui(QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.LoggedIn.sizePolicy().hasHeightForWidth())
         self.LoggedIn.setSizePolicy(sizePolicy)
-        self.LoggedIn.setMinimumSize(QtCore.QSize(350, 0))
-        self.LoggedIn.setMaximumSize(QtCore.QSize(350, 1165))
+        self.LoggedIn.setMinimumSize(QtCore.QSize(300, 0))
+        self.LoggedIn.setMaximumSize(QtCore.QSize(300, 1165))
         self.LoggedIn.setStyleSheet("background-color: #555555")
         self.LoggedIn.setObjectName("LoggedIn")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.LoggedIn)
@@ -314,11 +297,11 @@ class MainGui(QWidget):
         sizePolicy.setHeightForWidth(self.menuBar.sizePolicy().hasHeightForWidth())
         self.menuBar.setSizePolicy(sizePolicy)
         self.menuBar.setMinimumSize(QtCore.QSize(225, 55))
-        self.menuBar.setMaximumSize(QtCore.QSize(350, 55))
+        self.menuBar.setMaximumSize(QtCore.QSize(300, 55))
         self.menuBar.setStyleSheet("background-color: #333333;")
         self.menuBar.setObjectName("menuBar")
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.menuBar)
-        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(-1, -7, 350, 73))
+        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(-1, -7, 300, 73))
         self.horizontalLayoutWidget_4.setObjectName("horizontalLayoutWidget_4")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_4)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -330,46 +313,46 @@ class MainGui(QWidget):
         self.menuBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
         self.menuBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.menuBtn.setStyleSheet(":hover {\n"
-                                   "    background-color: rgb(91, 103, 131);\n"
-                                   "}\n"
-                                   "\n"
-                                   "QToolButton {\n"
-                                   "    border:none;\n"
-                                   "}")
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/assets/record.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/menuBars.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.menuBtn.setIcon(icon1)
-        self.menuBtn.setIconSize(QtCore.QSize(60, 45))
+        self.menuBtn.setIconSize(QtCore.QSize(40, 40))
         self.menuBtn.setObjectName("menuBtn")
         self.horizontalLayout_2.addWidget(self.menuBtn)
         self.saveBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
         self.saveBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.saveBtn.setStyleSheet(":hover {\n"
-                                   "    background-color: rgb(91, 103, 131);\n"
-                                   "}\n"
-                                   "\n"
-                                   "QToolButton {\n"
-                                   "    border:none;\n"
-                                   "}")
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/assets/download.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.saveBtn.setIcon(icon2)
-        self.saveBtn.setIconSize(QtCore.QSize(60, 45))
+        self.saveBtn.setIconSize(QtCore.QSize(40, 40))
         self.saveBtn.setObjectName("saveBtn")
         self.horizontalLayout_2.addWidget(self.saveBtn)
         self.logoutBtn = QtWidgets.QToolButton(self.horizontalLayoutWidget_4)
         self.logoutBtn.setMinimumSize(QtCore.QSize(60, 60))
         self.logoutBtn.setStyleSheet(":hover {\n"
-                                     "    background-color: rgb(91, 103, 131);\n"
-                                     "}\n"
-                                     "\n"
-                                     "QToolButton {\n"
-                                     "    border:none;\n"
-                                     "}")
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/assets/logout.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.logoutBtn.setIcon(icon3)
-        self.logoutBtn.setIconSize(QtCore.QSize(60, 45))
+        self.logoutBtn.setIconSize(QtCore.QSize(40, 40))
         self.logoutBtn.setObjectName("logoutBtn")
         self.horizontalLayout_2.addWidget(self.logoutBtn)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -382,10 +365,10 @@ class MainGui(QWidget):
         sizePolicy.setHeightForWidth(self.info.sizePolicy().hasHeightForWidth())
         self.info.setSizePolicy(sizePolicy)
         self.info.setMinimumSize(QtCore.QSize(225, 240))
-        self.info.setMaximumSize(QtCore.QSize(350, 240))
+        self.info.setMaximumSize(QtCore.QSize(300, 240))
         self.info.setObjectName("info")
         self.verticalWidget_4 = QtWidgets.QWidget(self.info)
-        self.verticalWidget_4.setGeometry(QtCore.QRect(9, 3, 329, 233))
+        self.verticalWidget_4.setGeometry(QtCore.QRect(9, 3, 279, 233))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -395,9 +378,9 @@ class MainGui(QWidget):
         self.verticalWidget_4.setObjectName("verticalWidget_4")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.verticalWidget_4)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-
-        self.radioLayoutH5 = QtWidgets.QHBoxLayout()
-        self.radioLayoutH5.setObjectName("radioLayoutH5")
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.Webcam = QtWidgets.QRadioButton(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
@@ -405,23 +388,22 @@ class MainGui(QWidget):
         self.Webcam.setFont(font)
         self.Webcam.setChecked(True)
         self.Webcam.setObjectName("Webcam")
-        self.radioLayoutH5.addWidget(self.Webcam)
+        self.horizontalLayout_5.addWidget(self.Webcam)
         self.File = QtWidgets.QRadioButton(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(16)
         self.File.setFont(font)
         self.File.setObjectName("File")
-        self.radioLayoutH5.addWidget(self.File)
+        self.horizontalLayout_5.addWidget(self.File)
         self.GoPro = QtWidgets.QRadioButton(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
         font.setPointSize(16)
         self.GoPro.setFont(font)
         self.GoPro.setObjectName("GoPro")
-        self.radioLayoutH5.addWidget(self.GoPro)
-        self.verticalLayout_4.addLayout(self.radioLayoutH5)
-
+        self.horizontalLayout_5.addWidget(self.GoPro)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_5)
         self.usernameOut = QtWidgets.QLabel(self.verticalWidget_4)
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
@@ -470,14 +452,12 @@ class MainGui(QWidget):
         self.accessLevelOut.setReadOnly(True)
         self.accessLevelOut.setObjectName("accessLevelOut")
         self.verticalLayout_4.addWidget(self.accessLevelOut)
-        self.verticalLayout_4.setStretch(0, 1)
         self.verticalLayout_4.setStretch(1, 1)
         self.verticalLayout_4.setStretch(2, 1)
         self.verticalLayout_4.setStretch(3, 1)
         self.verticalLayout_4.setStretch(4, 1)
+        self.verticalLayout_4.setStretch(5, 1)
         self.verticalLayout_2.addWidget(self.info)
-
-        ####
         self.scrollLabel = QtWidgets.QWidget(self.LoggedIn)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -503,20 +483,18 @@ class MainGui(QWidget):
         self.trackingLabel.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.trackingLabel.setObjectName("trackingLabel")
         self.verticalLayout_2.addWidget(self.scrollLabel)
-
         self.trackings = QtWidgets.QWidget(self.LoggedIn)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.trackings.sizePolicy().hasHeightForWidth())
         self.trackings.setSizePolicy(sizePolicy)
-        self.trackings.setMinimumSize(QtCore.QSize(0, 350))
+        self.trackings.setMinimumSize(QtCore.QSize(0, 300))
         self.trackings.setSizeIncrement(QtCore.QSize(0, 1))
         self.trackings.setObjectName("trackings")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.trackings)
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.scrollArea_2 = QtWidgets.QScrollArea(self.trackings)
-
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -525,19 +503,11 @@ class MainGui(QWidget):
         self.scrollArea_2.setLineWidth(0)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
-        self.scrollArea_2.setFrameShape(QFrame.NoFrame)
         self.trackingField = QtWidgets.QWidget()
-        self.trackingField_layout = QtWidgets.QVBoxLayout(self.trackingField)
-        self.trackingField_layout.setSpacing(0)
-        self.trackingField_layout.setContentsMargins(10,0,0,0)
-
-        self.trackingField.setGeometry(QtCore.QRect(0, 0, 350, 462))
+        self.trackingField.setGeometry(QtCore.QRect(0, 0, 278, 754))
         self.trackingField.setObjectName("trackingField")
-
         self.scrollArea_2.setWidget(self.trackingField)
         self.gridLayout_6.addWidget(self.scrollArea_2, 0, 0, 1, 1)
-
-        ####
         self.verticalLayout_2.addWidget(self.trackings)
         self.verticalLayout_2.setStretch(0, 1)
         self.verticalLayout_2.setStretch(1, 3)
@@ -554,130 +524,87 @@ class MainGui(QWidget):
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.widget_2 = QtWidgets.QWidget(self.widget)
         self.widget_2.setMinimumSize(QtCore.QSize(0, 55))
-        self.widget_2.setStyleSheet("background-color: #333333;\n")
+        self.widget_2.setStyleSheet("background-color: #333333;")
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout.setContentsMargins(0, 0, 6, 6)
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem3 = QtWidgets.QSpacerItem(1000, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
-        self.minimizeBtn = QtWidgets.QToolButton(self.widget_2)
-        self.minimizeBtn.setStyleSheet(":hover {\n"
-                                       "    background-color: rgb(91, 103, 131);\n"
-                                       "}\n"
-                                       "\n"
-                                       "QToolButton {\n"
-                                       "    border:none;\n"
-                                       "}")
-        self.minimizeBtn.setText("")
+        self.Minimize = QtWidgets.QToolButton(self.widget_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Minimize.sizePolicy().hasHeightForWidth())
+        self.Minimize.setSizePolicy(sizePolicy)
+        self.Minimize.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.Minimize.setText("")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(":/assets/minimize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.minimizeBtn.setIcon(icon4)
-        self.minimizeBtn.setIconSize(QtCore.QSize(30, 30))
-        self.minimizeBtn.setObjectName("minimize")
-        self.horizontalLayout.addWidget(self.minimizeBtn)
-        self.maxrestoreBtn = QtWidgets.QToolButton(self.widget_2)
-        self.maxrestoreBtn.setStyleSheet(":hover {\n"
-                                         "    background-color: rgb(91, 103, 131);\n"
-                                         "}\n"
-                                         "\n"
-                                         "QToolButton {\n"
-                                         "    border:none;\n"
-                                         "}")
-        self.maxrestoreBtn.setText("")
+        self.Minimize.setIcon(icon4)
+        self.Minimize.setIconSize(QtCore.QSize(40, 40))
+        self.Minimize.setObjectName("Minimize")
+        self.horizontalLayout.addWidget(self.Minimize)
+        self.MaxRestore = QtWidgets.QToolButton(self.widget_2)
+        self.MaxRestore.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.MaxRestore.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap(":/assets/maximize.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.maxrestoreBtn.setIcon(icon5)
-        self.maxrestoreBtn.setIconSize(QtCore.QSize(30, 30))
-        self.maxrestoreBtn.setObjectName("maximize")
-        self.horizontalLayout.addWidget(self.maxrestoreBtn)
-        self.closeBtn = QtWidgets.QToolButton(self.widget_2)
-        self.closeBtn.setStyleSheet(":hover {\n"
-                                    "    background-color: rgb(91, 103, 131);\n"
-                                    "}\n"
-                                    "\n"
-                                    "QToolButton {\n"
-                                    "    border:none;\n"
-                                    "}")
-        self.closeBtn.setText("")
+        self.MaxRestore.setIcon(icon5)
+        self.MaxRestore.setIconSize(QtCore.QSize(40, 40))
+        self.MaxRestore.setObjectName("MaxRestore")
+        self.horizontalLayout.addWidget(self.MaxRestore)
+        self.Close = QtWidgets.QToolButton(self.widget_2)
+        self.Close.setStyleSheet(":hover {\n"
+"    background-color: rgb(91, 103, 131);\n"
+"}\n"
+"\n"
+"QToolButton {\n"
+"    border:none;\n"
+"}")
+        self.Close.setText("")
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(":/assets/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.closeBtn.setIcon(icon6)
-        self.closeBtn.setIconSize(QtCore.QSize(30, 30))
-        self.closeBtn.setObjectName("close")
-        self.horizontalLayout.addWidget(self.closeBtn)
+        self.Close.setIcon(icon6)
+        self.Close.setIconSize(QtCore.QSize(40, 40))
+        self.Close.setObjectName("Close")
+        self.horizontalLayout.addWidget(self.Close)
         self.gridLayout_5.addWidget(self.widget_2, 0, 0, 1, 1)
-
         self.mediaArea = QtWidgets.QStackedWidget(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mediaArea.sizePolicy().hasHeightForWidth())
         self.mediaArea.setSizePolicy(sizePolicy)
-        self.mediaArea.setStyleSheet("background-image: url(:/assets/camera.png);")
+        self.mediaArea.setStyleSheet("background-color: transparent;\n"
+"")
         self.mediaArea.setObjectName("mediaArea")
         self.cameraArea = QVideoWidget()
         self.cameraArea.setObjectName("cameraArea")
-        self.cameraArea.setStyleSheet("background-image: url(:/assets/camera.png);")
         self.mediaArea.addWidget(self.cameraArea)
+        self.captureArea = QtWidgets.QWidget()
+        self.captureArea.setObjectName("captureArea")
+        self.mediaArea.addWidget(self.captureArea)
         self.gridLayout_5.addWidget(self.mediaArea, 1, 0, 1, 1)
         self.horizontalLayout_3.addWidget(self.widget)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
-        self.VisualSP.setCentralWidget(self.Main)
+        VisualSP.setCentralWidget(self.Main)
 
-        self.retranslateUi(self.VisualSP)
-        self.stackedWidget.setCurrentIndex(0)
-        self.mediaArea.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(self.VisualSP)
-        #self.cameraArea = QVideoWidget(self.widget) #VideoWidget.VideoWidget(self.widget)
-#
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.cameraArea.sizePolicy().hasHeightForWidth())
-        #self.cameraArea.setSizePolicy(sizePolicy)
-#
-        #self.cameraArea.setObjectName("cameraArea")
-        #self.gridLayout_5.addWidget(self.cameraArea, 1, 0, 1, 1)
-        #self.horizontalLayout_3.addWidget(self.widget)
-        #self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
-        #self.VisualSP.setCentralWidget(self.Main)
-#
-        #self.VisualSP.setAttribute(QtCore.Qt.WA_Hover)
-#
-        #self.retranslateUi(self.VisualSP)
-        #self.stackedWidget.setCurrentIndex(0)
-        #QtCore.QMetaObject.connectSlotsByName(self.VisualSP)
-
-        self.VisualSP.setStyleSheet("QMainWindow {\n"
-                                    "background-color: #656565;\n"
-                                    "background-image:    url(:/assets/camera.png);\n"
-                                    "background-repeat: no-repeat;\n"
-                                    "background-position: right bottom;\n"
-                                    "margin: 10px;"
-                                    "}")
-
-        #self.widget_2.installEventFilter(self)
-        self.VisualSP.installEventFilter(self)
-
-        self.pressing = False
-        self.start = QPoint(0,0)
-        self.moving = False
-
-        #self.Main.setMouseTracking(True)
-        self.hoverLeftEdge = False
-        self.hoverRightEdge = False
-        self.hoverTopEdge = False
-        self.hoverBottomEdge = False
-        self.resizePadding = 10
-
-        self.VisualSP.setMouseTracking(True)
-        #self.Main.setCursor(QtCore.Qt.SizeAllCursor)
-        #self.horizontalLayout_3.setContentsMargins(1,1,1,1)
-        #self.widget.setCursor(QtCore.Qt.ArrowCursor)
-        #self.stackedWidget.setCursor(QtCore.Qt.SizeAllCursor)
-
-
+        self.retranslateUi(VisualSP)
+        self.stackedWidget.setCurrentIndex(2)
+        QtCore.QMetaObject.connectSlotsByName(VisualSP)
 
     def retranslateUi(self, VisualSP):
         _translate = QtCore.QCoreApplication.translate
@@ -706,98 +633,6 @@ class MainGui(QWidget):
         self.accessLevelOut.setPlaceholderText(_translate("VisualSP", "Access Level"))
         self.trackingLabel.setText(_translate("VisualSP", "Previous Trackings"))
 
-    def eventFilter(self, obj, event):
-        if event.type() == event.HoverMove:
-            self.setHover(event)
-            self.setCursorSP(event)
-        if event.type() == event.MouseButtonPress:
-            self.mousePressEvent(event)
-        if event.type() == event.MouseMove:
-            self.mouseMoveEvent(event)
-        if event.type() == event.MouseButtonRelease:
-            self.mouseReleaseEvent(event)
-        if event.type() == event.MouseButtonDblClick:
-            self.mouseDoubleClickEvent(event)
-        event.accept()
-        return super(MainGui, self).eventFilter(obj, event)
 
-    def mousePressEvent(self, event):
-        self.pressing = True
-        self.start = event.pos()
-
-    def mouseMoveEvent(self, event):
-        #TOP BAR STUFF
-        if (self.widget_2.underMouse() and not (self.hoverTopEdge or self.hoverRightEdge)) or self.moving:
-            if self.pressing:
-                self.moving = True
-                self.VisualSP.move(event.globalPos()-self.start)
-        #RESIZE STUFF
-        #TODO not perfect
-        if (self.hoverTopEdge) and not self.moving:
-            frame = self.VisualSP.geometry()
-            #print("1|",event.pos())
-            frame.setTop(frame.top() + event.pos().y() - self.start.y())
-            self.VisualSP.setGeometry(frame)
-        if (self.hoverBottomEdge) and not self.moving:
-            frame = self.VisualSP.geometry()
-            #print("2|",event.pos())
-            self.VisualSP.setGeometry(frame.x(), frame.y(), frame.width(),event.pos().y())
-        #TODO not perfect
-        if (self.hoverLeftEdge) and not self.moving:
-            frame = self.VisualSP.geometry()
-            #print("3|",event.pos())
-            frame.setLeft(frame.left() + (event.pos().x() - self.start.x()))
-            self.VisualSP.setGeometry(frame)
-        if (self.hoverRightEdge) and not self.moving:
-            frame = self.VisualSP.geometry()
-            #print("4|",event.pos())
-            self.VisualSP.setGeometry(frame.x(), frame.y(), event.pos().x(), frame.height())
-
-
-
-    def mouseReleaseEvent(self, event):
-        self.pressing = False
-        self.moving = False
-
-    def mouseDoubleClickEvent(self, event):
-        #TOP BAR STUFF
-        if self.widget_2.underMouse():
-            if self.maxNormal:
-                self.VisualSP.showNormal()
-                self.maxNormal = False
-                self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/maximize.png"))
-            else:
-                self.VisualSP.showMaximized()
-                self.maxNormal = True
-                self.maxrestoreBtn.setIcon(QtGui.QIcon(":/assets/restore.png"))
-
-    def setCursorSP(self, event):
-        if self.hoverRightEdge or self.hoverLeftEdge:
-            self.VisualSP.setCursor(QtCore.Qt.SizeHorCursor)
-        if self.hoverBottomEdge or self.hoverTopEdge:
-            self.VisualSP.setCursor(QtCore.Qt.SizeVerCursor)
-        if (self.hoverTopEdge and self.hoverLeftEdge) or (self.hoverBottomEdge and self.hoverRightEdge):
-            self.VisualSP.setCursor(QtCore.Qt.SizeFDiagCursor)
-        if (self.hoverTopEdge and self.hoverRightEdge) or (self.hoverBottomEdge and self.hoverLeftEdge):
-            self.VisualSP.setCursor(QtCore.Qt.SizeBDiagCursor)
-        if not (self.hoverLeftEdge or self.hoverBottomEdge or self.hoverRightEdge or self.hoverTopEdge):
-            self.VisualSP.setCursor(QtCore.Qt.ArrowCursor)
-
-    def setHover(self, event):
-        if (not event.pos().x() < 0) and event.pos().x() <= self.resizePadding:
-            self.hoverLeftEdge = True
-        elif not self.pressing:
-            self.hoverLeftEdge = False
-        if (not event.pos().x() > self.VisualSP.width()) and event.pos().x() >= self.VisualSP.width()-self.resizePadding:
-            self.hoverRightEdge = True
-        elif not self.pressing:
-            self.hoverRightEdge = False
-        if (not event.pos().y() < 0) and event.pos().y() <= self.resizePadding:
-            self.hoverTopEdge = True
-        elif not self.pressing:
-            self.hoverTopEdge = False
-        if (not event.pos().y() > self.VisualSP.height()) and event.pos().y() >= self.VisualSP.height()-self.resizePadding:
-            self.hoverBottomEdge = True
-        elif not self.pressing:
-            self.hoverBottomEdge = False
-
+from PyQt5.QtMultimediaWidget import QVideoWidget
+import qtresources_rc
