@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 import yaml
 
-input = 'orb'
+input = 'fast'
 
 # Created by: Kenzie King
 
@@ -108,7 +108,7 @@ def siftSurf(old_gray, p0):
     good_old = p0
     old_gray = frame_gray.copy()
     p0 = np.array(good_new).reshape(-1,1,2)
-    cv.imshow('undistorted image with trackers',img)
+    cv.imshow('frame',img)
 
 # Main loop 
 while(1):
@@ -124,7 +124,7 @@ while(1):
         calc()
         draw(mask, undist)
         update(frame_gray)
-        cv.imshow('undistorted image with trackers',img)
+        cv.imshow('frame',img)
 
     elif (input == 'sift'):
         sift = cv.xfeatures2d.SIFT_create()
@@ -134,7 +134,7 @@ while(1):
         good_old = p0
         old_gray = frame_gray.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
-        cv.imshow('undistorted image with trackers',img)
+        cv.imshow('frame',img)
 
     elif (input == 'surf'):
         surf = cv.xfeatures2d.SURF_create(1000)
@@ -144,7 +144,7 @@ while(1):
         good_old = p0
         old_gray = frame_gray.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
-        cv.imshow('undistorted image with trackers',img)
+        cv.imshow('frame',img)
 
     elif (input == 'orb'):
         orb = cv.ORB_create(nfeatures=100)
@@ -154,15 +154,21 @@ while(1):
         good_old = p0
         old_gray = frame_gray.copy()
         p0 = np.array(good_new).reshape(-1,1,2)
-        cv.imshow('undistorted image with trackers',img)
+        cv.imshow('frame',img)
 
-
+    elif (input == 'fast'):
+        fast = cv.FastFeatureDetector_create(25, True)
+    	# calls FAST algorithm using OpenCV
+    	kp = fast.detect(frame, None)
+    	# draws the points that FAST finds on the image
+    	img = cv.drawKeypoints(old_gray, kp, None, color=(80, 0, 200))
+        cv.imshow('frame',img)
 
     # Exit loop with specific key press (escape and x button on window)
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
-    if (cv.getWindowProperty('undistorted image with trackers',cv.WND_PROP_VISIBLE) < 1):
+    if (cv.getWindowProperty('frame',cv.WND_PROP_VISIBLE) < 1):
         break
 
 # Kill
