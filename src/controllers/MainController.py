@@ -27,6 +27,7 @@ class MainController:
 
     def __init__(self):
         self.app = QtWidgets.QApplication(sys.argv)
+        self.selectedBtn = "None"
         self.gui = MainGui.MainGui()
         self.user = User.User()
         self.connectButtons()
@@ -65,7 +66,7 @@ class MainController:
         #captureArea = GproStream.GproStream()
         time = SystemUtils.getTimeStamp().replace(" ", "_").replace(":","-")
         fileLoc = FileHelper.VIDEO_FLDR + self.user.user["USERNAME"] + "-" + time + ".avi"
-        captureArea.capture(fileLoc)
+        captureArea.capture(fileLoc, self.selectedBtn)
         self.user.user["TRACKINGS"].append(self.user.user["USERNAME"] + "-" + time + ".avi")
         self.gui.mediaArea.addWidget(captureArea)
         self.gui.mediaArea.setCurrentIndex(1)
@@ -113,11 +114,15 @@ class MainController:
         self.gui.logoutBtn.clicked.connect(self.logoutButton)
         self.gui.saveBtn.clicked.connect(lambda: (self.user.save(), self.updateUserInfoPanel()))
         self.gui.menuBtn.clicked.connect(self.createNew)
+        self.gui.GoPro.toggled.connect(lambda:self.btnstate(self.b2))
 
         ##WINDOW BUTTONS
         self.gui.closeBtn.clicked.connect(self.closeBtn)
         self.gui.maxrestoreBtn.clicked.connect(self.showMaxRestore)
         self.gui.minimizeBtn.clicked.connect(self.showSmall)
+
+    def btnstate(self, btn):
+        self.selectedBtn = btn
 
     def loginButton(self):
         if os.path.isfile(FileHelper.USER_FLDR + self.gui.usernameField.text() + ".pkl"):
