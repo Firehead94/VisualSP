@@ -27,6 +27,7 @@ class MainController:
 
     def __init__(self):
         self.app = QtWidgets.QApplication(sys.argv)
+        self.error_dialog = QtWidgets.QErrorMessage()
         self.gui = MainGui.MainGui()
         self.user = User.User()
         self.connectButtons()
@@ -93,6 +94,7 @@ class MainController:
                 self.playing.setIcon(QtGui.QIcon(":/assets/play.png"))
                 self.playing = self.gui.sender()
             else:
+                self.error_dialog.showMessage("File has been moved, deleted or corrupted")
                 print("no file found")
 
     def deleteBtn(self):
@@ -165,6 +167,8 @@ class MainController:
                 self.user.user["ACCESS_LEVEL"] = "GUEST"
             self.user.save()
             self.updateUserInfoPanel()
+            self.gui.featureDetections.setVisible(True)
+            self.gui.Source.setVisible(True)
             self.gui.stackedWidget.setCurrentIndex(2)
 
     def showSmall(self):

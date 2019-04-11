@@ -21,6 +21,7 @@ class CameraFeed(QtWidgets.QWidget):
     def __init__(self):
         super(CameraFeed,self).__init__()
         self.frames_per_second = 30
+        self.error_dialog = QtWidgets.QErrorMessage()
 
     def capture(self, fileLoc, capType, detection):
         if capType == 'GoPro':
@@ -36,10 +37,14 @@ class CameraFeed(QtWidgets.QWidget):
             options |= QFileDialog.DontUseNativeDialog
             fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;MP4 Files (*.mp4);;AVI Files (*.avi)", options=options)
             if fileName:
-                fileName = fileName.replace("/","\\")
-                print(fileName)
-                cap = cv.VideoCapture(fileName)
-                vid = cv.VideoWriter_fourcc(*'XVID')
+                if fileName[-3:] == 'avi' or fileName[-3:] == 'mp4':
+                    fileName = fileName.replace("/","\\")
+                    print(fileName)
+                    cap = cv.VideoCapture(fileName)
+                    vid = cv.VideoWriter_fourcc(*'XVID')
+                else:
+                    print("Incorrect file type")
+                    return
             else:
                 print("No file selected")
                 return
@@ -47,15 +52,18 @@ class CameraFeed(QtWidgets.QWidget):
             cap = cv.VideoCapture(0)
             vid = cv.VideoWriter_fourcc(*'XVID')
         elif capType == 'None':
-            print('No cap device selected')
+            self.error_dialog.showMessage("No capture device selected")
+            print('No capture device selected')
             return
         else:
+            self.error_dialog.showMessage("Error")
             print("error")
             return
         out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
         tracker = DetectTracker.DetectAndTrack(cap, detection)
 
         if cap.isOpened() != True:
+            self.error_dialog.showMessage("There was an error trying to open the stream. Check if GoPro is connected to computer via WIFI")
             print("There was an error trying to open the stream. Check if GoPro is connected to computer via WIFI")
         else:
             while(True):
