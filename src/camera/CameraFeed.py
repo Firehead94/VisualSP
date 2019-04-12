@@ -27,21 +27,16 @@ class CameraFeed(QtWidgets.QWidget):
 
     def capture(self, fileLoc, capType, detection):
         if capType == 'GoPro':
-            print("gpcam")
             self.gpCam = GoProCamera.GoPro()
-            print("sock")
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.t = time()
             self.udp = "udp://10.5.5.9:8554"
-            print("starting")
             try:
                 self.gpCam.livestream("start")
             except:
                 self.error_dialog.showMessage("No GoPro detected")
                 return
-            print("started")
             cap = cv.VideoCapture(self.udp)
-            print("cap")
             vid = cv.VideoWriter_fourcc(*'MJPG')
         elif capType == 'File':
             options = QFileDialog.Options()
@@ -51,7 +46,6 @@ class CameraFeed(QtWidgets.QWidget):
                 if fileName[-3:] == 'avi' or fileName[-3:] == 'MP4':
                     if not (SystemUtils.getOS() == 'linux' or SystemUtils.getOS() == 'darwin'):
                         fileName = fileName.replace("/","\\")
-                    print(fileName)
                     cap = cv.VideoCapture(fileName)
                     vid = cv.VideoWriter_fourcc(*'XVID')
                 else:
@@ -71,7 +65,10 @@ class CameraFeed(QtWidgets.QWidget):
             self.error_dialog.showMessage("Error")
             print("error")
             return
-        out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+        if detection == "ShiTomasi" or detection == "FAST" or detection == "Brief":
+            out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+        else:
+            out = cv.VideoWriter(fileLoc, vid, self.frames_per_second, ( (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)))*2, int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
         tracker = DetectTracker.DetectAndTrack(cap, detection)
 
         if cap.isOpened() != True:
